@@ -1,6 +1,6 @@
 package com.example.flight_management_system.model;
 
-public class FlightAssigment {
+public class FlightAssignment {
     private String id;
     private String flightId;
     private String staffId;//

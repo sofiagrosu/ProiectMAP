@@ -8,5 +8,5 @@ public class Flight {
     private String noticeBoardId;
     private String airplaneId;
     private List<Ticket> tickets;
-    private List<FlightAssignments> flightAssignments;
+    private List<FlightAssignment> flightAssignments;
 }
