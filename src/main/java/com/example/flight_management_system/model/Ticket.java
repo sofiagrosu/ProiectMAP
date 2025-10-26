@@ -10,6 +10,8 @@ public class Ticket {
     private String seatNumber;
     private List<Luggage> luggages;
 
+    public Ticket() {}
+
     public Ticket(String id, String passengerId, String flightId, double price, String seatNumber) {
         this.id = id;
         this.passengerId = passengerId;
@@ -22,8 +24,8 @@ public class Ticket {
         return id;
     }
 
-    public String setId(){
-        return id;
+    public void setId(String id){
+        this.id = id;
     }
 
     public String getPassengerId() {
