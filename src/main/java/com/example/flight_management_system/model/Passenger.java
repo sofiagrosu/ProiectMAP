@@ -8,6 +8,9 @@ public class Passenger {
     private String currency;
     private List<Ticket> tickets;
 
+    //punctul 5- adaugarea de atribute noi
+    private boolean isCheckedIn;
+
     public Passenger(String id, String name, String currency, List<Ticket> tickets) {
         this.id = id;
         this.name = name;
@@ -44,5 +47,13 @@ public class Passenger {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    private boolean isCheckedIn(){
+        return isCheckedIn;
+    }
+
+    public void setCheckedIn(boolean checkedIn){
+        isCheckedIn = checkedIn;
     }
 }

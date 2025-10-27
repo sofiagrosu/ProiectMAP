@@ -10,8 +10,11 @@ public class Flight {
     private List<Ticket> tickets;
     private List<FlightAssignment> flightAssignments;
 
+    //punctul 5- adaugarea de atribute noi
+    private String gateNumber;
 
-    public Flight(String id, String name, String noticeBoardId,  String airplaneId) {
+
+    public Flight(String id, String name, String noticeBoardId,  String airplaneId, String gateNumber) {
         this.id = id;
         this.name = name;
         this.noticeBoardId = noticeBoardId;
@@ -64,6 +67,14 @@ public class Flight {
 
     public void setFlightAssignments(List<FlightAssignment> flightAssignments) {
         this.flightAssignments = flightAssignments;
+    }
+
+    public String getGateNumber() {
+        return gateNumber;
+    }
+
+    public void setGateNumber(String gateNumber) {
+        this.gateNumber = gateNumber;
     }
 }
 
