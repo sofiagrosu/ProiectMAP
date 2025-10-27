@@ -4,11 +4,13 @@ import java.util.List;
 
 public class AirlineEmployee extends Staff{
     private String role;
-    List<FlightAssignment> flightAssigments;
-    public AirlineEmployee(String id, String name, String role, List<FlightAssignment> flightAssigments) {
+    private List<FlightAssignment> flightAssigments;
+    private String company;
+    public AirlineEmployee(String id, String name, String role, List<FlightAssignment> flightAssigments, String company) {
         super(id, name);
         this.role = role;
         this.flightAssigments = flightAssigments;
+        this.company = company;
     }
     public String getRole() {
         return role;
@@ -21,6 +23,13 @@ public class AirlineEmployee extends Staff{
     }
     public void setFlightAssigments(List<FlightAssignment> flightAssigments) {
         this.flightAssigments = flightAssigments;}
+
+    public String getCompany() {
+        return company;
+    }
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public Boolean equals(AirlineEmployee other){
         return this.getId().equals(other.getId());
