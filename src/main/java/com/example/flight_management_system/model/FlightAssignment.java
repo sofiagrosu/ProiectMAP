@@ -1,14 +1,25 @@
 package com.example.flight_management_system.model;
 
+import java.time.LocalDate;
+
 public class FlightAssignment {
     private String id;
     private String flightId;
     private String staffId;
-    public FlightAssignment(String id, String flightId, String staffId) {
+    private LocalDate assigmentDate;
+    public FlightAssignment(String id, String flightId, String staffId, LocalDate assigmentDate) {
         this.id = id;
         this.flightId = flightId;
         this.staffId = staffId;
+        this.assigmentDate = assigmentDate;
     }
+
+    public LocalDate getAssigmentDate() {
+        return assigmentDate;
+    }
+public void setAssigmentDate(LocalDate assigmentDate) {
+        this.assigmentDate = assigmentDate;
+}
     public String getId() {
         return id;
     }
