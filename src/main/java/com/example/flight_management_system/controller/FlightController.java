@@ -1,6 +1,9 @@
 package com.example.flight_management_system.controller;
 
 
+import com.example.flight_management_system.service.FlightService;
+import com.example.flight_management_system.service.NoticeBoardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +16,7 @@ public class FlightController {
     private final FlightService flightService;
     private final AirplaneService airplaneService;
     private final NoticeBoardService noticeBoardService;
+
 
     @GetMapping("/all")
     @ResponseBody

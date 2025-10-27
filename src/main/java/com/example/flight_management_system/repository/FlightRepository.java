@@ -7,24 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class FlightRepository implements GenericRepository<Flight>{
+public class FlightRepository {
     private List<Flight> flights  = new ArrayList<>();
     private long nextId = 1;
 
-    @Override
-    public void save(Flight flight) {
+    public Flight save(Flight flight) {
         if (flight.getId() == null) {                   //daca nu are id
             flight.setId(String.valueOf(nextId));       //ii da unul nou
             nextId++;
         }
         flights.add(flight);
-
+        return flight;
     }
-    @Override
+
     public List<Flight> findAll() {
         return new ArrayList<>(flights);                //returneaza o copie a listei flights
     }
-    @Override
+
     public Flight findById(String id) {
         for (Flight flight : flights) {
             if (flight.getId().equals(id)) {
@@ -33,8 +32,13 @@ public class FlightRepository implements GenericRepository<Flight>{
         }
         return null;
     }
-    @Override
-    public boolean delete(Flight flight) {
-        return flights.remove(flight);
+
+    public boolean delete(String id) {
+        Flight flight = findById(id);
+        if (flight != null) {
+            flights.remove(flight);
+            return true;
+        }
+        return false;
     }
 }

@@ -77,4 +77,3 @@ public class Flight {
         this.gateNumber = gateNumber;
     }
 }
-
