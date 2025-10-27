@@ -30,5 +30,11 @@ public class Airplane {
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
     }
+    public Boolean equals(Airplane other){
+        return this.getId().equals(other.getId());
+    }
+    public String toString(){
+        return "Airplane{id="+this.id+", number="+this.number+", flights="+this.flights+"}";
+    }
 
 }
