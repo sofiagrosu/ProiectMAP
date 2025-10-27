@@ -2,6 +2,7 @@ package com.example.flight_management_system.controller;
 
 import com.example.flight_management_system.model.AirlineEmployee;
 import com.example.flight_management_system.model.AirportEmployee;
+import com.example.flight_management_system.model.FlightAssignment;
 import com.example.flight_management_system.service.AirlineEmployeeService;
 import com.example.flight_management_system.service.AirportEmployeeService;
 import com.example.flight_management_system.service.FlightAssignmentService;
@@ -40,17 +41,17 @@ public class StaffController {
     }
     @GetMapping("/staff/airport/{id}")
     @ResponseBody
-    public AirportEmployee airlineId(@PathVariable String id){
+    public AirportEmployee airportId(@PathVariable String id){
         return airportEmployeeService.findById(id);
     }
     @GetMapping("/assignments")
     @ResponseBody
-    public String assignmentAll(){
+    public List<FlightAssignment> assignmentAll(){
         return flightAssignmentService.findAll();
     }
     @GetMapping("/staff/assignment/{id}")
     @ResponseBody
-    public String airlineId(@PathVariable int id){
+    public FlightAssignment assignmentId(@PathVariable String id){
         return flightAssignmentService.findById(id);
     }
 

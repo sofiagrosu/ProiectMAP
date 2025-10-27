@@ -5,6 +5,8 @@ import com.example.flight_management_system.repository.FlightAssignmentRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FlightAssignmentService {
     private final FlightAssignmentRepository flightAssignmentRepository;
@@ -14,8 +16,8 @@ public class FlightAssignmentService {
         this.flightAssignmentRepository = flightAssignmentRepository;
     }
 
-    public Iterable<FlightAssignment> findAll(){
-        return flightAssignmentRepository.findAll();
+    public List<FlightAssignment> findAll(){
+        return (List<FlightAssignment>) flightAssignmentRepository.findAll();
     }
 
     public FlightAssignment findById(String id){
