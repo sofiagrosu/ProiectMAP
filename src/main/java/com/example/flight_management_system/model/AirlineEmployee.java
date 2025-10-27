@@ -21,4 +21,11 @@ public class AirlineEmployee extends Staff{
     }
     public void setFlightAssigments(List<FlightAssignment> flightAssigments) {
         this.flightAssigments = flightAssigments;}
+
+    public Boolean equals(AirlineEmployee other){
+        return this.getId().equals(other.getId());
+    }
+    public String toString(){
+        return "AirlineEmployee{id="+this.getId()+", name="+this.getName()+", role="+this.role+", flightAssigments="+this.flightAssigments+"}";
+    }
 }
