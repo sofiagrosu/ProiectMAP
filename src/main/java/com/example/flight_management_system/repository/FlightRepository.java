@@ -1,10 +1,12 @@
 package com.example.flight_management_system.repository;
 
 import com.example.flight_management_system.model.Flight;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class FlightRepository {
     private List<Flight> flights  = new ArrayList<>();
     private long nextId = 1;
