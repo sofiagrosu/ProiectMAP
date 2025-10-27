@@ -20,4 +20,10 @@ public class AirportEmployee extends Staff {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
+    public Boolean equals(AirportEmployee other){
+        return this.getId().equals(other.getId());
+    }
+    public String toString(){
+        return "AirportEmployee{id="+this.getId()+", name="+this.getName()+", department="+this.department+", designation="+this.designation+"}";
+    }
 }
