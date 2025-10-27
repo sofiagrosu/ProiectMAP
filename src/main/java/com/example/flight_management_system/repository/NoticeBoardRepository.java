@@ -7,23 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class NoticeBoardRepository {
+public class NoticeBoardRepository implements GenericRepository<NoticeBoard> {
     private List<NoticeBoard> noticeBoards = new ArrayList<>();
     private long nextId = 1;
 
-    public NoticeBoard save(NoticeBoard noticeBoard) {
+    @Override
+    public void save(NoticeBoard noticeBoard) {
         if (noticeBoard.getId() == null) {
             noticeBoard.setId(String.valueOf(nextId));
             nextId++;
         }
         noticeBoards.add(noticeBoard);
-        return noticeBoard;
-    }
 
+    }
+    @Override
     public List<NoticeBoard> findAll() {
         return new ArrayList<>(noticeBoards);
     }
-
+    @Override
     public NoticeBoard findById(String id) {
         for (NoticeBoard noticeBoard : noticeBoards) {
             if (noticeBoard.getId().equals(id)) {
@@ -32,13 +33,8 @@ public class NoticeBoardRepository {
         }
         return null;
     }
-
-    public boolean delete(String id) {
-        NoticeBoard noticeBoard = findById(id);
-        if (noticeBoard != null) {
-            noticeBoards.remove(noticeBoard);
-            return true;
-        }
-        return false;
+    @Override
+    public boolean delete(NoticeBoard noticeBoard) {
+        return noticeBoards.remove(noticeBoard);
     }
 }

@@ -7,23 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class TicketRepository {
+public class TicketRepository implements GenericRepository<Ticket> {
     private List<Ticket> tickets =  new ArrayList<>();
     private long nextId = 1;
 
-    public Ticket save(Ticket ticket) {
+    @Override
+    public void save(Ticket ticket) {
         if (ticket.getId() == null) {
             ticket.setId(String.valueOf(nextId));
             nextId++;
         }
-        tickets.add(ticket);
-        return ticket;
-    }
 
+    }
+    @Override
     public List<Ticket> findAll() {
         return new ArrayList<>(tickets);
     }
-
+    @Override
     public Ticket findById(String id) {
         for (Ticket ticket : tickets) {
             if (ticket.getId().equals(id)) {
@@ -32,13 +32,8 @@ public class TicketRepository {
         }
         return null;
     }
-
-    public boolean delete(String id) {
-        Ticket ticket = findById(id);
-        if (ticket != null) {
-            tickets.remove(ticket);
-            return true;
-        }
-        return false;
+    @Override
+    public boolean delete(Ticket ticket) {
+        return tickets.remove(ticket);
     }
 }

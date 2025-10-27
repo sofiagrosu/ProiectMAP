@@ -6,23 +6,26 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Repository
-public class LuggageRepository {
+public class LuggageRepository implements GenericRepository<Luggage> {
     private List<Luggage> luggages = new ArrayList<>();
     private long nextId = 1;
 
-    public Luggage save(Luggage luggage) {
+    @Override
+    public void save(Luggage luggage) {
         if (luggage.getId() == null) {
             luggage.setId(String.valueOf(nextId));
             nextId++;
         }
         luggages.add(luggage);
-        return luggage;
+
     }
 
+    @Override
     public List<Luggage> findAll() {
         return new ArrayList<>(luggages);
     }
 
+    @Override
     public Luggage findById(String id) {
         for (Luggage luggage : luggages) {
             if (luggage.getId().equals(id)) {
@@ -31,13 +34,8 @@ public class LuggageRepository {
         }
         return null;
     }
-
-    public boolean delete(String id) {
-        Luggage luggage = findById(id);
-        if (luggage != null) {
-            luggages.remove(luggage);
-            return true;
-        }
-        return false;
+    @Override
+    public boolean delete(Luggage luggage) {
+        return luggages.remove(luggage);
     }
 }

@@ -1,11 +1,12 @@
 package com.example.flight_management_system.repository;
-
+import org.springframework.stereotype.Repository;
 import com.example.flight_management_system.model.AirlineEmployee;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirlineEmployeeRepository implements Repository<AirlineEmployee> {
+@Repository
+public class AirlineEmployeeRepository implements GenericRepository<AirlineEmployee> {
     private List<AirlineEmployee> airlineEmployeeList;
 
     public AirlineEmployeeRepository() {
@@ -13,13 +14,13 @@ public class AirlineEmployeeRepository implements Repository<AirlineEmployee> {
     }
 
     @Override
-    public void add(AirlineEmployee item) {
+    public void save(AirlineEmployee item) {
         airlineEmployeeList.add(item);
     }
 
     @Override
-    public void delete(AirlineEmployee item) {
-        airlineEmployeeList.remove(item);
+    public boolean delete(AirlineEmployee item) {
+        return airlineEmployeeList.remove(item);
 
     }
     @Override

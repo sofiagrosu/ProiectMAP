@@ -1,21 +1,22 @@
 package com.example.flight_management_system.repository;
 
 import com.example.flight_management_system.model.AirportEmployee;
-
+import org.springframework.stereotype.Repository;
 import java.util.List;
 
-public class AirportEmployeeRepository implements Repository<AirportEmployee>{
+@Repository
+public class AirportEmployeeRepository implements GenericRepository<AirportEmployee> {
     private List<AirportEmployee> airlineEmployeeList;
     public AirportEmployeeRepository(List<AirportEmployee> airlineEmployeeList) {
         this.airlineEmployeeList = airlineEmployeeList;
     }
     @Override
-    public void add(AirportEmployee item) {
+    public void save(AirportEmployee item) {
         airlineEmployeeList.add(item);
     }
     @Override
-    public void delete(AirportEmployee item) {
-        airlineEmployeeList.remove(item);
+    public boolean delete(AirportEmployee item) {
+        return airlineEmployeeList.remove(item);
     }
     @Override
     public Iterable<AirportEmployee> findAll() {

@@ -1,21 +1,22 @@
 package com.example.flight_management_system.repository;
 
 import com.example.flight_management_system.model.Airplane;
-
+import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
-public class AirplaneRepository implements Repository<Airplane>{
+@Repository
+public class AirplaneRepository implements GenericRepository<Airplane>{
     private ArrayList<Airplane> airplanes;
     public AirplaneRepository() {
         this.airplanes = new ArrayList<>();
     }
     @Override
-    public void add(Airplane item) {
+    public void save(Airplane item) {
         airplanes.add(item);
     }
     @Override
-    public void delete(Airplane item) {
-        airplanes.remove(item);
+    public boolean delete(Airplane item) {
+        return airplanes.remove(item);
     }
     @Override
     public Iterable<Airplane> findAll() {
