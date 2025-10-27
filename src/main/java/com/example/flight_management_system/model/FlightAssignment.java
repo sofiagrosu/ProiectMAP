@@ -30,4 +30,11 @@ public class FlightAssignment {
         this.staffId = staffId;
     }
 
+    public Boolean equals(FlightAssignment other){
+        return this.getId().equals(other.getId());
+    }
+    public String toString(){
+        return "FlightAssignment{id="+this.id+", flightId="+this.flightId+", staffId="+this.staffId+"}";
+    }
+
 }
