@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public class InMemoryRepo < T extends BaseMethods> implements GenericRepository<T>{
-    private List<T> storedList = new ArrayList<>() ;
+    private List<T> storedList ;
     private int nextId = 1;
 
     @Override

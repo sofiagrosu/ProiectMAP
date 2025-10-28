@@ -1,7 +1,6 @@
 package com.example.flight_management_system.controller;
 
 
-import com.example.flight_management_system.model.Airplane;
 import com.example.flight_management_system.model.Flight;
 import com.example.flight_management_system.model.NoticeBoard;
 import com.example.flight_management_system.service.AirplaneService;
@@ -30,9 +29,10 @@ public class FlightController {
 
     @GetMapping("/all")
     @ResponseBody
-    public List<Flight> flightAll(){
+    public List<Flight> flighAll(){
         return flightService.findAll();
     }
+
     @GetMapping("/{id}")
     @ResponseBody
     public Flight flightId(@PathVariable String id){
@@ -40,13 +40,13 @@ public class FlightController {
 
     @GetMapping("/airplane")
     @ResponseBody
-    public Iterable<Airplane> airplaneAll(){
-        return airplaneService.findAll();
+    public List<Flight> airplaneAll(){
+        return flightService.findAll();
     }
     @GetMapping("/airplane/{id}")
     @ResponseBody
-    public Airplane airplaneId(@PathVariable String id){
-        return airplaneService.findById(id);}
+    public Flight airplaneId(@PathVariable String id){
+        return flightService.findById(id);}
 
     @GetMapping("/notices")
     @ResponseBody
