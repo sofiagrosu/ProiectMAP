@@ -2,7 +2,7 @@ package com.example.flight_management_system.model;
 
 import java.time.LocalDate;
 
-public class FlightAssignment {
+public class FlightAssignment implements BaseMethods{
     private String id;
     private String flightId;
     private String staffId;

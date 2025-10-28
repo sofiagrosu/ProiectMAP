@@ -2,7 +2,7 @@ package com.example.flight_management_system.model;
 
 import java.util.List;
 
-public class AirlineEmployee extends Staff{
+public class AirlineEmployee extends Staff {
     private String role;
     private List<FlightAssignment> flightAssigments;
     private String company;
@@ -37,4 +37,5 @@ public class AirlineEmployee extends Staff{
     public String toString(){
         return "AirlineEmployee{id="+this.getId()+", name="+this.getName()+", role="+this.role+", flightAssigments="+this.flightAssigments+"}";
     }
+
 }

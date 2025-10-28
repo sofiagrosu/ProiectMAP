@@ -3,12 +3,12 @@ package com.example.flight_management_system.repository;
 import com.example.flight_management_system.model.Luggage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import com.example.flight_management_system.model.BaseMethods;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class InMemoryRepo<T> implements GenericRepository<T>{
+public class InMemoryRepo < T extends BaseMethods> implements GenericRepository<T>{
     private List<T> storedList ;
     private int nextId = 1;
 

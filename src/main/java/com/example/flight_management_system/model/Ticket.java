@@ -2,7 +2,7 @@ package com.example.flight_management_system.model;
 
 import java.util.List;
 
-public class Ticket {
+public class Ticket implements BaseMethods{
     private String id;
     private String passengerId;
     private String flightId;

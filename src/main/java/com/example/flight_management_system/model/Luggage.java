@@ -1,6 +1,6 @@
 package com.example.flight_management_system.model;
 
-public class Luggage {
+public class Luggage implements BaseMethods{
     private String id;
     private String ticketId;
     private String status;
