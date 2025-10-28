@@ -14,9 +14,9 @@ public class Main {
         FlightAssignmentRepository assignmentRepo = new FlightAssignmentRepository();
         LuggageRepository luggageRepo = new LuggageRepository();
 
-        Flight flight1 = new Flight("F001", "Bucuresti-Londra", "NB001", "A001", 5);
-        Flight flight2 = new Flight("F002", "Cluj-Paris", "NB002", "A002", 3);
-        Flight flight3 = new Flight("F003", "Timisoara-Roma", "NB003", "A003", 7);
+        Flight flight1 = new Flight("F001", "Bucuresti-Londra", "NB001", "A001", "5");
+        Flight flight2 = new Flight("F002", "Cluj-Paris", "NB002", "A002", "3");
+        Flight flight3 = new Flight("F003", "Timisoara-Roma", "NB003", "A003", "7");
 
         flightService.save(flight1);
         FlightController fc = new FlightController(flightService,new AirplaneService(new AirplaneRepository()), new NoticeBoardService(new NoticeBoardRepository()));
