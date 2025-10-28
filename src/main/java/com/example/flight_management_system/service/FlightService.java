@@ -25,8 +25,8 @@ public class FlightService {
         return flightRepository.findById(id);
     }
 
-    public boolean delete(String id) {
-        return flightRepository.delete(id);
+    public boolean delete(Flight flight) {
+        return flightRepository.delete(flight);
     }
 
     public void save(Flight flight){
