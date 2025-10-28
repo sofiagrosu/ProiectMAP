@@ -76,4 +76,5 @@ public class Flight {
     public void setGateNumber(String gateNumber) {
         this.gateNumber = gateNumber;
     }
+
 }
