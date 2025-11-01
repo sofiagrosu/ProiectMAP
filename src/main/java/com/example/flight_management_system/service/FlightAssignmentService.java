@@ -5,30 +5,11 @@ import com.example.flight_management_system.repository.FlightAssignmentRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class FlightAssignmentService {
-    private final FlightAssignmentRepository flightAssignmentRepository;
+public class FlightAssignmentService extends CrudService<FlightAssignment> {
 
     @Autowired
     public FlightAssignmentService(FlightAssignmentRepository flightAssignmentRepository) {
-        this.flightAssignmentRepository = flightAssignmentRepository;
-    }
-
-    public List<FlightAssignment> findAll(){
-        return (List<FlightAssignment>) flightAssignmentRepository.findAll();
-    }
-
-    public FlightAssignment findById(String id){
-        return flightAssignmentRepository.findById(id);
-    }
-
-    public void save(FlightAssignment assignment){
-        flightAssignmentRepository.save(assignment);
-    }
-
-    public boolean delete(FlightAssignment assignment){
-        return flightAssignmentRepository.delete(assignment);
+        super(flightAssignmentRepository);
     }
 }
