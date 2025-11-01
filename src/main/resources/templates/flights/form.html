@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Flight</title>
+</head>
+<body>
+<h1>Add a new Flight</h1>
+<form th:action="@{/flights}" th:object="${flight}" method="post">
+    <label>Name: <input type="text" th:field="*{name}" /></label><br/>
+    <label>NoticeBoardId: <input type="text" th:field="*{noticeBoardId}" /></label><br/>
+    <label>AirplaneId: <input type="text" th:field="*{airplaneId}" /></label><br/>
+    <label>Gate Number: <input type="text" th:field="*{gateNumber}" /></label><br/>
+    <button type="submit">Save</button>
+</form>
+<a th:href="@{/flights}">Back to list</a>
+</body>
+</html>

@@ -19,6 +19,7 @@ public class Flight implements BaseMethods{
         this.name = name;
         this.noticeBoardId = noticeBoardId;
         this.airplaneId = airplaneId;
+        this.gateNumber = gateNumber;
     }
 
     public Flight() {

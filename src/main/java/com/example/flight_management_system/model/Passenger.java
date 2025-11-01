@@ -1,5 +1,6 @@
 package com.example.flight_management_system.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Passenger implements BaseMethods {
@@ -10,6 +11,14 @@ public class Passenger implements BaseMethods {
 
     //punctul 5- adaugarea de atribute noi
     private boolean isCheckedIn;
+
+    public Passenger() {
+        this.id = "";
+        this.name = "";
+        this.currency = "";
+        this.tickets = new ArrayList<>();
+        this.isCheckedIn = false;
+    }
 
     public Passenger(String id, String name, String currency, List<Ticket> tickets) {
         this.id = id;

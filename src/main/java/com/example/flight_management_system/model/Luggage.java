@@ -11,6 +11,12 @@ public class Luggage implements BaseMethods{
         this.status = status;
     }
 
+    public Luggage() {
+        this.id = "";
+        this.ticketId = "";
+        this.status = "";
+    }
+
     public String getId() {
         return id;
     }
