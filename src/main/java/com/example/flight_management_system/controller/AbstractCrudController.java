@@ -4,6 +4,7 @@ package com.example.flight_management_system.controller;
 import com.example.flight_management_system.model.BaseMethods;
 import com.example.flight_management_system.repository.GenericRepository;
 import com.example.flight_management_system.repository.InMemoryRepo;
+import com.example.flight_management_system.service.CrudService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.function.Supplier;
@@ -18,7 +19,7 @@ import java.util.function.Supplier;
  */
 public abstract class AbstractCrudController<T extends BaseMethods> {
 
-    private final CrudService<T> service;
+    protected final CrudService<T> service;
     private final String listView;     // ex: "flights/index"
     private final String formView;     // ex: "flights/form"
     private final String listModelKey; // ex: "flights"
@@ -64,7 +65,7 @@ public abstract class AbstractCrudController<T extends BaseMethods> {
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable ID id) {
+    public String delete(@PathVariable String id) {
         service.deleteById(id);
         return "redirect:" + basePath;
     }

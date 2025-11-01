@@ -21,6 +21,13 @@ public class CrudService<T extends BaseMethods> {
         return repository.findById(id);
     }
 
+    public void deleteById(String id) {
+        T item = repository.findById(id);
+        if (item != null) {
+            repository.delete(item);
+        }
+    }
+
     public void save(T item) {
         repository.save(item);
     }
