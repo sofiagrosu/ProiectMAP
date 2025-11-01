@@ -6,7 +6,7 @@ import java.util.List;
 
 
 @Repository
-public class FlightAssignmentRepository extends InMemoryRepo<FlightAssignment> {
+public class FlightAssignmentRepository extends  InMemoryRepo<FlightAssignment> {
 
 
 }
