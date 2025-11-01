@@ -13,6 +13,11 @@ public class NoticeBoard implements BaseMethods{
         this.date = date;
     }
 
+    public NoticeBoard(){
+        this.id = "";
+        this.date = LocalDate.now();
+    }
+
     public String getId() {
         return id;
     }

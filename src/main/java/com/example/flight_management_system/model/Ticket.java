@@ -10,7 +10,13 @@ public class Ticket implements BaseMethods{
     private String seatNumber;
     private List<Luggage> luggages;
 
-    public Ticket() {}
+    public Ticket() {
+        this.id = "";
+        this.passengerId = "";
+        this.flightId = "";
+        this.price = 0;
+        this.seatNumber = "";
+    }
 
     public Ticket(String id, String passengerId, String flightId, double price, String seatNumber) {
         this.id = id;
@@ -19,6 +25,7 @@ public class Ticket implements BaseMethods{
         this.price = price;
         this.seatNumber = seatNumber;
     }
+
 
     public String getId(){
         return id;
