@@ -12,6 +12,10 @@ public class Airplane implements BaseMethods {
         this.number = number;
         this.flights = flights;
     }
+    public Airplane() {
+        this.id = null;
+        this.number = 0;
+    }
     public String getId() {
         return id;
     }

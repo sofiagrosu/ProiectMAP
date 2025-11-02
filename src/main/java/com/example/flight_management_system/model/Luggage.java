@@ -12,7 +12,7 @@ public class Luggage implements BaseMethods{
     }
 
     public Luggage() {
-        this.id = "";
+        this.id = null;
         this.ticketId = "";
         this.status = "";
     }

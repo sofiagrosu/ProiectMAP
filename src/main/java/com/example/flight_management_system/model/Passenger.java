@@ -13,7 +13,7 @@ public class Passenger implements BaseMethods {
     private boolean isCheckedIn;
 
     public Passenger() {
-        this.id = "";
+        this.id = null;
         this.name = "";
         this.currency = "";
         this.tickets = new ArrayList<>();

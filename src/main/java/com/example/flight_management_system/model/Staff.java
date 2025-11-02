@@ -7,6 +7,10 @@ public abstract class Staff implements BaseMethods {
         this.id = id;
         this.name = name;
     }
+    public Staff() {
+        this.id = null;
+        this.name = "";
+    }
     public String getId() {
         return id;
     }

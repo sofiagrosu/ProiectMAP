@@ -14,7 +14,7 @@ public class NoticeBoard implements BaseMethods{
     }
 
     public NoticeBoard(){
-        this.id = "";
+        this.id = null;
         this.date = LocalDate.now();
     }
 

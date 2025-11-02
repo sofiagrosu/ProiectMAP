@@ -13,6 +13,12 @@ public class FlightAssignment implements BaseMethods{
         this.staffId = staffId;
         this.assigmentDate = assigmentDate;
     }
+    public FlightAssignment() {
+        this.id = null;
+        this.flightId = "";
+        this.staffId = "";
+        this.assigmentDate = LocalDate.now();
+    }
 
     public LocalDate getAssigmentDate() {
         return assigmentDate;

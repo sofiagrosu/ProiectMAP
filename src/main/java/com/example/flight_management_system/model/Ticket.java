@@ -11,7 +11,7 @@ public class Ticket implements BaseMethods{
     private List<Luggage> luggages;
 
     public Ticket() {
-        this.id = "";
+        this.id = null;
         this.passengerId = "";
         this.flightId = "";
         this.price = 0;

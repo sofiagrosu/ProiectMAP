@@ -12,6 +12,12 @@ public class AirlineEmployee extends Staff {
         this.flightAssigments = flightAssigments;
         this.company = company;
     }
+    public AirlineEmployee() {
+        super();
+        this.role = "";
+        this.flightAssigments = null;
+        this.company = "";
+    }
     public String getRole() {
         return role;
     }
