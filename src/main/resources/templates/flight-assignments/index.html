@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>Flight Assignments</title></head>
+<body>
+<h1>Flight Assignments</h1>
+<a th:href="@{/flight-assignments/new}">Add assignment</a><br/><br/>
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead><tr><th>ID</th><th>Flight Id</th><th>Staff Id</th><th>Actions</th></tr></thead>
+    <tbody>
+    <tr th:each="as : ${assignments}">
+        <td th:text="${as.id}">ID</td>
+        <td th:text="${as.flightId}">F-1</td>
+        <td th:text="${as.staffId}">S-1</td>
+        <td>
+            <form th:action="@{'/flight-assignments/' + ${as.id} + '/delete'}" method="post"><button type="submit">Delete</button></form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body></html>

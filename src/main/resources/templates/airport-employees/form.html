@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Airport Employee</title></head>
+<body>
+<h1>Create Airport Employee</h1>
+<form th:action="@{/airport-employees}" th:object="${airportEmployee}" method="post">
+    <div><label>Name</label> <input th:field="*{name}" placeholder="Alex Pop"/></div>
+    <div><label>Designation</label> <input th:field="*{designation}" placeholder="Gate Agent"/></div>
+    <div><label>Department</label> <input th:field="*{department}" placeholder="Ops"/></div>
+    <button type="submit">Save</button> <a th:href="@{/airport-employees}">Back</a>
+</form>
+</body></html>

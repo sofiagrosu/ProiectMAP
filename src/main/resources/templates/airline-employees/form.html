@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Airline Employee</title></head>
+<body>
+<h1>Create Airline Employee</h1>
+<form th:action="@{/airline-employees}" th:object="${airlineEmployee}" method="post">
+    <div><label>Name</label> <input th:field="*{name}" placeholder="Jane Smith"/></div>
+    <div>
+        <label>Role</label>
+        <select th:field="*{role}">
+            <option value="Pilot">Pilot</option>
+            <option value="Closed">Closed</option>
+        </select>
+    </div>
+    <button type="submit">Save</button> <a th:href="@{/airline-employees}">Back</a>
+</form>
+</body></html>
