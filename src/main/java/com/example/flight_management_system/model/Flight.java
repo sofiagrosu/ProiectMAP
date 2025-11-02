@@ -23,7 +23,7 @@ public class Flight implements BaseMethods{
     }
 
     public Flight() {
-        this. id = "";
+        this. id = null;
         this.name = "";
         this.noticeBoardId = "";
         this.airplaneId = "";
