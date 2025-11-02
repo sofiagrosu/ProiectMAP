@@ -16,8 +16,8 @@ public class PassengerController extends AbstractCrudController<Passenger> {
     public PassengerController(CrudService<Passenger> service) {
         super(service,
                 "/passengers",
-                "passenger/index",
-                "passenger/form",
+                "passengers/index",
+                "passengers/form",
                 "passengers",
                 "passenger",
                 Passenger::new);

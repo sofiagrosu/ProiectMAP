@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Assignment</title></head>
 <body>
 <h1>Create Flight Assignment</h1>
-<form th:action="@{/flight-assignments}" th:object="${assignment}" method="post">
+<form th:action="@{/templates/assignments}" th:object="${assignment}" method="post">
     <div><label>Flight Id</label> <input th:field="*{flightId}" placeholder="F-1"/></div>
     <div><label>Staff Id</label> <input th:field="*{staffId}" placeholder="S-1"/></div>
-    <button type="submit">Save</button> <a th:href="@{/flight-assignments}">Back</a>
+    <button type="submit">Save</button> <a th:href="@{/templates/assignments}">Back</a>
 </form>
 </body></html>
