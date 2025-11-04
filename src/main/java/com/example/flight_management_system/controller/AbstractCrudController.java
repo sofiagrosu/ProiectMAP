@@ -9,14 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.function.Supplier;
 
-/**
- * Controller generic pentru CRUD minimal (list, create, delete) – Tema 2.
- * Subclasele trebuie doar să definească:
- * - path-ul de bază (ex: "/flights")
- * - view-urile (ex: "flights/index", "flights/form")
- * - numele atributelor de model (ex: "flights", "flight")
- * - fabrica de instanțe noi (ex: Flight::new)
- */
 public abstract class AbstractCrudController<T extends BaseMethods> {
 
     protected final CrudService<T> service;
@@ -44,26 +36,28 @@ public abstract class AbstractCrudController<T extends BaseMethods> {
         this.factory = factory;
     }
 
+    //listeaza toate entitatile
     @GetMapping
     public String list(Model model) {
         model.addAttribute(listModelKey, service.findAll());
         return listView;
     }
 
+    //afiseaza formularul de creare
     @GetMapping("/new")
     public String form(Model model) {
         model.addAttribute(formModelKey, factory.get());
         return formView;
     }
 
+    //salveaza o entitate noua
     @PostMapping
     public String create(@ModelAttribute(name = "#{T(java.lang.String).valueOf(formModelKey)}") T entity) {
-        // Notă: dacă expresia de mai sus te încurcă în unele IDE-uri,
-        // poți schimba cu @ModelAttribute("<formModelKey>") în subclasă.
         service.save(entity);
         return "redirect:" + basePath;
     }
 
+    //sterge o entitate
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable String id) {
         service.deleteById(id);
