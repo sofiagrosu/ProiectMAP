@@ -1,0 +1,104 @@
+[
+  {
+    "id": "T001",
+    "passengerId": "P001",
+    "flightId": "F001",
+    "price": 250.0,
+    "seatNumber": "12A",
+    "luggages": [
+      { "id": "L001", "ticketId": "T001", "status": "Checked In" }
+    ]
+  },
+  {
+    "id": "T002",
+    "passengerId": "P002",
+    "flightId": "F002",
+    "price": 180.5,
+    "seatNumber": "8B",
+    "luggages": [
+      { "id": "L002", "ticketId": "T002", "status": "In Transit" },
+      { "id": "L011", "ticketId": "T002", "status": "Checked In" }
+    ]
+  },
+  {
+    "id": "T003",
+    "passengerId": "P003",
+    "flightId": "F003",
+    "price": 310.0,
+    "seatNumber": "3C",
+    "luggages": [
+      { "id": "L003", "ticketId": "T003", "status": "Delivered" }
+    ]
+  },
+  {
+    "id": "T004",
+    "passengerId": "P004",
+    "flightId": "F004",
+    "price": 220.0,
+    "seatNumber": "10D",
+    "luggages": [
+      { "id": "L004", "ticketId": "T004", "status": "Lost" }
+    ]
+  },
+  {
+    "id": "T005",
+    "passengerId": "P005",
+    "flightId": "F005",
+    "price": 280.0,
+    "seatNumber": "5A",
+    "luggages": [
+      { "id": "L005", "ticketId": "T005", "status": "Checked In" }
+    ]
+  },
+  {
+    "id": "T006",
+    "passengerId": "P006",
+    "flightId": "F006",
+    "price": 195.0,
+    "seatNumber": "14F",
+    "luggages": [
+      { "id": "L006", "ticketId": "T006", "status": "In Transit" },
+      { "id": "L012", "ticketId": "T006", "status": "Delivered" }
+    ]
+  },
+  {
+    "id": "T007",
+    "passengerId": "P007",
+    "flightId": "F007",
+    "price": 330.0,
+    "seatNumber": "2B",
+    "luggages": [
+      { "id": "L007", "ticketId": "T007", "status": "Delivered" }
+    ]
+  },
+  {
+    "id": "T008",
+    "passengerId": "P008",
+    "flightId": "F008",
+    "price": 205.0,
+    "seatNumber": "9E",
+    "luggages": [
+      { "id": "L008", "ticketId": "T008", "status": "Checked In" }
+    ]
+  },
+  {
+    "id": "T009",
+    "passengerId": "P009",
+    "flightId": "F009",
+    "price": 260.0,
+    "seatNumber": "11C",
+    "luggages": [
+      { "id": "L009", "ticketId": "T009", "status": "Delivered" }
+    ]
+  },
+  {
+    "id": "T010",
+    "passengerId": "P010",
+    "flightId": "F010",
+    "price": 175.0,
+    "seatNumber": "15D",
+    "luggages": [
+      { "id": "L010", "ticketId": "T010", "status": "Lost" }
+    ]
+  }
+]

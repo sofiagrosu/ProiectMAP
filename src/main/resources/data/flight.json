@@ -1,0 +1,132 @@
+[
+  {
+    "id": "F001",
+    "name": "Flight Berlin-Paris",
+    "noticeBoardId": "NB101",
+    "airplaneId": "A320",
+    "gateNumber": "G1",
+    "tickets": [
+      { "id": "T001", "passengerId": "P001", "flightId": "F001", "price": 250.0, "seatNumber": "12A", "luggages": [ { "id": "L001", "ticketId": "T001", "status": "Checked In" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA001", "flightId": "F001", "staffId": "S001", "assigmentDate": "2025-11-05" }
+    ]
+  },
+  {
+    "id": "F002",
+    "name": "Flight Paris-London",
+    "noticeBoardId": "NB102",
+    "airplaneId": "B737",
+    "gateNumber": "G2",
+    "tickets": [
+      { "id": "T002", "passengerId": "P002", "flightId": "F002", "price": 180.5, "seatNumber": "8B", "luggages": [ { "id": "L002", "ticketId": "T002", "status": "In Transit" }, { "id": "L011", "ticketId": "T002", "status": "Checked In" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA002", "flightId": "F002", "staffId": "S002", "assigmentDate": "2025-11-06" }
+    ]
+  },
+  {
+    "id": "F003",
+    "name": "Flight London-Rome",
+    "noticeBoardId": "NB103",
+    "airplaneId": "A321",
+    "gateNumber": "G3",
+    "tickets": [
+      { "id": "T003", "passengerId": "P003", "flightId": "F003", "price": 310.0, "seatNumber": "3C", "luggages": [ { "id": "L003", "ticketId": "T003", "status": "Delivered" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA003", "flightId": "F003", "staffId": "S003", "assigmentDate": "2025-11-07" }
+    ]
+  },
+  {
+    "id": "F004",
+    "name": "Flight Rome-Vienna",
+    "noticeBoardId": "NB104",
+    "airplaneId": "B747",
+    "gateNumber": "G4",
+    "tickets": [
+      { "id": "T004", "passengerId": "P004", "flightId": "F004", "price": 220.0, "seatNumber": "10D", "luggages": [ { "id": "L004", "ticketId": "T004", "status": "Lost" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA004", "flightId": "F004", "staffId": "S004", "assigmentDate": "2025-11-08" }
+    ]
+  },
+  {
+    "id": "F005",
+    "name": "Flight Vienna-Berlin",
+    "noticeBoardId": "NB105",
+    "airplaneId": "A319",
+    "gateNumber": "G5",
+    "tickets": [
+      { "id": "T005", "passengerId": "P005", "flightId": "F005", "price": 280.0, "seatNumber": "5A", "luggages": [ { "id": "L005", "ticketId": "T005", "status": "Checked In" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA005", "flightId": "F005", "staffId": "S005", "assigmentDate": "2025-11-09" }
+    ]
+  },
+  {
+    "id": "F006",
+    "name": "Flight Madrid-Berlin",
+    "noticeBoardId": "NB106",
+    "airplaneId": "A320",
+    "gateNumber": "G6",
+    "tickets": [
+      { "id": "T006", "passengerId": "P006", "flightId": "F006", "price": 195.0, "seatNumber": "14F", "luggages": [ { "id": "L006", "ticketId": "T006", "status": "In Transit" }, { "id": "L012", "ticketId": "T006", "status": "Delivered" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA006", "flightId": "F006", "staffId": "S006", "assigmentDate": "2025-11-10" }
+    ]
+  },
+  {
+    "id": "F007",
+    "name": "Flight Lisbon-Madrid",
+    "noticeBoardId": "NB107",
+    "airplaneId": "E190",
+    "gateNumber": "G7",
+    "tickets": [
+      { "id": "T007", "passengerId": "P007", "flightId": "F007", "price": 330.0, "seatNumber": "2B", "luggages": [ { "id": "L007", "ticketId": "T007", "status": "Delivered" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA007", "flightId": "F007", "staffId": "S007", "assigmentDate": "2025-11-11" }
+    ]
+  },
+  {
+    "id": "F008",
+    "name": "Flight Amsterdam-Brussels",
+    "noticeBoardId": "NB108",
+    "airplaneId": "B737",
+    "gateNumber": "G8",
+    "tickets": [
+      { "id": "T008", "passengerId": "P008", "flightId": "F008", "price": 205.0, "seatNumber": "9E", "luggages": [ { "id": "L008", "ticketId": "T008", "status": "Checked In" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA008", "flightId": "F008", "staffId": "S008", "assigmentDate": "2025-11-12" }
+    ]
+  },
+  {
+    "id": "F009",
+    "name": "Flight Copenhagen-Stockholm",
+    "noticeBoardId": "NB109",
+    "airplaneId": "A220",
+    "gateNumber": "G9",
+    "tickets": [
+      { "id": "T009", "passengerId": "P009", "flightId": "F009", "price": 260.0, "seatNumber": "11C", "luggages": [ { "id": "L009", "ticketId": "T009", "status": "Delivered" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA009", "flightId": "F009", "staffId": "S009", "assigmentDate": "2025-11-13" }
+    ]
+  },
+  {
+    "id": "F010",
+    "name": "Flight Athens-Zurich",
+    "noticeBoardId": "NB110",
+    "airplaneId": "A320",
+    "gateNumber": "G10",
+    "tickets": [
+      { "id": "T010", "passengerId": "P010", "flightId": "F010", "price": 175.0, "seatNumber": "15D", "luggages": [ { "id": "L010", "ticketId": "T010", "status": "Lost" } ] }
+    ],
+    "flightAssignments": [
+      { "id": "FA010", "flightId": "F010", "staffId": "S010", "assigmentDate": "2025-11-14" }
+    ]
+  }
+]

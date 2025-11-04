@@ -1,0 +1,72 @@
+[
+  {
+    "id": "P001",
+    "name": "Alice Popescu",
+    "currency": "EUR",
+    "tickets": ["T001"],
+    "isCheckedIn": true
+  },
+  {
+    "id": "P002",
+    "name": "Bogdan Ionescu",
+    "currency": "USD",
+    "tickets": ["T002"],
+    "isCheckedIn": false
+  },
+  {
+    "id": "P003",
+    "name": "Carla Dobre",
+    "currency": "GBP",
+    "tickets": ["T003"],
+    "isCheckedIn": true
+  },
+  {
+    "id": "P004",
+    "name": "Daniela Tudor",
+    "currency": "RON",
+    "tickets": ["T004"],
+    "isCheckedIn": false
+  },
+  {
+    "id": "P005",
+    "name": "Eduard Marinescu",
+    "currency": "EUR",
+    "tickets": ["T005"],
+    "isCheckedIn": true
+  },
+  {
+    "id": "P006",
+    "name": "Florin Petrescu",
+    "currency": "USD",
+    "tickets": ["T006"],
+    "isCheckedIn": false
+  },
+  {
+    "id": "P007",
+    "name": "Gabriela Stan",
+    "currency": "GBP",
+    "tickets": ["T007"],
+    "isCheckedIn": true
+  },
+  {
+    "id": "P008",
+    "name": "Horatiu Vasile",
+    "currency": "EUR",
+    "tickets": ["T008"],
+    "isCheckedIn": true
+  },
+  {
+    "id": "P009",
+    "name": "Ioana Cristea",
+    "currency": "RON",
+    "tickets": ["T009"],
+    "isCheckedIn": false
+  },
+  {
+    "id": "P010",
+    "name": "Julian Munteanu",
+    "currency": "USD",
+    "tickets": ["T010"],
+    "isCheckedIn": true
+  }
+]

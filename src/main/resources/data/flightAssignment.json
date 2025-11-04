@@ -1,0 +1,62 @@
+[
+  {
+    "id": "FA001",
+    "flightId": "F001",
+    "staffId": "S001",
+    "assigmentDate": "2025-02-10"
+  },
+  {
+    "id": "FA002",
+    "flightId": "F002",
+    "staffId": "S002",
+    "assigmentDate": "2025-02-11"
+  },
+  {
+    "id": "FA003",
+    "flightId": "F003",
+    "staffId": "S003",
+    "assigmentDate": "2025-02-12"
+  },
+  {
+    "id": "FA004",
+    "flightId": "F004",
+    "staffId": "S004",
+    "assigmentDate": "2025-02-13"
+  },
+  {
+    "id": "FA005",
+    "flightId": "F005",
+    "staffId": "S005",
+    "assigmentDate": "2025-02-14"
+  },
+  {
+    "id": "FA006",
+    "flightId": "F006",
+    "staffId": "S006",
+    "assigmentDate": "2025-02-15"
+  },
+  {
+    "id": "FA007",
+    "flightId": "F007",
+    "staffId": "S007",
+    "assigmentDate": "2025-02-16"
+  },
+  {
+    "id": "FA008",
+    "flightId": "F008",
+    "staffId": "S008",
+    "assigmentDate": "2025-02-17"
+  },
+  {
+    "id": "FA009",
+    "flightId": "F009",
+    "staffId": "S009",
+    "assigmentDate": "2025-02-18"
+  },
+  {
+    "id": "FA010",
+    "flightId": "F010",
+    "staffId": "S010",
+    "assigmentDate": "2025-02-19"
+  }
+]
