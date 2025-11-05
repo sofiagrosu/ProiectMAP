@@ -90,17 +90,17 @@ public CommandLineRunner initData(
         ticketService.save(t3);
 
         // ---------- LUGGAGE ----------
-        Luggage l1 = new Luggage(null, t1.getId(), "CheckedIn");
-        Luggage l2 = new Luggage(null, t2.getId(), "Loaded");
-        Luggage l3 = new Luggage(null, t3.getId(), "Delivered");
+        Luggage l1 = new Luggage(null, t1.getId(), Status.CHECKED_IN);
+        Luggage l2 = new Luggage(null, t2.getId(),Status.LOADED);
+        Luggage l3 = new Luggage(null, t3.getId(), Status.DELIVERED);
         luggageService.save(l1);
         luggageService.save(l2);
         luggageService.save(l3);
 
         // ---------- EMPLOYEES ----------
-        AirlineEmployee e1 = new AirlineEmployee(null, "John Pilot", "Pilot", null, "BlueAir");
-        AirlineEmployee e2 = new AirlineEmployee(null, "Anna Copilot", "Pilot", null, "WizzAir");
-        AirlineEmployee e3 = new AirlineEmployee(null, "Marta Crew", "CabinCrew", null, "Ryanair");
+        AirlineEmployee e1 = new AirlineEmployee(null, "John Pilot", Role.PILOT, null, "BlueAir");
+        AirlineEmployee e2 = new AirlineEmployee(null, "Anna Copilot", Role.PILOT, null, "WizzAir");
+        AirlineEmployee e3 = new AirlineEmployee(null, "Marta Crew", Role.PILOT, null, "Ryanair");
         airlineEmployeeService.save(e1);
         airlineEmployeeService.save(e2);
         airlineEmployeeService.save(e3);

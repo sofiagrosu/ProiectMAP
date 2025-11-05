@@ -1,12 +1,12 @@
 package com.example.flight_management_system.model;
 
 import java.util.List;
-
+import static com.example.flight_management_system.model.Role.CLOSED;
 public class AirlineEmployee extends Staff {
-    private String role;
+    private Role role;
     private List<FlightAssignment> flightAssigments;
     private String company;
-    public AirlineEmployee(String id, String name, String role, List<FlightAssignment> flightAssigments, String company) {
+    public AirlineEmployee(String id, String name, Role role, List<FlightAssignment> flightAssigments, String company) {
         super(id, name);
         this.role = role;
         this.flightAssigments = flightAssigments;
@@ -14,14 +14,14 @@ public class AirlineEmployee extends Staff {
     }
     public AirlineEmployee() {
         super();
-        this.role = "";
+        this.role = CLOSED;
         this.flightAssigments = null;
         this.company = "";
     }
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
     public List<FlightAssignment> getFlightAssigments() {
