@@ -126,7 +126,7 @@ public CommandLineRunner initData(
 
 
 
-        System.out.println("Initial data loaded successfully!");
+        System.out.println("✅ Initial data loaded successfully!");
     };
     }
 

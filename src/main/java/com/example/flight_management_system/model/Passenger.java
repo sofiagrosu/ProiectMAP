@@ -1,5 +1,7 @@
 package com.example.flight_management_system.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class Passenger implements BaseMethods {
     private List<Ticket> tickets;
 
     //punctul 5- adaugarea de atribute noi
+    @JsonProperty("isCheckedIn")
     private boolean isCheckedIn;
 
     public Passenger() {

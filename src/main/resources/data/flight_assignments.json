@@ -1,0 +1,16 @@
+[ {
+  "id" : "fa-1",
+  "flightId" : "fl-101",
+  "staffId" : "al-1",
+  "assigmentDate" : "2025-11-08"
+}, {
+  "id" : "fa-2",
+  "flightId" : "fl-202",
+  "staffId" : "al-2",
+  "assigmentDate" : "2025-11-09"
+}, {
+  "id" : "fa-3",
+  "flightId" : "fl-303",
+  "staffId" : "al-3",
+  "assigmentDate" : "2025-11-10"
+} ]

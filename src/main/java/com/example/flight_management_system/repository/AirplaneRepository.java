@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public class AirplaneRepository extends InMemoryRepo<Airplane> {
+public class AirplaneRepository extends InFileRepository<Airplane> {
+    public AirplaneRepository() {
+        super("airplanes.json", Airplane.class);
+    }
 
 }

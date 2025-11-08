@@ -1,0 +1,22 @@
+[ {
+  "id" : "t-1",
+  "passengerId" : "p-1",
+  "flightId" : "fl-101",
+  "price" : 120.5,
+  "seatNumber" : "12A",
+  "luggages" : [ ]
+}, {
+  "id" : "t-2",
+  "passengerId" : "p-2",
+  "flightId" : "fl-202",
+  "price" : 99.99,
+  "seatNumber" : "14C",
+  "luggages" : [ ]
+}, {
+  "id" : "t-3",
+  "passengerId" : "p-3",
+  "flightId" : "fl-303",
+  "price" : 150.0,
+  "seatNumber" : "16B",
+  "luggages" : [ ]
+} ]

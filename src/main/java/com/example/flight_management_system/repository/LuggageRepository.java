@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Repository
-public class LuggageRepository extends InMemoryRepo<Luggage>  {
-
+public class LuggageRepository extends InFileRepository<Luggage>  {
+    public LuggageRepository() {
+        super("luggages.json", Luggage.class);
+    }
 }

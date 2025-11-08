@@ -1,0 +1,13 @@
+[ {
+  "id" : "ap-101",
+  "number" : 101,
+  "flights" : [ ]
+}, {
+  "id" : "ap-202",
+  "number" : 202,
+  "flights" : [ ]
+}, {
+  "id" : "ap-303",
+  "number" : 303,
+  "flights" : [ ]
+} ]

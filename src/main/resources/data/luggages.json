@@ -1,0 +1,13 @@
+[ {
+  "id" : "lg-1",
+  "ticketId" : "t-1",
+  "status" : "CHECKED_IN"
+}, {
+  "id" : "lg-2",
+  "ticketId" : "t-2",
+  "status" : "LOADED"
+}, {
+  "id" : "lg-3",
+  "ticketId" : "t-3",
+  "status" : "DELIVERED"
+} ]

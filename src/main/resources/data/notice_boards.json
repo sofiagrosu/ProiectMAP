@@ -1,0 +1,13 @@
+[ {
+  "id" : "nb-1",
+  "date" : "2025-11-02",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-2",
+  "date" : "2025-11-03",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-3",
+  "date" : "2025-12-10",
+  "flightOfTheDay" : [ ]
+} ]

@@ -9,6 +9,9 @@ import java.util.List;
 
 
 @Repository
-public class PassengerRepository extends InMemoryRepo<Passenger>  {
+public class PassengerRepository extends InFileRepository<Passenger>  {
 
+    public PassengerRepository() {
+        super("passengers.json", Passenger.class);
+    }
 }
