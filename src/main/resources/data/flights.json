@@ -15,11 +15,11 @@
   "flightAssignments" : [ ],
   "gateNumber" : ""
 }, {
-  "id" : "fl-303",
-  "name" : "Flight 303",
-  "noticeBoardId" : "nb-3",
-  "airplaneId" : "ap-303",
-  "tickets" : [ ],
-  "flightAssignments" : [ ],
-  "gateNumber" : ""
+  "id" : "4",
+  "name" : "Bianca",
+  "noticeBoardId" : "1",
+  "airplaneId" : "1",
+  "tickets" : null,
+  "flightAssignments" : null,
+  "gateNumber" : "1"
 } ]
