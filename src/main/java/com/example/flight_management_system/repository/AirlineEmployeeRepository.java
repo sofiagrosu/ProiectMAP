@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public class AirlineEmployeeRepository extends InFileRepository<AirlineEmployee> {
     public AirlineEmployeeRepository() {
-        super("airline_employees.txt", AirlineEmployee.class);
+        super("airline_employees.json", AirlineEmployee.class);
     }
 
 }

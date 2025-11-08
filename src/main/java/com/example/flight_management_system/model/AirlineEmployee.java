@@ -6,6 +6,8 @@ public class AirlineEmployee extends Staff {
     private Role role;
     private List<FlightAssignment> flightAssigments;
     private String company;
+
+
     public AirlineEmployee(String id, String name, Role role, List<FlightAssignment> flightAssigments, String company) {
         super(id, name);
         this.role = role;

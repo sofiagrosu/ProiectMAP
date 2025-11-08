@@ -9,6 +9,6 @@ import java.util.ArrayList;
 @Repository
 public class LuggageRepository extends InFileRepository<Luggage>  {
     public LuggageRepository() {
-        super("luggages.txt", Luggage.class);
+        super("luggages.json", Luggage.class);
     }
 }

@@ -10,12 +10,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 public class InFileRepository < T extends BaseMethods> implements GenericRepository<T> {
 //implement method read from jasons and write to jason file in resources folder
 private final File file;
     private final ObjectMapper mapper;//(din Jackson) serializează obiecte Java în JSON.
     private List<T> items;
+    private Random random = new Random();
+    private int newId = random.nextInt(1, 100);
 
     public InFileRepository(String fileName, Class<T> type) {
         this.mapper = new ObjectMapper() .findAndRegisterModules()                // încarcă automat JavaTimeModule
@@ -36,16 +40,35 @@ private final File file;
             this.items = new ArrayList<>();
         }
     }
+    public void saveAll() {
+        if (items == null) return;
+
+        try {
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, this.items);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(" Error at opening the file: " + file.getName());
+        }
+    }
 
     @Override
     public void save(T item) {
-        items.add(item);
+
+        if (item.getId() == null) {
+            while (findById(String.valueOf(newId)) != null) {
+                newId = random.nextInt(1, 100);
+            }
+            item.setId(String.valueOf(newId));
+        }
+            items.add(item);
         try {
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, items);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        saveAll();
     }
+
 
 
     @Override
@@ -58,6 +81,8 @@ private final File file;
                 e.printStackTrace();
             }
         }
+        saveAll();
+
         return removed;
     }
 

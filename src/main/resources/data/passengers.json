@@ -1,0 +1,19 @@
+[ {
+  "id" : "p-1",
+  "name" : "Alice",
+  "currency" : "EUR",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-2",
+  "name" : "Bob",
+  "currency" : "USD",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-3",
+  "name" : "Charlie",
+  "currency" : "GBP",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+} ]

@@ -1,0 +1,16 @@
+[ {
+  "id" : "ae-1",
+  "name" : "Daniel Ops",
+  "department" : "Operations",
+  "designation" : "Gate Agent"
+}, {
+  "id" : "ae-2",
+  "name" : "Sophie Ground",
+  "department" : "Ground",
+  "designation" : "Loader"
+}, {
+  "id" : "ae-3",
+  "name" : "Mihai CheckIn",
+  "department" : "Customer Service",
+  "designation" : "Desk Agent"
+} ]
