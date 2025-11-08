@@ -18,7 +18,7 @@ private final File file;
 
     public InFileRepository(String fileName, Class<T> type) {
         this.mapper = new ObjectMapper();
-        this.file = new File("src/main/resources/" + fileName);
+        this.file = new File("src/main/resources/data/" + fileName);
 
         // dacă fișierul nu există sau e gol, creează listă goală
         if (file.exists() && file.length() > 0) {

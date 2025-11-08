@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class NoticeBoardRepository extends InMemoryRepo<NoticeBoard>  {
+public class NoticeBoardRepository extends InFileRepository<NoticeBoard>  {
 
+    public NoticeBoardRepository() {
+        super("notice_boards.json", NoticeBoard.class);
+    }
 }

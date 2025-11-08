@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class TicketRepository extends InMemoryRepo<Ticket>  {
+public class TicketRepository extends InFileRepository<Ticket>  {
 
+    public TicketRepository() {
+        super("tickets.json", Ticket.class);
+    }
 }

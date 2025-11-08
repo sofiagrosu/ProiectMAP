@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class FlightRepository extends InMemoryRepo<Flight> {
+public class FlightRepository extends InFileRepository<Flight> {
 
+    public FlightRepository() {
+        super("flights.json", Flight.class);
+    }
 }
