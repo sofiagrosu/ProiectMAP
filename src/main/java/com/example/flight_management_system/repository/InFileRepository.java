@@ -3,6 +3,7 @@ package com.example.flight_management_system.repository;
 
 import com.example.flight_management_system.model.BaseMethods;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.io.File;
@@ -17,7 +18,8 @@ private final File file;
     private List<T> items;
 
     public InFileRepository(String fileName, Class<T> type) {
-        this.mapper = new ObjectMapper();
+        this.mapper = new ObjectMapper() .findAndRegisterModules()                // încarcă automat JavaTimeModule
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // scrie "yyyy-MM-dd";
         this.file = new File("src/main/resources/data/" + fileName);
 
         // dacă fișierul nu există sau e gol, creează listă goală
