@@ -3,7 +3,7 @@ import java.util.List;
 
 import java.util.List;
 
-public class Airplane {
+public class Airplane implements BaseMethods {
     private String id;
     private int number;
     List<Flight> flights;
@@ -11,6 +11,10 @@ public class Airplane {
         this.id = id;
         this.number = number;
         this.flights = flights;
+    }
+    public Airplane() {
+        this.id = null;
+        this.number = 0;
     }
     public String getId() {
         return id;

@@ -8,6 +8,11 @@ public class AirportEmployee extends Staff {
         this.department = department;
         this.designation = designation;
     }
+    public AirportEmployee() {
+        super();
+        this.department = "";
+        this.designation = "";
+    }
     public String getDepartment() {
         return department;
     }

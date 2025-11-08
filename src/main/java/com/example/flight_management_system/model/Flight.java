@@ -2,7 +2,7 @@ package com.example.flight_management_system.model;
 
 import java.util.List;
 
-public class Flight {
+public class Flight implements BaseMethods{
     private String id;
     private String name;
     private String noticeBoardId;
@@ -19,6 +19,15 @@ public class Flight {
         this.name = name;
         this.noticeBoardId = noticeBoardId;
         this.airplaneId = airplaneId;
+        this.gateNumber = gateNumber;
+    }
+
+    public Flight() {
+        this. id = null;
+        this.name = "";
+        this.noticeBoardId = "";
+        this.airplaneId = "";
+        this.gateNumber = "";
     }
 
     public String getId() {
@@ -77,4 +86,3 @@ public class Flight {
         this.gateNumber = gateNumber;
     }
 }
-

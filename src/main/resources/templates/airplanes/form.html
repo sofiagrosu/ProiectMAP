@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Airplane</title></head>
+<body>
+<h1>Create Airplane</h1>
+<form th:action="@{/airplanes}" th:object="${airplane}" method="post">
+    <div><label>Number</label> <input th:field="*{number}" type="number" min="0" placeholder="e.g., 320"/></div>
+    <button type="submit">Save</button> <a th:href="@{/airplanes}">Back</a>
+</form>
+</body></html>

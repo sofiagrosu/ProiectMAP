@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Passenger</title></head>
+<body>
+<h1>Create Passenger</h1>
+<form th:action="@{/passengers}" th:object="${passenger}" method="post">
+    <div><label>Name</label> <input th:field="*{name}" placeholder="John Doe"/></div>
+    <div><label>Currency</label> <input th:field="*{currency}" placeholder="EUR"/></div>
+    <button type="submit">Save</button> <a th:href="@{/passengers}">Back</a>
+</form>
+</body></html>

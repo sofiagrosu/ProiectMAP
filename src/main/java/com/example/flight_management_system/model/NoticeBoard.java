@@ -3,7 +3,7 @@ package com.example.flight_management_system.model;
 import java.time.LocalDate;
 import java.util.List;
 
-public class NoticeBoard {
+public class NoticeBoard implements BaseMethods{
     private String id;
     LocalDate date;
     List<Flight> flightOfTheDay;
@@ -11,6 +11,11 @@ public class NoticeBoard {
     public NoticeBoard(String id, LocalDate date) {
         this.id = id;
         this.date = date;
+    }
+
+    public NoticeBoard(){
+        this.id = null;
+        this.date = LocalDate.now();
     }
 
     public String getId() {

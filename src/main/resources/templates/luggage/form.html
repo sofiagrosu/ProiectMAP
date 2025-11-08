@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Luggage</title>
+</head>
+<body>
+<h1>Add Luggage</h1>
+<form th:action="@{/luggage}" th:object="${luggage}" method="post">
+    <label>ID:</label>
+    <input type="text" th:field="*{id}" /><br>
+
+    <label>Ticket ID:</label>
+    <input type="text" th:field="*{ticketId}" /><br>
+
+    <label>Status:</label>
+    <input type="text" th:field="*{status}" /><br>
+
+    <button type="submit">Save</button>
+</form>
+<a th:href="@{/luggage}">Back to List</a>
+</body>
+</html>

@@ -2,7 +2,7 @@ package com.example.flight_management_system.model;
 
 import java.util.List;
 
-public class Ticket {
+public class Ticket implements BaseMethods{
     private String id;
     private String passengerId;
     private String flightId;
@@ -10,7 +10,13 @@ public class Ticket {
     private String seatNumber;
     private List<Luggage> luggages;
 
-    public Ticket() {}
+    public Ticket() {
+        this.id = null;
+        this.passengerId = "";
+        this.flightId = "";
+        this.price = 0;
+        this.seatNumber = "";
+    }
 
     public Ticket(String id, String passengerId, String flightId, double price, String seatNumber) {
         this.id = id;
@@ -19,6 +25,7 @@ public class Ticket {
         this.price = price;
         this.seatNumber = seatNumber;
     }
+
 
     public String getId(){
         return id;

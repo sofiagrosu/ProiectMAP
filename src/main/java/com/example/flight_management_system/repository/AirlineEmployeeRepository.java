@@ -6,34 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class AirlineEmployeeRepository implements GenericRepository<AirlineEmployee> {
-    private List<AirlineEmployee> airlineEmployeeList;
+public class AirlineEmployeeRepository extends InMemoryRepo<AirlineEmployee> {
 
-    public AirlineEmployeeRepository() {
-        this.airlineEmployeeList = new ArrayList<>();
-    }
-
-    @Override
-    public void save(AirlineEmployee item) {
-        airlineEmployeeList.add(item);
-    }
-
-    @Override
-    public boolean delete(AirlineEmployee item) {
-        return airlineEmployeeList.remove(item);
-
-    }
-    @Override
-    public Iterable<AirlineEmployee> findAll() {
-        return airlineEmployeeList;
-    }
-    @Override
-    public AirlineEmployee findById(String searchedId) {
-        for (AirlineEmployee employee : airlineEmployeeList) {
-            if (employee.getId().equals(searchedId)) {
-                return employee;
-            }
-        }
-        return null;
-    }
 }

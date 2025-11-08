@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Notice Board</title></head>
+<body>
+<h1>Create Notice Board</h1>
+<form th:action="@{/noticeboards}" th:object="${noticeboard}" method="post">
+    <div><label>Date</label> <input th:field="*{date}" type="date"/></div>
+    <button type="submit">Save</button> <a th:href="@{/noticeboards}">Back</a>
+</form>
+</body></html>

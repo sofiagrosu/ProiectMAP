@@ -7,34 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class FlightRepository implements GenericRepository<Flight>{
-    private List<Flight> flights  = new ArrayList<>();
-    private long nextId = 1;
+public class FlightRepository extends InMemoryRepo<Flight> {
 
-    @Override
-    public void save(Flight flight) {
-        if (flight.getId() == null) {                   //daca nu are id
-            flight.setId(String.valueOf(nextId));       //ii da unul nou
-            nextId++;
-        }
-        flights.add(flight);
-
-    }
-    @Override
-    public List<Flight> findAll() {
-        return new ArrayList<>(flights);                //returneaza o copie a listei flights
-    }
-    @Override
-    public Flight findById(String id) {
-        for (Flight flight : flights) {
-            if (flight.getId().equals(id)) {
-                return flight;
-            }
-        }
-        return null;
-    }
-    @Override
-    public boolean delete(Flight flight) {
-        return flights.remove(flight);
-    }
 }
