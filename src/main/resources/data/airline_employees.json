@@ -1,25 +1,23 @@
-[ {
-  "id" : "al-1",
-  "name" : "John Pilot",
-  "role" : "PILOT",
-  "flightAssigments" : [ ],
-  "company" : "BlueAir"
-}, {
-  "id" : "al-2",
-  "name" : "Anna Copilot",
-  "role" : "PILOT",
-  "flightAssigments" : [ ],
-  "company" : "WizzAir"
-}, {
-  "id" : "al-3",
-  "name" : "Marta Crew",
-  "role" : "PILOT",
-  "flightAssigments" : [ ],
-  "company" : "Ryanair"
-}, {
-  "id" : "20",
-  "name" : "TestFlight",
-  "role" : "PILOT",
-  "flightAssigments" : null,
-  "company" : "ASDF"
-} ]
+[
+  {
+    "id": "al-1",
+    "name": "John Pilot",
+    "role": "PILOT",
+    "flightAssigments": [],
+    "company": "BlueAir"
+  },
+  {
+    "id": "al-2",
+    "name": "Anna Copilot",
+    "role": "PILOT",
+    "flightAssigments": [],
+    "company": "WizzAir"
+  },
+  {
+    "id": "al-3",
+    "name": "Marta Crew",
+    "role": "PILOT",
+    "flightAssigments": [],
+    "company": "Ryanair"
+  }
+]

@@ -1,13 +1,52 @@
-[ {
-  "id" : "ap-101",
-  "number" : 101,
-  "flights" : [ ]
-}, {
-  "id" : "ap-202",
-  "number" : 202,
-  "flights" : [ ]
-}, {
-  "id" : "ap-303",
-  "number" : 303,
-  "flights" : [ ]
-} ]
+[
+  {
+    "id": "ap-101",
+    "number": 101,
+    "flights": []
+  },
+  {
+    "id": "ap-202",
+    "number": 202,
+    "flights": []
+  },
+  {
+    "id": "ap-303",
+    "number": 303,
+    "flights": []
+  },
+  {
+    "id": "ap-404",
+    "number": 404,
+    "flights": []
+  },
+  {
+    "id": "ap-505",
+    "number": 505,
+    "flights": []
+  },
+  {
+    "id": "ap-606",
+    "number": 606,
+    "flights": []
+  },
+  {
+    "id": "ap-707",
+    "number": 707,
+    "flights": []
+  },
+  {
+    "id": "ap-808",
+    "number": 808,
+    "flights": []
+  },
+  {
+    "id": "ap-909",
+    "number": 909,
+    "flights": []
+  },
+  {
+    "id": "ap-1010",
+    "number": 1010,
+    "flights": []
+  }
+]

@@ -1,16 +1,62 @@
-[ {
-  "id" : "fa-1",
-  "flightId" : "fl-101",
-  "staffId" : "al-1",
-  "assigmentDate" : "2025-11-08"
-}, {
-  "id" : "fa-2",
-  "flightId" : "fl-202",
-  "staffId" : "al-2",
-  "assigmentDate" : "2025-11-09"
-}, {
-  "id" : "fa-3",
-  "flightId" : "fl-303",
-  "staffId" : "al-3",
-  "assigmentDate" : "2025-11-10"
-} ]
+[
+  {
+    "id": "fa-1",
+    "flightId": "fl-101",
+    "staffId": "al-1",
+    "assigmentDate": "2025-11-08"
+  },
+  {
+    "id": "fa-2",
+    "flightId": "fl-202",
+    "staffId": "al-2",
+    "assigmentDate": "2025-11-09"
+  },
+  {
+    "id": "fa-3",
+    "flightId": "fl-303",
+    "staffId": "al-3",
+    "assigmentDate": "2025-11-10"
+  },
+  {
+    "id": "fa-4",
+    "flightId": "fl-404",
+    "staffId": "al-4",
+    "assigmentDate": "2025-11-11"
+  },
+  {
+    "id": "fa-5",
+    "flightId": "fl-505",
+    "staffId": "al-5",
+    "assigmentDate": "2025-11-12"
+  },
+  {
+    "id": "fa-6",
+    "flightId": "fl-606",
+    "staffId": "al-6",
+    "assigmentDate": "2025-11-13"
+  },
+  {
+    "id": "fa-7",
+    "flightId": "fl-707",
+    "staffId": "al-7",
+    "assigmentDate": "2025-11-14"
+  },
+  {
+    "id": "fa-8",
+    "flightId": "fl-808",
+    "staffId": "al-8",
+    "assigmentDate": "2025-11-15"
+  },
+  {
+    "id": "fa-9",
+    "flightId": "fl-909",
+    "staffId": "al-9",
+    "assigmentDate": "2025-11-16"
+  },
+  {
+    "id": "fa-10",
+    "flightId": "fl-1010",
+    "staffId": "al-10",
+    "assigmentDate": "2025-11-17"
+  }
+]

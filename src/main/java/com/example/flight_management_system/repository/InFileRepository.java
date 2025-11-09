@@ -14,16 +14,16 @@ import java.util.Random;
 
 
 public class InFileRepository < T extends BaseMethods> implements GenericRepository<T> {
-//implement method read from jasons and write to jason file in resources folder
-private final File file;
-    private final ObjectMapper mapper;//(din Jackson) serializează obiecte Java în JSON.
-    private List<T> items;
+
+    private final File file;
+    private final ObjectMapper mapper;  //obiect din biblioteca Jackson, folosit pentru conversia intre obiecte Java-Jason
+    private List<T> items;              //lista de obiecte incarcat din fisier
     private Random random = new Random();
     private int newId = random.nextInt(1, 100);
 
     public InFileRepository(String fileName, Class<T> type) {
-        this.mapper = new ObjectMapper() .findAndRegisterModules()                // încarcă automat JavaTimeModule
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // scrie "yyyy-MM-dd";
+        this.mapper = new ObjectMapper() .findAndRegisterModules()
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         this.file = new File("src/main/resources/data/" + fileName);
 
         // dacă fișierul nu există sau e gol, creează listă goală
@@ -53,22 +53,17 @@ private final File file;
 
     @Override
     public void save(T item) {
+        if (item.getId() == null || item.getId().isEmpty()) {
+            String newId;
+            do {
+                newId = generateIdForType(item.getClass());
+            } while (findById(newId) != null);
+            item.setId(newId);
+        }
 
-        if (item.getId() == null) {
-            while (findById(String.valueOf(newId)) != null) {
-                newId = random.nextInt(1, 100);
-            }
-            item.setId(String.valueOf(newId));
-        }
-            items.add(item);
-        try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, items);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        items.add(item);
         saveAll();
     }
-
 
 
     @Override
@@ -100,6 +95,46 @@ private final File file;
             }
         }
         return null;
+    }
+
+    private String generateIdForType(Class<?> type) {
+        String prefix;
+
+        switch (type.getSimpleName().toLowerCase()) {
+            case "flight":
+                prefix = "fl";
+                break;
+            case "luggage":
+                prefix = "lg";
+                break;
+            case "noticeboard":
+                prefix = "nb";
+                break;
+            case "airlineemployee":
+                prefix = "ae";
+                break;
+            case "airportemployee":
+                prefix = "ape";
+                break;
+            case "passenger":
+                prefix = "ps";
+                break;
+            case "ticket":
+                prefix = "tk";
+                break;
+            case "flightassignment":
+                prefix = "fa";
+                break;
+            case "airplane":
+                prefix = "ap";
+                break;
+            default:
+                prefix = "id";
+                break;
+        }
+
+        int number = random.nextInt(100, 9999);
+        return prefix + "-" + number;
     }
 
 }
