@@ -7,6 +7,6 @@ public interface GenericRepository<T> {
     public boolean delete(T item);
     public List<T> findAll();
     public T findById(String id);
-
+    void update(T item);
 
 }

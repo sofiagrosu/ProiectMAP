@@ -1,11 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Airport Employee</title></head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Airport Employee Form</title>
+</head>
 <body>
-<h1>Create Airport Employee</h1>
-<form th:action="@{/airport-employees}" th:object="${airportEmployee}" method="post">
-    <div><label>Name</label> <input th:field="*{name}" placeholder="Alex Pop"/></div>
-    <div><label>Designation</label> <input th:field="*{designation}" placeholder="Gate Agent"/></div>
-    <div><label>Department</label> <input th:field="*{department}" placeholder="Ops"/></div>
-    <button type="submit">Save</button> <a th:href="@{/airport-employees}">Back</a>
+<h1 th:text="${airportEmployee.id == null} ? 'Create Airport Employee' : 'Edit Airport Employee'"></h1>
+
+<form th:action="@{${airportEmployee.id == null} ? '/airport-employees' : '/airport-employees/' + ${airportEmployee.id} + '/edit'}"
+      th:object="${airportEmployee}"
+      method="post">
+
+    <div>
+        <label>Name</label>
+        <input th:field="*{name}" placeholder="Alex Pop"/>
+    </div>
+
+    <div>
+        <label>Designation</label>
+        <input th:field="*{designation}" placeholder="Gate Agent"/>
+    </div>
+
+    <div>
+        <label>Department</label>
+        <input th:field="*{department}" placeholder="Ops"/>
+    </div>
+
+    <div style="margin-top:10px;">
+        <button type="submit" th:text="${airportEmployee.id == null} ? 'Save' : 'Update'"></button>
+        <a th:href="@{/airport-employees}">Back</a>
+    </div>
+
 </form>
-</body></html>
+</body>
+</html>

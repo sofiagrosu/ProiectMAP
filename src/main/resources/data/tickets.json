@@ -1,82 +1,71 @@
-[
-  {
-    "id": "t-1",
-    "passengerId": "p-1",
-    "flightId": "fl-101",
-    "price": 120.5,
-    "seatNumber": "12A",
-    "luggages": []
-  },
-  {
-    "id": "t-2",
-    "passengerId": "p-2",
-    "flightId": "fl-202",
-    "price": 99.99,
-    "seatNumber": "14C",
-    "luggages": []
-  },
-  {
-    "id": "t-3",
-    "passengerId": "p-3",
-    "flightId": "fl-303",
-    "price": 150.0,
-    "seatNumber": "16B",
-    "luggages": []
-  },
-  {
-    "id": "t-4",
-    "passengerId": "p-4",
-    "flightId": "fl-404",
-    "price": 180.75,
-    "seatNumber": "11D",
-    "luggages": []
-  },
-  {
-    "id": "t-5",
-    "passengerId": "p-5",
-    "flightId": "fl-505",
-    "price": 130.25,
-    "seatNumber": "15A",
-    "luggages": []
-  },
-  {
-    "id": "t-6",
-    "passengerId": "p-6",
-    "flightId": "fl-606",
-    "price": 110.0,
-    "seatNumber": "18C",
-    "luggages": []
-  },
-  {
-    "id": "t-7",
-    "passengerId": "p-7",
-    "flightId": "fl-707",
-    "price": 200.0,
-    "seatNumber": "10B",
-    "luggages": []
-  },
-  {
-    "id": "t-8",
-    "passengerId": "p-8",
-    "flightId": "fl-808",
-    "price": 175.5,
-    "seatNumber": "13F",
-    "luggages": []
-  },
-  {
-    "id": "t-9",
-    "passengerId": "p-9",
-    "flightId": "fl-909",
-    "price": 95.0,
-    "seatNumber": "17D",
-    "luggages": []
-  },
-  {
-    "id": "t-10",
-    "passengerId": "p-10",
-    "flightId": "fl-1010",
-    "price": 145.25,
-    "seatNumber": "19A",
-    "luggages": []
-  }
-]
+[ {
+  "id" : "t-1",
+  "passengerId" : "p-1",
+  "flightId" : "fl-101",
+  "price" : 120.5,
+  "seatNumber" : "12A",
+  "luggages" : [ ]
+}, {
+  "id" : "t-2",
+  "passengerId" : "p-2",
+  "flightId" : "fl-202",
+  "price" : 99.99,
+  "seatNumber" : "14C",
+  "luggages" : [ ]
+}, {
+  "id" : "t-3",
+  "passengerId" : "p-3",
+  "flightId" : "fl-303",
+  "price" : 150.0,
+  "seatNumber" : "16B",
+  "luggages" : [ ]
+}, {
+  "id" : "t-4",
+  "passengerId" : "p-4",
+  "flightId" : "fl-404",
+  "price" : 180.75,
+  "seatNumber" : "11D",
+  "luggages" : [ ]
+}, {
+  "id" : "t-5",
+  "passengerId" : "p-5",
+  "flightId" : "fl-505",
+  "price" : 130.25,
+  "seatNumber" : "15A",
+  "luggages" : [ ]
+}, {
+  "id" : "t-6",
+  "passengerId" : "p-6",
+  "flightId" : "fl-606",
+  "price" : 110.0,
+  "seatNumber" : "18C",
+  "luggages" : [ ]
+}, {
+  "id" : "t-7",
+  "passengerId" : "p-7",
+  "flightId" : "fl-707",
+  "price" : 200.0,
+  "seatNumber" : "10B",
+  "luggages" : [ ]
+}, {
+  "id" : "t-8",
+  "passengerId" : "p-8",
+  "flightId" : "fl-808",
+  "price" : 175.5,
+  "seatNumber" : "13F",
+  "luggages" : [ ]
+}, {
+  "id" : "t-9",
+  "passengerId" : "p-9",
+  "flightId" : "fl-909",
+  "price" : 95.0,
+  "seatNumber" : "17D",
+  "luggages" : [ ]
+}, {
+  "id" : "t-10",
+  "passengerId" : "p-10",
+  "flightId" : "fl-1010",
+  "price" : 145.25,
+  "seatNumber" : "19B",
+  "luggages" : null
+} ]

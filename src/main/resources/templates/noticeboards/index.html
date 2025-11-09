@@ -7,8 +7,7 @@
 <body>
 <h1>Notice Boards</h1>
 
-<a th:href="@{/noticeboards/new}">Add notice board</a>
-<br/><br/>
+<a th:href="@{/noticeboards/new}">Add Notice Board</a><br/><br/>
 
 <table border="1" cellpadding="6" cellspacing="0">
     <thead>
@@ -23,7 +22,11 @@
         <td th:text="${n.id}">ID</td>
         <td th:text="${n.date}">2025-11-02</td>
         <td>
-            <form th:action="@{'/noticeboards/' + ${n.id} + '/delete'}" method="post">
+            <!-- Link pentru editare -->
+            <a th:href="@{'/noticeboards/' + ${n.id} + '/edit'}">Edit</a>
+
+            <!-- Formular pentru stergere -->
+            <form th:action="@{'/noticeboards/' + ${n.id} + '/delete'}" method="post" style="display:inline">
                 <button type="submit">Delete</button>
             </form>
         </td>

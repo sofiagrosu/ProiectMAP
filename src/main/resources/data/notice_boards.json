@@ -1,52 +1,41 @@
-[
-  {
-    "id": "nb-1",
-    "date": "2025-11-02",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-2",
-    "date": "2025-11-03",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-3",
-    "date": "2025-12-10",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-4",
-    "date": "2025-12-15",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-5",
-    "date": "2025-12-20",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-6",
-    "date": "2025-12-24",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-7",
-    "date": "2025-12-31",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-8",
-    "date": "2026-01-05",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-9",
-    "date": "2026-01-10",
-    "flightOfTheDay": []
-  },
-  {
-    "id": "nb-10",
-    "date": "2026-01-15",
-    "flightOfTheDay": []
-  }
-]
+[ {
+  "id" : "nb-1",
+  "date" : "2025-11-02",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-2",
+  "date" : "2025-11-03",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-3",
+  "date" : "2025-12-10",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-4",
+  "date" : "2025-12-15",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-5",
+  "date" : "2025-12-20",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-6",
+  "date" : "2025-12-24",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-7",
+  "date" : "2025-12-31",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-8",
+  "date" : "2026-01-05",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-9",
+  "date" : "2026-01-10",
+  "flightOfTheDay" : [ ]
+}, {
+  "id" : "nb-10",
+  "date" : "2025-11-12",
+  "flightOfTheDay" : null
+} ]

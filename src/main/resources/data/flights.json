@@ -1,92 +1,81 @@
-[
-  {
-    "id": "fl-101",
-    "name": "Flight 101",
-    "noticeBoardId": "nb-1",
-    "airplaneId": "ap-101",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "A1"
-  },
-  {
-    "id": "fl-202",
-    "name": "Flight 202",
-    "noticeBoardId": "nb-2",
-    "airplaneId": "ap-202",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "A2"
-  },
-  {
-    "id": "fl-303",
-    "name": "Flight 303",
-    "noticeBoardId": "nb-3",
-    "airplaneId": "ap-303",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "B1"
-  },
-  {
-    "id": "fl-404",
-    "name": "Flight 404",
-    "noticeBoardId": "nb-4",
-    "airplaneId": "ap-404",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "B2"
-  },
-  {
-    "id": "fl-505",
-    "name": "Flight 505",
-    "noticeBoardId": "nb-5",
-    "airplaneId": "ap-505",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "C1"
-  },
-  {
-    "id": "fl-606",
-    "name": "Flight 606",
-    "noticeBoardId": "nb-6",
-    "airplaneId": "ap-606",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "C2"
-  },
-  {
-    "id": "fl-707",
-    "name": "Flight 707",
-    "noticeBoardId": "nb-7",
-    "airplaneId": "ap-707",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "D1"
-  },
-  {
-    "id": "fl-808",
-    "name": "Flight 808",
-    "noticeBoardId": "nb-8",
-    "airplaneId": "ap-808",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "D2"
-  },
-  {
-    "id": "fl-909",
-    "name": "Flight 909",
-    "noticeBoardId": "nb-9",
-    "airplaneId": "ap-909",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "E1"
-  },
-  {
-    "id": "fl-1010",
-    "name": "Flight 1010",
-    "noticeBoardId": "nb-10",
-    "airplaneId": "ap-1010",
-    "tickets": [],
-    "flightAssignments": [],
-    "gateNumber": "E2"
-  }
-]
+[ {
+  "id" : "fl-101",
+  "name" : "Flight 101",
+  "noticeBoardId" : "nb-1",
+  "airplaneId" : "ap-101",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "A1"
+}, {
+  "id" : "fl-202",
+  "name" : "Flight 202",
+  "noticeBoardId" : "nb-2",
+  "airplaneId" : "ap-202",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "A2"
+}, {
+  "id" : "fl-303",
+  "name" : "Flight 303",
+  "noticeBoardId" : "nb-3",
+  "airplaneId" : "ap-303",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "B1"
+}, {
+  "id" : "fl-404",
+  "name" : "Flight 404",
+  "noticeBoardId" : "nb-4",
+  "airplaneId" : "ap-404",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "B2"
+}, {
+  "id" : "fl-505",
+  "name" : "Flight 505",
+  "noticeBoardId" : "nb-5",
+  "airplaneId" : "ap-505",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "C1"
+}, {
+  "id" : "fl-606",
+  "name" : "Flight 606",
+  "noticeBoardId" : "nb-6",
+  "airplaneId" : "ap-606",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "C2"
+}, {
+  "id" : "fl-707",
+  "name" : "Flight 707",
+  "noticeBoardId" : "nb-7",
+  "airplaneId" : "ap-707",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "D1"
+}, {
+  "id" : "fl-808",
+  "name" : "Flight 808",
+  "noticeBoardId" : "nb-8",
+  "airplaneId" : "ap-808",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "D2"
+}, {
+  "id" : "fl-909",
+  "name" : "Flight 909",
+  "noticeBoardId" : "nb-9",
+  "airplaneId" : "ap-909",
+  "tickets" : [ ],
+  "flightAssignments" : [ ],
+  "gateNumber" : "E1"
+}, {
+  "id" : "fl-1010",
+  "name" : "Flight 1010",
+  "noticeBoardId" : "nb-9",
+  "airplaneId" : "ap-1010",
+  "tickets" : null,
+  "flightAssignments" : null,
+  "gateNumber" : "E9"
+} ]

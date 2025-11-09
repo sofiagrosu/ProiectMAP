@@ -1,72 +1,61 @@
-[
-  {
-    "id": "p-1",
-    "name": "Alice",
-    "currency": "EUR",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-2",
-    "name": "Bob",
-    "currency": "USD",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-3",
-    "name": "Charlie",
-    "currency": "GBP",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-4",
-    "name": "Diana",
-    "currency": "EUR",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-5",
-    "name": "Ethan",
-    "currency": "USD",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-6",
-    "name": "Fiona",
-    "currency": "GBP",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-7",
-    "name": "George",
-    "currency": "EUR",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-8",
-    "name": "Hannah",
-    "currency": "USD",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-9",
-    "name": "Ian",
-    "currency": "CAD",
-    "tickets": [],
-    "isCheckedIn": false
-  },
-  {
-    "id": "p-10",
-    "name": "Julia",
-    "currency": "AUD",
-    "tickets": [],
-    "isCheckedIn": false
-  }
-]
+[ {
+  "id" : "p-1",
+  "name" : "Alice",
+  "currency" : "EUR",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-2",
+  "name" : "Bob",
+  "currency" : "USD",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-3",
+  "name" : "Charlie",
+  "currency" : "GBP",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-4",
+  "name" : "Diana",
+  "currency" : "EUR",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-5",
+  "name" : "Ethan",
+  "currency" : "USD",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-6",
+  "name" : "Fiona",
+  "currency" : "GBP",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-7",
+  "name" : "George",
+  "currency" : "EUR",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-8",
+  "name" : "Hannah",
+  "currency" : "USD",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-9",
+  "name" : "Ian",
+  "currency" : "CAD",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+}, {
+  "id" : "p-10",
+  "name" : "Julia",
+  "currency" : "RON",
+  "tickets" : [ ],
+  "isCheckedIn" : false
+} ]

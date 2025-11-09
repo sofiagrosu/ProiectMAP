@@ -1,18 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>Airplanes</title></head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Airplanes</title>
+</head>
 <body>
 <h1>Airplanes</h1>
+
+<!-- Link pentru a crea un nou avion -->
 <a th:href="@{/airplanes/new}">Add airplane</a><br/><br/>
+
+<!-- Tabel cu toate avioanele -->
 <table border="1" cellpadding="6" cellspacing="0">
-    <thead><tr><th>ID</th><th>Number</th><th>Actions</th></tr></thead>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Number</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
     <tbody>
+    <!-- Iterare prin lista de avioane din model -->
     <tr th:each="a : ${airplanes}">
         <td th:text="${a.id}">ID</td>
         <td th:text="${a.number}">123</td>
         <td>
-            <form th:action="@{'/airplanes/' + ${a.id} + '/delete'}" method="post"><button type="submit">Delete</button></form>
+            <!-- Link pentru editare -->
+            <a th:href="@{'/airplanes/' + ${a.id} + '/edit'}">Edit</a>
+
+            <!-- Formular pentru stergere -->
+            <form th:action="@{'/airplanes/' + ${a.id} + '/delete'}" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
         </td>
     </tr>
     </tbody>
 </table>
-</body></html>
+</body>
+</html>

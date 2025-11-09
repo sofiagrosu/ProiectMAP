@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>New Assignment</title></head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Flight Assignment Form</title>
+</head>
 <body>
-<h1>Create Flight Assignment</h1>
-<form th:action="@{/flight-assignments}" th:object="${assignment}" method="post">
-    <div><label>Flight Id</label> <input th:field="*{flightId}" placeholder="F-1"/></div>
-    <div><label>Staff Id</label> <input th:field="*{staffId}" placeholder="S-1"/></div>
-    <button type="submit">Save</button> <a th:href="@{/flight-assignments}">Back</a>
+<h1 th:text="${assignment.id == null} ? 'Create Flight Assignment' : 'Edit Flight Assignment'"></h1>
+
+<form th:action="@{${assignment.id == null} ? '/flight-assignments' : '/flight-assignments/' + ${assignment.id} + '/edit'}"
+      th:object="${assignment}"
+      method="post">
+
+    <div>
+        <label>Flight Id</label>
+        <input th:field="*{flightId}" placeholder="F-1"/>
+    </div>
+
+    <div>
+        <label>Staff Id</label>
+        <input th:field="*{staffId}" placeholder="S-1"/>
+    </div>
+
+    <div style="margin-top:10px;">
+        <button type="submit" th:text="${assignment.id == null} ? 'Save' : 'Update'"></button>
+        <a th:href="@{/flight-assignments}">Back</a>
+    </div>
+
 </form>
-</body></html>
+</body>
+</html>

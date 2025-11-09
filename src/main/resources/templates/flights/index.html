@@ -5,8 +5,11 @@
 </head>
 <body>
 <h1>Flights</h1>
-<a th:href="@{/flights/new}">Add new flight</a>
-<table border="1">
+
+<a th:href="@{/flights/new}">Add new flight</a><br/><br/>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -14,17 +17,24 @@
         <th>Gate</th>
         <th>Actions</th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="flight : ${flights}">
-        <td th:text="${flight.id}"></td>
-        <td th:text="${flight.name}"></td>
-        <td th:text="${flight.airplaneId}"></td>
-        <td th:text="${flight.gateNumber}"></td>
+        <td th:text="${flight.id}">ID</td>
+        <td th:text="${flight.name}">Flight Name</td>
+        <td th:text="${flight.airplaneId}">Airplane</td>
+        <td th:text="${flight.gateNumber}">Gate</td>
         <td>
-            <form th:action="@{'/flights/' + ${flight.id} + '/delete'}" method="post">
+            <!-- Link pentru editare -->
+            <a th:href="@{'/flights/' + ${flight.id} + '/edit'}">Edit</a>
+
+            <!-- Formular pentru stergere -->
+            <form th:action="@{'/flights/' + ${flight.id} + '/delete'}" method="post" style="display:inline">
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
+    </tbody>
 </table>
 </body>
 </html>

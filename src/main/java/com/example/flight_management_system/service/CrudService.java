@@ -35,4 +35,14 @@ public class CrudService<T extends BaseMethods> {
     public boolean delete(T item) {
         return repository.delete(item);
     }
+
+    public void update(T entity) {
+        T existing = repository.findById(entity.getId());
+        if (existing != null) {
+            repository.delete(existing);
+            repository.save(entity);
+        }
+    }
+
+
 }

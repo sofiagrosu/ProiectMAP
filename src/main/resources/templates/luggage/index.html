@@ -5,8 +5,10 @@
 </head>
 <body>
 <h1>Luggage List</h1>
-<a th:href="@{/luggage/new}">Add New Luggage</a>
-<table border="1">
+
+<a th:href="@{/luggage/new}">Add New Luggage</a><br/><br/>
+
+<table border="1" cellpadding="6" cellspacing="0">
     <thead>
     <tr>
         <th>ID</th>
@@ -16,12 +18,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="luggage : ${luggageList}">
-        <td th:text="${luggage.id}"></td>
-        <td th:text="${luggage.ticketId}"></td>
-        <td th:text="${luggage.status}"></td>
+    <tr th:each="l : ${luggageList}">
+        <td th:text="${l.id}">LG-123</td>
+        <td th:text="${l.ticketId}">T-001</td>
+        <td th:text="${l.status}">Checked</td>
         <td>
-            <form th:action="@{'/luggage/' + ${luggage.id} + '/delete'}" method="post" style="display:inline">
+            <!-- Link pentru editare -->
+            <a th:href="@{'/luggage/' + ${l.id} + '/edit'}">Edit</a>
+
+            <!-- Formular pentru stergere -->
+            <form th:action="@{'/luggage/' + ${l.id} + '/delete'}" method="post" style="display:inline">
                 <button type="submit">Delete</button>
             </form>
         </td>

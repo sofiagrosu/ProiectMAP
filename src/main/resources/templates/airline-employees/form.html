@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>New Airline Employee</title>
+    <title th:text="${airlineEmployee.id != null} ? 'Edit Airline Employee' : 'New Airline Employee'">Airline Employee</title>
 </head>
 <body>
-<h1>Create Airline Employee</h1>
+<h1 th:text="${airlineEmployee.id != null} ? 'Edit Airline Employee' : 'Create Airline Employee'">Create Airline Employee</h1>
 
-<form th:action="@{/airline-employees}" th:object="${airlineEmployee}" method="post">
+<form th:action="${airlineEmployee.id != null} ? @{/airline-employees/{id}/edit(id=${airlineEmployee.id})} : @{/airline-employees}"
+      th:object="${airlineEmployee}"
+      method="post">
 
     <div>
         <label>Name</label>
@@ -30,7 +32,7 @@
     </div>
 
     <div style="margin-top:10px;">
-        <button type="submit">Save</button>
+        <button type="submit" th:text="${airlineEmployee.id != null} ? 'Update' : 'Save'">Save</button>
         <a th:href="@{/airline-employees}">Back</a>
     </div>
 

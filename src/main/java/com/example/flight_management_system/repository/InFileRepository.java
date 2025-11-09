@@ -19,11 +19,12 @@ public class InFileRepository < T extends BaseMethods> implements GenericReposit
     private final ObjectMapper mapper;  //obiect din biblioteca Jackson, folosit pentru conversia intre obiecte Java-Jason
     private List<T> items;              //lista de obiecte incarcat din fisier
     private Random random = new Random();
-    private int newId = random.nextInt(1, 100);
+    //private int newId = random.nextInt(1, 100);
 
     public InFileRepository(String fileName, Class<T> type) {
         this.mapper = new ObjectMapper() .findAndRegisterModules()
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); //dezactiveaza salvarea datei ca numar
+
         this.file = new File("src/main/resources/data/" + fileName);
 
         // dacă fișierul nu există sau e gol, creează listă goală
@@ -40,6 +41,8 @@ public class InFileRepository < T extends BaseMethods> implements GenericReposit
             this.items = new ArrayList<>();
         }
     }
+
+
     public void saveAll() {
         if (items == null) return;
 
@@ -111,10 +114,10 @@ public class InFileRepository < T extends BaseMethods> implements GenericReposit
                 prefix = "nb";
                 break;
             case "airlineemployee":
-                prefix = "ae";
+                prefix = "al";
                 break;
             case "airportemployee":
-                prefix = "ape";
+                prefix = "ae";
                 break;
             case "passenger":
                 prefix = "ps";
@@ -136,5 +139,18 @@ public class InFileRepository < T extends BaseMethods> implements GenericReposit
         int number = random.nextInt(100, 9999);
         return prefix + "-" + number;
     }
+
+    @Override
+    public void update(T item) {
+        T existing = findById(item.getId());
+        if (existing != null) {
+            int index = items.indexOf(existing);
+            items.set(index, item);
+            saveAll();
+        } else {
+            throw new RuntimeException("The object with the id " + item.getId() + " does not exist.");
+        }
+    }
+
 
 }

@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Flight</title>
+    <title>Flight Form</title>
 </head>
 <body>
-<h1>Add a new Flight</h1>
-<form th:action="@{/flights}" th:object="${flight}" method="post">
-    <label>Name: <input type="text" th:field="*{name}" /></label><br/>
-    <label>NoticeBoardId: <input type="text" th:field="*{noticeBoardId}" /></label><br/>
-    <label>AirplaneId: <input type="text" th:field="*{airplaneId}" /></label><br/>
-    <label>Gate Number: <input type="text" th:field="*{gateNumber}" /></label><br/>
-    <button type="submit">Save</button>
+<h1 th:text="${flight.id == null} ? 'Add a new Flight' : 'Edit Flight'"></h1>
+
+<form th:action="@{${flight.id == null} ? '/flights' : '/flights/' + ${flight.id} + '/edit'}"
+      th:object="${flight}"
+      method="post">
+
+    <div>
+        <label>Name: <input type="text" th:field="*{name}" /></label>
+    </div>
+
+    <div>
+        <label>NoticeBoardId: <input type="text" th:field="*{noticeBoardId}" /></label>
+    </div>
+
+    <div>
+        <label>AirplaneId: <input type="text" th:field="*{airplaneId}" /></label>
+    </div>
+
+    <div>
+        <label>Gate Number: <input type="text" th:field="*{gateNumber}" /></label>
+    </div>
+
+    <div style="margin-top:10px;">
+        <button type="submit" th:text="${flight.id == null} ? 'Save' : 'Update'"></button>
+        <a th:href="@{/flights}">Back</a>
+    </div>
+
 </form>
-<a th:href="@{/flights}">Back to list</a>
 </body>
 </html>

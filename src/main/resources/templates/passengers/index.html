@@ -1,19 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"><head><meta charset="UTF-8"/><title>Passengers</title></head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Passengers</title>
+</head>
 <body>
 <h1>Passengers</h1>
+
 <a th:href="@{/passengers/new}">Add passenger</a><br/><br/>
+
 <table border="1" cellpadding="6" cellspacing="0">
-    <thead><tr><th>ID</th><th>Name</th><th>Currency</th><th>Actions</th></tr></thead>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Currency</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
     <tbody>
     <tr th:each="p : ${passengers}">
         <td th:text="${p.id}">ID</td>
         <td th:text="${p.name}">John Doe</td>
         <td th:text="${p.currency}">EUR</td>
         <td>
-            <form th:action="@{'/passengers/' + ${p.id} + '/delete'}" method="post"><button type="submit">Delete</button></form>
+            <!-- Link pentru editare -->
+            <a th:href="@{'/passengers/' + ${p.id} + '/edit'}">Edit</a>
+
+            <!-- Formular pentru stergere -->
+            <form th:action="@{'/passengers/' + ${p.id} + '/delete'}" method="post" style="display:inline">
+                <button type="submit">Delete</button>
+            </form>
         </td>
     </tr>
     </tbody>
 </table>
-</body></html>
+</body>
+</html>

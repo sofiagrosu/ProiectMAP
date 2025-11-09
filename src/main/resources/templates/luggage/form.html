@@ -2,12 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Luggage</title>
+    <title>Luggage Form</title>
 </head>
 <body>
-<h1>Add Luggage</h1>
+<h1 th:text="${luggage.id == null} ? 'Add Luggage' : 'Edit Luggage'"></h1>
 
-<form th:action="@{/luggage}" th:object="${luggage}" method="post">
+<form th:action="@{${luggage.id == null} ? '/luggage' : '/luggage/' + ${luggage.id} + '/edit'}"
+      th:object="${luggage}"
+      method="post">
 
     <div>
         <label>ID:</label>
@@ -30,10 +32,10 @@
     </div>
 
     <div style="margin-top:10px;">
-        <button type="submit">Save</button>
+        <button type="submit" th:text="${luggage.id == null} ? 'Save' : 'Update'"></button>
         <a th:href="@{/luggage}">Back to List</a>
     </div>
-</form>
 
+</form>
 </body>
 </html>

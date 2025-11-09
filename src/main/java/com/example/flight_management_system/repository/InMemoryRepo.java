@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class InMemoryRepo < T extends BaseMethods> implements GenericRepository<T>{
+public class InMemoryRepo < T extends BaseMethods> implements GenericRepository<T> {
     private List<T> storedList = new ArrayList<>();
     private int nextId = 1;
 
@@ -36,8 +36,20 @@ public class InMemoryRepo < T extends BaseMethods> implements GenericRepository<
         }
         return null;
     }
+
     @Override
     public boolean delete(T item) {
         return storedList.remove(item);
+    }
+
+    @Override
+    public void update(T item) {
+        for (int i = 0; i < storedList.size(); i++) {
+            if (storedList.get(i).getId().equals(item.getId())) {
+                storedList.set(i, item);
+                return;
+            }
+        }
+
     }
 }
