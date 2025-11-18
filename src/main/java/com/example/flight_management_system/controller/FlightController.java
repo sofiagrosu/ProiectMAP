@@ -26,4 +26,5 @@ public class FlightController extends AbstractCrudController<Flight> {
         service.save(flight);
         return "redirect:/flights";
     }
+
 }

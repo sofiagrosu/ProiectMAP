@@ -83,4 +83,5 @@ public abstract class AbstractCrudController<T extends BaseMethods> {
         service.update(entity); // apelează metoda de update din CrudService
         return "redirect:" + basePath;
     }
+
 }
