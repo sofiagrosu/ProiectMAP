@@ -16,10 +16,9 @@ public class Passenger implements BaseMethods {
     private String id;
     private String name;
     private String currency;
-    private List<Ticket> tickets;
-
-    //punctul 5- adaugarea de atribute noi
-    @JsonProperty("isCheckedIn")
+  @OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets = new ArrayList<>();
+  @JsonProperty("isCheckedIn")
     private boolean isCheckedIn;
 
     public Passenger() {

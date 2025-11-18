@@ -1,5 +1,6 @@
 package com.example.flight_management_system.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,24 +10,27 @@ import jakarta.persistence.*;
 public class Ticket implements BaseMethods{
     @Id
     private String id;
-    private String passengerId;
-    private String flightId;
     private double price;
     private String seatNumber;
-    private List<Luggage> luggages;
+    @ManyToOne
+    @JoinColumn(name = "passengerId")
+    private Passenger passenger;
+
+    @ManyToOne
+    @JoinColumn(name = "flightId")
+    private Flight flight;
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Luggage> luggages = new ArrayList<>();
 
     public Ticket() {
         this.id = null;
-        this.passengerId = "";
-        this.flightId = "";
         this.price = 0;
         this.seatNumber = "";
     }
 
     public Ticket( String passengerId, String flightId, double price, String seatNumber) {
         this.id = UUID.randomUUID().toString();;
-        this.passengerId = passengerId;
-        this.flightId = flightId;
         this.price = price;
         this.seatNumber = seatNumber;
     }
@@ -41,20 +45,20 @@ public class Ticket implements BaseMethods{
     }
 
     public String getPassengerId() {
-        return passengerId;
+        return passenger.getId();
     }
 
-    public void setPassengerId(String passengerId) {
-        this.passengerId = passengerId;
-    }
-
-    public String getFlightId() {
-        return flightId;
-    }
-
-    public void setFlightId(String flightId) {
-        this.flightId = flightId;
-    }
+//    public void setPassengerId(Passenger passenger) {
+//        this.passenger= passengerId;
+//    }
+//
+//    public String getFlightId() {
+//        return flightId;
+//    }
+//
+//    public void setFlightId(String flightId) {
+//        this.flightId = flightId;
+//    }
 
     public double getPrice() {
         return price;

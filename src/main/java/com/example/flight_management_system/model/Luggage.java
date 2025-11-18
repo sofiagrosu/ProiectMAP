@@ -7,18 +7,18 @@ import java.util.UUID;
 public class Luggage implements BaseMethods{
     @Id
     private String id;
-    private String ticketId;
-    private Status status;
 
+    private Status status;
+    @ManyToOne
+    @JoinColumn(name = "ticketId")
+    private Ticket ticket;
     public Luggage( String ticketId, Status status) {
         this.id = UUID.randomUUID().toString();
-        this.ticketId = ticketId;
         this.status = status;
     }
 
     public Luggage() {
         this.id = null;
-        this.ticketId = "";
         this.status = null;
     }
 
@@ -30,13 +30,13 @@ public class Luggage implements BaseMethods{
         this.id = id;
     }
 
-    public String getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
-    }
+//    public String getTicketId() {
+//        return ticketId;
+//    }
+//
+//    public void setTicketId(String ticketId) {
+//        this.ticketId = ticketId;
+//    }
 
     public Status getStatus() {
         return status;

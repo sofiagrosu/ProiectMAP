@@ -1,6 +1,7 @@
 package com.example.flight_management_system.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +13,8 @@ public class NoticeBoard implements BaseMethods{
     @Id
     private String id;
     LocalDate date;
-    List<Flight> flightOfTheDay;
+    @OneToMany(mappedBy = "noticeBoard", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Flight> flightsOfTheDay = new ArrayList<>();
 
     public NoticeBoard( LocalDate date) {
         this.id = UUID.randomUUID().toString();;
@@ -40,11 +42,11 @@ public class NoticeBoard implements BaseMethods{
         this.date = date;
     }
 
-    public List<Flight> getFlightOfTheDay() {
-        return flightOfTheDay;
+    public List<Flight> getFlightsOfTheDay() {
+        return flightsOfTheDay;
     }
 
-    public void setFlightOfTheDay(List<Flight> flightOfTheDay) {
-        this.flightOfTheDay = flightOfTheDay;
+    public void setFlightsOfTheDay(List<Flight> flightOfTheDay) {
+        this.flightsOfTheDay = flightOfTheDay;
     }
 }

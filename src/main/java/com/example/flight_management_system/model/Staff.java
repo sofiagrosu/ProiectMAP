@@ -3,7 +3,9 @@ import java.util.UUID;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "Staff")
+@Table(name = "Staff")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "staff_type")
 public abstract class Staff implements BaseMethods {
     @Id
     private String id;

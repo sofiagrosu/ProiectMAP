@@ -8,18 +8,26 @@ import java.util.UUID;
 public class FlightAssignment implements BaseMethods{
     @Id
     private String id;
-    private String flightId;
     private String staffId;
     private LocalDate assigmentDate;
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    private Flight flight;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private AirlineEmployee employee;
+
+
     public FlightAssignment( String flightId, String staffId, LocalDate assigmentDate) {
         this.id = UUID.randomUUID().toString();
-        this.flightId = flightId;
+//        this.flightId = flightId;
         this.staffId = staffId;
         this.assigmentDate = assigmentDate;
     }
     public FlightAssignment() {
         this.id = null;
-        this.flightId = "";
+//        this.flightId = "";
         this.staffId = "";
         this.assigmentDate = LocalDate.now();
     }
@@ -38,11 +46,11 @@ public void setAssigmentDate(LocalDate assigmentDate) {
     }
 
     public String getFlightId() {
-        return flightId;
+        return flight.getId();
     }
-    public void setFlightId(String flightId) {
-        this.flightId = flightId;
-    }
+//    public void setFlightId(String flightId) {
+//        this.flightId = flightId;
+//    }
 
     public String getStaffId() {
         return staffId;
@@ -55,7 +63,7 @@ public void setAssigmentDate(LocalDate assigmentDate) {
         return this.getId().equals(other.getId());
     }
     public String toString(){
-        return "FlightAssignment{id="+this.id+", flightId="+this.flightId+", staffId="+this.staffId+"}";
+        return "FlightAssignment{id="+this.id+", flightId="+this.flight.getId()+", staffId="+this.staffId+"}";
     }
 
 }

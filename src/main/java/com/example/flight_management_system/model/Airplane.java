@@ -1,6 +1,7 @@
 package com.example.flight_management_system.model;
 import jakarta.persistence.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.List;
@@ -14,7 +15,10 @@ public class Airplane implements BaseMethods {
     @Id
     private String id;
     private int number;
-    List<Flight> flights;
+
+    @OneToMany(mappedBy = "airplane", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Flight> flights = new ArrayList<>();
+
     public Airplane( int number, List<Flight> flights) {
         this.id = UUID.randomUUID().toString();;
         this.number = number;
