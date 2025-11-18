@@ -1,15 +1,15 @@
 package com.example.flight_management_system.service;
 
 import com.example.flight_management_system.model.BaseMethods;
-import com.example.flight_management_system.repository.GenericRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public class CrudService<T extends BaseMethods> {
+public abstract class CrudService<T extends BaseMethods> {
 
-    protected final GenericRepository<T> repository;
+    protected final JpaRepository<T, String> repository;
 
-    public CrudService(GenericRepository<T> repository) {
+    protected CrudService(JpaRepository<T, String> repository) {
         this.repository = repository;
     }
 
@@ -17,32 +17,25 @@ public class CrudService<T extends BaseMethods> {
         return repository.findAll();
     }
 
+
     public T findById(String id) {
-        return repository.findById(id);
+        return repository.findById(id).orElse(null);
     }
 
     public void deleteById(String id) {
-        T item = repository.findById(id);
-        if (item != null) {
-            repository.delete(item);
-        }
+        repository.deleteById(id);
     }
 
-    public void save(T item) {
-        repository.save(item);
+    public T save(T entity) {
+        return repository.save(entity);
     }
 
-    public boolean delete(T item) {
-        return repository.delete(item);
+    public void delete(T entity) {
+        repository.delete(entity);
     }
 
-    public void update(T entity) {
-        T existing = repository.findById(entity.getId());
-        if (existing != null) {
-            repository.delete(existing);
-            repository.save(entity);
-        }
+    // la JPA, update = tot save()
+    public T update(T entity) {
+        return repository.save(entity);
     }
-
-
 }
