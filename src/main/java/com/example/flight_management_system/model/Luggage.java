@@ -1,12 +1,17 @@
 package com.example.flight_management_system.model;
+import jakarta.persistence.*;
+import java.util.UUID;
 
+@Entity
+@Table(name = "Luggages")
 public class Luggage implements BaseMethods{
+    @Id
     private String id;
     private String ticketId;
     private Status status;
 
-    public Luggage(String id, String ticketId, Status status) {
-        this.id = id;
+    public Luggage( String ticketId, Status status) {
+        this.id = UUID.randomUUID().toString();
         this.ticketId = ticketId;
         this.status = status;
     }

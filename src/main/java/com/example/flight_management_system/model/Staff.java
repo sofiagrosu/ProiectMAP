@@ -1,10 +1,14 @@
 package com.example.flight_management_system.model;
+import java.util.UUID;
+import jakarta.persistence.*;
 
+@Entity
 public abstract class Staff implements BaseMethods {
+    @Id
     private String id;
     private String name;
-    public Staff(String id, String name) {
-        this.id = id;
+    public Staff( String name) {
+        this.id = UUID.randomUUID().toString();;
         this.name = name;
     }
     public Staff() {

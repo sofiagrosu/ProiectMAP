@@ -1,14 +1,22 @@
 package com.example.flight_management_system.model;
-import java.util.List;
+import jakarta.persistence.Entity;
 
 import java.util.List;
 
+import java.util.List;
+import java.util.UUID;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Airplanes")
 public class Airplane implements BaseMethods {
+    @Id
     private String id;
     private int number;
     List<Flight> flights;
-    public Airplane(String id, int number, List<Flight> flights) {
-        this.id = id;
+    public Airplane( int number, List<Flight> flights) {
+        this.id = UUID.randomUUID().toString();;
         this.number = number;
         this.flights = flights;
     }

@@ -1,8 +1,13 @@
 package com.example.flight_management_system.model;
 
 import java.util.List;
+import java.util.UUID;
 
+import jakarta.persistence.*;
+
+@Entity@Table (name = "Tickets")
 public class Ticket implements BaseMethods{
+    @Id
     private String id;
     private String passengerId;
     private String flightId;
@@ -18,8 +23,8 @@ public class Ticket implements BaseMethods{
         this.seatNumber = "";
     }
 
-    public Ticket(String id, String passengerId, String flightId, double price, String seatNumber) {
-        this.id = id;
+    public Ticket( String passengerId, String flightId, double price, String seatNumber) {
+        this.id = UUID.randomUUID().toString();;
         this.passengerId = passengerId;
         this.flightId = flightId;
         this.price = price;

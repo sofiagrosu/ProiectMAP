@@ -4,8 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import jakarta.persistence.*;
+
+
+@Entity
+@Table(name = "Passengers")
 public class Passenger implements BaseMethods {
+    @Id
     private String id;
     private String name;
     private String currency;
@@ -23,8 +30,8 @@ public class Passenger implements BaseMethods {
         this.isCheckedIn = false;
     }
 
-    public Passenger(String id, String name, String currency, List<Ticket> tickets) {
-        this.id = id;
+    public Passenger( String name, String currency, List<Ticket> tickets) {
+        this.id = UUID.randomUUID().toString();;
         this.name = name;
         this.currency = currency;
     }

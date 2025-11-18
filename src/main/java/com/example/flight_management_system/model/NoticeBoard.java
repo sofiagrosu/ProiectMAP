@@ -2,14 +2,20 @@ package com.example.flight_management_system.model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table (name = "NoticeBoards")
 public class NoticeBoard implements BaseMethods{
+    @Id
     private String id;
     LocalDate date;
     List<Flight> flightOfTheDay;
 
-    public NoticeBoard(String id, LocalDate date) {
-        this.id = id;
+    public NoticeBoard( LocalDate date) {
+        this.id = UUID.randomUUID().toString();;
         this.date = date;
     }
 

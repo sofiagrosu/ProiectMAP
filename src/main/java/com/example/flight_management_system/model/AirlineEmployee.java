@@ -1,15 +1,19 @@
 package com.example.flight_management_system.model;
-
+import jakarta.persistence.*;
 import java.util.List;
 import static com.example.flight_management_system.model.Role.CLOSED;
+
+
+@Entity
+@Table (name = "AirlineEmployees")
 public class AirlineEmployee extends Staff {
     private Role role;
     private List<FlightAssignment> flightAssigments;
     private String company;
 
 
-    public AirlineEmployee(String id, String name, Role role, List<FlightAssignment> flightAssigments, String company) {
-        super(id, name);
+    public AirlineEmployee(String name, Role role, List<FlightAssignment> flightAssigments, String company) {
+        super( name);
         this.role = role;
         this.flightAssigments = flightAssigments;
         this.company = company;

@@ -1,10 +1,12 @@
 package com.example.flight_management_system.model;
+import jakarta.persistence.*;
+
 
 public class AirportEmployee extends Staff {
     private String department;
     private String designation;
-    public AirportEmployee(String id, String name, String department, String designation) {
-        super(id, name);
+    public AirportEmployee( String name, String department, String designation) {
+        super(name);
         this.department = department;
         this.designation = designation;
     }
