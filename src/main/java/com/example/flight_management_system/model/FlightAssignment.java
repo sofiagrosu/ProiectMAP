@@ -1,14 +1,18 @@
 package com.example.flight_management_system.model;
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
+@Entity
+@Table(name = "FlightAssignments")
 public class FlightAssignment implements BaseMethods{
+    @Id
     private String id;
     private String flightId;
     private String staffId;
     private LocalDate assigmentDate;
-    public FlightAssignment(String id, String flightId, String staffId, LocalDate assigmentDate) {
-        this.id = id;
+    public FlightAssignment( String flightId, String staffId, LocalDate assigmentDate) {
+        this.id = UUID.randomUUID().toString();
         this.flightId = flightId;
         this.staffId = staffId;
         this.assigmentDate = assigmentDate;
