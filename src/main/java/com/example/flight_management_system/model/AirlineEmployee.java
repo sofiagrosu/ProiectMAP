@@ -5,7 +5,7 @@ import static com.example.flight_management_system.model.Role.CLOSED;
 
 
 @Entity
-@Table (name = "AirlineEmployees")
+
 public class AirlineEmployee extends Staff {
     private Role role;
     private List<FlightAssignment> flightAssigments;

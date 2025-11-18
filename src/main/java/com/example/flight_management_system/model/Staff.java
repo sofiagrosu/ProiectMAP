@@ -3,6 +3,7 @@ import java.util.UUID;
 import jakarta.persistence.*;
 
 @Entity
+@Table (name = "Staff")
 public abstract class Staff implements BaseMethods {
     @Id
     private String id;

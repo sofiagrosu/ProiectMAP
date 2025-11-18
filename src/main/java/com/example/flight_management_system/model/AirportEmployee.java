@@ -1,7 +1,7 @@
 package com.example.flight_management_system.model;
 import jakarta.persistence.*;
 
-
+@Entity
 public class AirportEmployee extends Staff {
     private String department;
     private String designation;
