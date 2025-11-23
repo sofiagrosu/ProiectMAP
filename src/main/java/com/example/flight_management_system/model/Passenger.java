@@ -11,9 +11,13 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Passengers")
-public class Passenger implements BaseMethods {
-    @Id
-    private String id;
+public class Passenger extends BaseMethods {
+    private static int counter = 1;
+    @Override
+    protected String generateCustomId() {
+        return "P" + (counter++);
+    }
+
     private String name;
     private String currency;
   @OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -22,7 +26,6 @@ public class Passenger implements BaseMethods {
     private boolean isCheckedIn;
 
     public Passenger() {
-        this.id = null;
         this.name = "";
         this.currency = "";
         this.tickets = new ArrayList<>();
@@ -30,7 +33,6 @@ public class Passenger implements BaseMethods {
     }
 
     public Passenger( String name, String currency, List<Ticket> tickets) {
-        this.id = UUID.randomUUID().toString();;
         this.name = name;
         this.currency = currency;
     }
