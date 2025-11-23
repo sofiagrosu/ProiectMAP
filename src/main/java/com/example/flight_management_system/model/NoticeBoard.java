@@ -9,9 +9,14 @@ import jakarta.persistence.*;
 
 @Entity
 @Table (name = "NoticeBoards")
-public class NoticeBoard implements BaseMethods{
-    @Id
-    private String id;
+public class NoticeBoard extends BaseMethods{
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "NB" + (counter++);
+    }
+
     LocalDate date;
     @OneToMany(mappedBy = "noticeBoard", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Flight> flightsOfTheDay = new ArrayList<>();

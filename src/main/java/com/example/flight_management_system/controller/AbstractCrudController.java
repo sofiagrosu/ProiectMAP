@@ -52,7 +52,7 @@ public abstract class AbstractCrudController<T extends BaseMethods> {
 
     //salveaza o entitate noua
     @PostMapping
-    public String create(@ModelAttribute(name = "#{T(java.lang.String).valueOf(formModelKey)}") T entity) {
+    public String create(@ModelAttribute T entity) {
         service.save(entity);
         return "redirect:" + basePath;
     }
@@ -75,12 +75,16 @@ public abstract class AbstractCrudController<T extends BaseMethods> {
         model.addAttribute(formModelKey, entity);
         return formView; // poți folosi același view ca la creare
     }
-
-    // salvează modificările unei entități existente
-    @PostMapping("/{id}/edit")
-    public String update(@PathVariable String id, @ModelAttribute(name = "#{T(java.lang.String).valueOf(formModelKey)}") T entity) {
-        entity.setId(id); // asigură-te că ID-ul nu se schimbă
-        service.update(entity); // apelează metoda de update din CrudService
+  // salvează modificările unei entități existente
+//    @PostMapping("/{id}/edit")
+//    public String update(@PathVariable String id, @ModelAttributeT entity) {
+//        entity.setId(id); // asigură-te că ID-ul nu se schimbă
+//        service.update(entity); // apelează metoda de update din CrudService
+//        return "redirect:" + basePath;
+//    }
+    protected String doUpdate(String id, T entity) {
+        entity.setId(id);
+        service.update(entity);
         return "redirect:" + basePath;
     }
 

@@ -4,9 +4,13 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Luggages")
-public class Luggage implements BaseMethods{
-    @Id
-    private String id;
+public class Luggage extends BaseMethods{
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "L" + (counter++);
+    }
 
     private Status status;
     @ManyToOne

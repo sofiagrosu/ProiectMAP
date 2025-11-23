@@ -11,9 +11,14 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Airplanes")
-public class Airplane implements BaseMethods {
-    @Id
-    private String id;
+public class Airplane extends BaseMethods {
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "A" + (counter++);
+    }
+
     private int number;
 
     @OneToMany(mappedBy = "airplane", cascade = CascadeType.ALL, orphanRemoval = true)

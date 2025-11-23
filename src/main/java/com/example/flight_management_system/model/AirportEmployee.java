@@ -4,6 +4,13 @@ import jakarta.persistence.*;
 @Entity
 @DiscriminatorValue("AIRPORT")
 public class AirportEmployee extends Staff {
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "APE" + (counter++);
+    }
+
     private String department;
     private String designation;
     public AirportEmployee( String name, String department, String designation) {

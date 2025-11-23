@@ -8,9 +8,14 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Flights")
-public class Flight implements BaseMethods{
-    @Id
-    private String id;
+public class Flight extends BaseMethods{
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "F" + (counter++);
+    }
+
     private String name;
     private String gateNumber;
 

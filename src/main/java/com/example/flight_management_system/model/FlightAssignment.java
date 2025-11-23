@@ -5,9 +5,14 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "FlightAssignments")
-public class FlightAssignment implements BaseMethods{
-    @Id
-    private String id;
+public class FlightAssignment extends BaseMethods{
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "FA" + (counter++);
+    }
+
     private String staffId;
     private LocalDate assigmentDate;
     @ManyToOne

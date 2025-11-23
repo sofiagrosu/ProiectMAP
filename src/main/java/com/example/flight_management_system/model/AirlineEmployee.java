@@ -10,6 +10,13 @@ import static com.example.flight_management_system.model.Role.CLOSED;
 @DiscriminatorValue("AIRLINE")
 
 public class AirlineEmployee extends Staff {
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "ALE" + (counter++);
+    }
+
     private Role role;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FlightAssignment> assignments = new ArrayList<>();

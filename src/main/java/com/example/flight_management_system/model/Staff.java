@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "Staff")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "staff_type")
-public abstract class Staff implements BaseMethods {
+public abstract class Staff extends BaseMethods {
     @Id
     private String id;
     private String name;

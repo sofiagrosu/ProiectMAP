@@ -7,9 +7,14 @@ import java.util.UUID;
 import jakarta.persistence.*;
 
 @Entity@Table (name = "Tickets")
-public class Ticket implements BaseMethods{
-    @Id
-    private String id;
+public class Ticket extends BaseMethods{
+    private static int counter = 1;
+
+    @Override
+    protected String generateCustomId() {
+        return "T" + (counter++);
+    }
+
     private double price;
     private String seatNumber;
     @ManyToOne
@@ -24,13 +29,13 @@ public class Ticket implements BaseMethods{
     private List<Luggage> luggages = new ArrayList<>();
 
     public Ticket() {
-        this.id = null;
+
         this.price = 0;
         this.seatNumber = "";
     }
 
     public Ticket( String passengerId, String flightId, double price, String seatNumber) {
-        this.id = UUID.randomUUID().toString();;
+    ;
         this.price = price;
         this.seatNumber = seatNumber;
     }
@@ -82,5 +87,20 @@ public class Ticket implements BaseMethods{
 
     public void setLuggages(List<Luggage> luggages) {
         this.luggages = luggages;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
+
+    public BaseMethods getFlight() {
+     return flight;
+    }
+
+    public BaseMethods getPassenger() {
+        return passenger;
     }
 }
