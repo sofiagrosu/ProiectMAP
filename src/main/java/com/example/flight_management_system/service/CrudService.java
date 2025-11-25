@@ -36,6 +36,8 @@ public class CrudService<T extends BaseMethods> {
         return repository.delete(item);
     }
 
+    //sterge obiectul vechi din lista, apoi il adauga din nou
+    //delete + save funtioneaza pt orice tip de stocare; nu depinde de indexul listei sau de fisiere
     public void update(T entity) {
         T existing = repository.findById(entity.getId());
         if (existing != null) {

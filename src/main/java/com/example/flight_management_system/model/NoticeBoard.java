@@ -1,44 +1,32 @@
 package com.example.flight_management_system.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public class NoticeBoard implements BaseMethods{
+@Entity
+@Table(name = "noticeboards")
+public class NoticeBoard implements BaseMethods {
+
+    @Id
     private String id;
-    LocalDate date;
-    List<Flight> flightOfTheDay;
 
-    public NoticeBoard(String id, LocalDate date) {
-        this.id = id;
-        this.date = date;
-    }
+    private LocalDate date;
 
-    public NoticeBoard(){
-        this.id = null;
-        this.date = LocalDate.now();
-    }
+    @OneToMany
+    @JoinColumn(name = "noticeboard_id")
+    private List<Flight> flightsOfTheDay = new ArrayList<>();
 
-    public String getId() {
-        return id;
-    }
+    public NoticeBoard() { this.id = null; this.date = LocalDate.now(); }
+    public NoticeBoard(String id, LocalDate date) { this.id = id; this.date = date; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @Override public String getId() { return id; }
+    @Override public void setId(String id) { this.id = id; }
 
-    public LocalDate getDate() {
-        return date;
-    }
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public List<Flight> getFlightOfTheDay() {
-        return flightOfTheDay;
-    }
-
-    public void setFlightOfTheDay(List<Flight> flightOfTheDay) {
-        this.flightOfTheDay = flightOfTheDay;
-    }
+    public List<Flight> getFlightsOfTheDay() { return flightsOfTheDay; }
+    public void setFlightsOfTheDay(List<Flight> flightsOfTheDay) { this.flightsOfTheDay = flightsOfTheDay; }
 }

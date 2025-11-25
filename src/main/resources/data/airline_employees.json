@@ -16,4 +16,22 @@
   "role" : "PILOT",
   "flightAssigments" : [ ],
   "company" : "Ryanair"
+}, {
+  "id" : "al-4993",
+  "name" : "Bianca",
+  "role" : "CLOSED",
+  "flightAssigments" : null,
+  "company" : "RyanAir"
+}, {
+  "id" : "al-328",
+  "name" : "John Pilot",
+  "role" : "CLOSED",
+  "flightAssigments" : null,
+  "company" : "BlueAir"
+}, {
+  "id" : "al-5736",
+  "name" : "Jane Smith",
+  "role" : "CLOSED",
+  "flightAssigments" : null,
+  "company" : "BlueAir"
 } ]

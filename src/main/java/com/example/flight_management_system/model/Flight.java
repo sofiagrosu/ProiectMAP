@@ -1,88 +1,56 @@
 package com.example.flight_management_system.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Flight implements BaseMethods{
-    private String id;
-    private String name;
-    private String noticeBoardId;
-    private String airplaneId;
-    private List<Ticket> tickets;
-    private List<FlightAssignment> flightAssignments;
+@Entity
+@Table(name = "flights")
+public class Flight implements BaseMethods {
 
-    //punctul 5- adaugarea de atribute noi
+    @Id
+    private String id;
+
+    @NotBlank
+    private String name;
+
+    private String noticeBoardId; // we will also map NoticeBoard relation
+    @ManyToOne
+    @JoinColumn(name = "airplane_id")
+    private Airplane airplane;
+
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FlightAssignment> flightAssignments = new ArrayList<>();
+
     private String gateNumber;
 
-
-    public Flight(String id, String name, String noticeBoardId,  String airplaneId, String gateNumber) {
-        this.id = id;
-        this.name = name;
-        this.noticeBoardId = noticeBoardId;
-        this.airplaneId = airplaneId;
-        this.gateNumber = gateNumber;
+    public Flight() { this.id = null; this.name = ""; this.noticeBoardId = ""; this.gateNumber = ""; }
+    public Flight(String id, String name, String noticeBoardId, Airplane airplane, String gateNumber){
+        this.id = id; this.name = name; this.noticeBoardId = noticeBoardId; this.airplane = airplane; this.gateNumber = gateNumber;
     }
 
-    public Flight() {
-        this. id = null;
-        this.name = "";
-        this.noticeBoardId = "";
-        this.airplaneId = "";
-        this.gateNumber = "";
-    }
+    @Override public String getId() { return id; }
+    @Override public void setId(String id) { this.id = id; }
 
-    public String getId() {
-        return id;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getNoticeBoardId() { return noticeBoardId; }
+    public void setNoticeBoardId(String noticeBoardId) { this.noticeBoardId = noticeBoardId; }
 
-    public String getName() {
-        return name;
-    }
+    public Airplane getAirplane() { return airplane; }
+    public void setAirplane(Airplane airplane) { this.airplane = airplane; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public List<Ticket> getTickets() { return tickets; }
+    public void setTickets(List<Ticket> tickets) { this.tickets = tickets; }
 
-    public String getNoticeBoardId() {
-        return noticeBoardId;
-    }
+    public List<FlightAssignment> getFlightAssignments() { return flightAssignments; }
+    public void setFlightAssignments(List<FlightAssignment> flightAssignments) { this.flightAssignments = flightAssignments; }
 
-    public void setNoticeBoardId(String noticeBoardId) {
-        this.noticeBoardId = noticeBoardId;
-    }
-
-    public String getAirplaneId() {
-        return airplaneId;
-    }
-
-    public void setAirplaneId(String airplaneId) {
-        this.airplaneId = airplaneId;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public List<FlightAssignment> getFlightAssignments() {
-        return flightAssignments;
-    }
-
-    public void setFlightAssignments(List<FlightAssignment> flightAssignments) {
-        this.flightAssignments = flightAssignments;
-    }
-
-    public String getGateNumber() {
-        return gateNumber;
-    }
-
-    public void setGateNumber(String gateNumber) {
-        this.gateNumber = gateNumber;
-    }
+    public String getGateNumber() { return gateNumber; }
+    public void setGateNumber(String gateNumber) { this.gateNumber = gateNumber; }
 }

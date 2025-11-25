@@ -1,12 +1,4 @@
 [ {
-  "id" : "fl-101",
-  "name" : "Flight 101",
-  "noticeBoardId" : "nb-1",
-  "airplaneId" : "ap-101",
-  "tickets" : [ ],
-  "flightAssignments" : [ ],
-  "gateNumber" : "A1"
-}, {
   "id" : "fl-202",
   "name" : "Flight 202",
   "noticeBoardId" : "nb-2",
@@ -63,19 +55,11 @@
   "flightAssignments" : [ ],
   "gateNumber" : "D2"
 }, {
-  "id" : "fl-909",
-  "name" : "Flight 909",
-  "noticeBoardId" : "nb-9",
-  "airplaneId" : "ap-909",
-  "tickets" : [ ],
-  "flightAssignments" : [ ],
-  "gateNumber" : "E1"
-}, {
-  "id" : "fl-1010",
-  "name" : "Flight 1010",
-  "noticeBoardId" : "nb-9",
-  "airplaneId" : "ap-1010",
+  "id" : "fl-9713",
+  "name" : "FL1011",
+  "noticeBoardId" : "NB67",
+  "airplaneId" : "A780",
   "tickets" : null,
   "flightAssignments" : null,
-  "gateNumber" : "E9"
+  "gateNumber" : "G6"
 } ]

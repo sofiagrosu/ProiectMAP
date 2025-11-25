@@ -1,43 +1,30 @@
 package com.example.flight_management_system.model;
 
-public class Luggage implements BaseMethods{
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "luggage")
+public class Luggage implements BaseMethods {
+
+    @Id
     private String id;
-    private String ticketId;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Luggage(String id, String ticketId, Status status) {
-        this.id = id;
-        this.ticketId = ticketId;
-        this.status = status;
-    }
+    public Luggage() { this.id = null; this.status = Status.CHECKED_IN; }
+    public Luggage(String id, Ticket ticket, Status status) { this.id = id; this.ticket = ticket; this.status = status; }
 
-    public Luggage() {
-        this.id = null;
-        this.ticketId = "";
-        this.status = null;
-    }
+    @Override public String getId() { return id; }
+    @Override public void setId(String id) { this.id = id; }
 
-    public String getId() {
-        return id;
-    }
+    public Ticket getTicket() { return ticket; }
+    public void setTicket(Ticket ticket) { this.ticket = ticket; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(String ticketId) {
-        this.ticketId = ticketId;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    public Status getStatus() { return status; }
+    public void setStatus(Status status) { this.status = status; }
 }

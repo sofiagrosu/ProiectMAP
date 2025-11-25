@@ -64,23 +64,22 @@ public abstract class AbstractCrudController<T extends BaseMethods> {
         return "redirect:" + basePath;
     }
 
-    // afișează formularul de editare pentru o entitate existentă
+    //afiseaza formularul de editare
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable String id, Model model) {
         T entity = service.findById(id);
         if (entity == null) {
-            // poți redirecționa sau arunca o eroare
             return "redirect:" + basePath;
         }
         model.addAttribute(formModelKey, entity);
-        return formView; // poți folosi același view ca la creare
+        return formView;
     }
 
     // salvează modificările unei entități existente
     @PostMapping("/{id}/edit")
     public String update(@PathVariable String id, @ModelAttribute(name = "#{T(java.lang.String).valueOf(formModelKey)}") T entity) {
-        entity.setId(id); // asigură-te că ID-ul nu se schimbă
-        service.update(entity); // apelează metoda de update din CrudService
+        entity.setId(id);       //obiectul editat are acelasi id cu obiectul existent in repo!!!
+        service.update(entity);
         return "redirect:" + basePath;
     }
 }

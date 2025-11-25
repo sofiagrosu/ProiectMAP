@@ -1,57 +1,39 @@
 package com.example.flight_management_system.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
-public class FlightAssignment implements BaseMethods{
+@Entity
+@Table(name = "flight_assignments")
+public class FlightAssignment implements BaseMethods {
+
+    @Id
     private String id;
-    private String flightId;
-    private String staffId;
-    private LocalDate assigmentDate;
-    public FlightAssignment(String id, String flightId, String staffId, LocalDate assigmentDate) {
-        this.id = id;
-        this.flightId = flightId;
-        this.staffId = staffId;
-        this.assigmentDate = assigmentDate;
-    }
-    public FlightAssignment() {
-        this.id = null;
-        this.flightId = "";
-        this.staffId = "";
-        this.assigmentDate = LocalDate.now();
+
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    private Flight flight;
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private Staff staff;
+
+    private LocalDate assignmentDate;
+
+    public FlightAssignment() { this.id = null; this.assignmentDate = LocalDate.now(); }
+    public FlightAssignment(String id, Flight flight, Staff staff, LocalDate assignmentDate) {
+        this.id = id; this.flight = flight; this.staff = staff; this.assignmentDate = assignmentDate;
     }
 
-    public LocalDate getAssigmentDate() {
-        return assigmentDate;
-    }
-public void setAssigmentDate(LocalDate assigmentDate) {
-        this.assigmentDate = assigmentDate;
-}
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
+    @Override public String getId() { return id; }
+    @Override public void setId(String id) { this.id = id; }
 
-    public String getFlightId() {
-        return flightId;
-    }
-    public void setFlightId(String flightId) {
-        this.flightId = flightId;
-    }
+    public Flight getFlight() { return flight; }
+    public void setFlight(Flight flight) { this.flight = flight; }
 
-    public String getStaffId() {
-        return staffId;
-    }
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
-    }
+    public Staff getStaff() { return staff; }
+    public void setStaff(Staff staff) { this.staff = staff; }
 
-    public Boolean equals(FlightAssignment other){
-        return this.getId().equals(other.getId());
-    }
-    public String toString(){
-        return "FlightAssignment{id="+this.id+", flightId="+this.flightId+", staffId="+this.staffId+"}";
-    }
-
+    public LocalDate getAssignmentDate() { return assignmentDate; }
+    public void setAssignmentDate(LocalDate assignmentDate) { this.assignmentDate = assignmentDate; }
 }

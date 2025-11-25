@@ -1,49 +1,33 @@
 package com.example.flight_management_system.model;
 
+import jakarta.persistence.*;
 import java.util.List;
-import static com.example.flight_management_system.model.Role.CLOSED;
+
+@Entity
+@Table(name = "airline_employee")
 public class AirlineEmployee extends Staff {
-    private Role role;
-    private List<FlightAssignment> flightAssigments;
+
+    @Enumerated(EnumType.STRING)
+    private Role role; // e.g. PILOT, CLOSED
+
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL)
+    private List<FlightAssignment> flightAssignments;
+
     private String company;
 
-
-    public AirlineEmployee(String id, String name, Role role, List<FlightAssignment> flightAssigments, String company) {
+    public AirlineEmployee() { super(); this.role = Role.CLOSED; this.company = ""; }
+    public AirlineEmployee(String id, String name, Role role, String company) {
         super(id, name);
         this.role = role;
-        this.flightAssigments = flightAssigments;
-        this.company = company;
-    }
-    public AirlineEmployee() {
-        super();
-        this.role = CLOSED;
-        this.flightAssigments = null;
-        this.company = "";
-    }
-    public Role getRole() {
-        return role;
-    }
-    public void setRole(Role role) {
-        this.role = role;
-    }
-    public List<FlightAssignment> getFlightAssigments() {
-        return flightAssigments;
-    }
-    public void setFlightAssigments(List<FlightAssignment> flightAssigments) {
-        this.flightAssigments = flightAssigments;}
-
-    public String getCompany() {
-        return company;
-    }
-    public void setCompany(String company) {
         this.company = company;
     }
 
-    public Boolean equals(AirlineEmployee other){
-        return this.getId().equals(other.getId());
-    }
-    public String toString(){
-        return "AirlineEmployee{id="+this.getId()+", name="+this.getName()+", role="+this.role+", flightAssigments="+this.flightAssigments+"}";
-    }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 
+    public List<FlightAssignment> getFlightAssignments() { return flightAssignments; }
+    public void setFlightAssignments(List<FlightAssignment> flightAssignments) { this.flightAssignments = flightAssignments; }
+
+    public String getCompany() { return company; }
+    public void setCompany(String company) { this.company = company; }
 }

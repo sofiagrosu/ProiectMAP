@@ -22,7 +22,7 @@ public class InFileRepository < T extends BaseMethods> implements GenericReposit
     //private int newId = random.nextInt(1, 100);
 
     public InFileRepository(String fileName, Class<T> type) {
-        this.mapper = new ObjectMapper() .findAndRegisterModules()
+        this.mapper = new ObjectMapper() .findAndRegisterModules()  //detecteaza automat module Jackson
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); //dezactiveaza salvarea datei ca numar
 
         this.file = new File("src/main/resources/data/" + fileName);
@@ -142,15 +142,14 @@ public class InFileRepository < T extends BaseMethods> implements GenericReposit
 
     @Override
     public void update(T item) {
-        T existing = findById(item.getId());
+        T existing = findById(item.getId());    //cauta obiectul dupa id
         if (existing != null) {
-            int index = items.indexOf(existing);
-            items.set(index, item);
+            int index = items.indexOf(existing);//returneaza pozitia obiectului existent in lista
+            items.set(index, item);             //inlocuieste elementul aflat la pozitia index cu obiectul item
             saveAll();
         } else {
             throw new RuntimeException("The object with the id " + item.getId() + " does not exist.");
         }
     }
-
 
 }

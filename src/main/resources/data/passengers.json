@@ -52,10 +52,4 @@
   "currency" : "CAD",
   "tickets" : [ ],
   "isCheckedIn" : false
-}, {
-  "id" : "p-10",
-  "name" : "Julia",
-  "currency" : "RON",
-  "tickets" : [ ],
-  "isCheckedIn" : false
 } ]
