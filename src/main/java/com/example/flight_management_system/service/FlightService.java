@@ -2,14 +2,16 @@ package com.example.flight_management_system.service;
 
 import com.example.flight_management_system.model.Flight;
 import com.example.flight_management_system.repository.FlightRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class FlightService extends CrudService<Flight> {
+import java.util.List;
 
-    @Autowired
-    public FlightService(FlightRepository flightRepository) {
-        super(flightRepository);
-    }
+@Service
+public class FlightService {
+    private final FlightRepository repo;
+    public FlightService(FlightRepository repo){ this.repo = repo; }
+    public List<Flight> findAll(){ return repo.findAll(); }
+    public Flight findById(String id){ return repo.findById(id).orElse(null); }
+    public Flight save(Flight f){ return repo.save(f); }
+    public void delete(String id){ repo.findById(id).ifPresent(repo::delete); }
 }
