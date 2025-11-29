@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Luggages</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Luggage List</title>
 </head>
 <body>
-<h1>Luggages</h1>
-<a th:href="@{/luggages/new}">New Luggage</a>
+
+<h2>Luggage List</h2>
+<a th:href="@{/luggages/new}">Create New Luggage</a>
 <table border="1">
     <thead>
     <tr>
         <th>ID</th>
-        <th>Ticket</th>
+        <th>Ticket ID</th>
         <th>Status</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="luggage : ${luggages}">
-        <td th:text="${luggage.id}">ID</td>
-        <td th:text="${luggage.ticket != null ? luggage.ticket.passenger.name + ' - ' + luggage.ticket.flight.name : 'No Ticket'}">Ticket</td>
-        <td th:text="${luggage.status}">Status</td>
+        <td th:text="${luggage.id}"></td>
+        <td th:text="${luggage.ticket.id}"></td>
+        <td th:text="${luggage.status}"></td>
         <td>
             <a th:href="@{/luggages/details/{id}(id=${luggage.id})}">Details</a> |
             <a th:href="@{/luggages/edit/{id}(id=${luggage.id})}">Edit</a> |
-            <a th:href="@{/luggages/delete/{id}(id=${luggage.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/luggages/delete/{id}(id=${luggage.id})}" onclick="return confirm('Are you sure you want to delete this luggage?');">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

@@ -13,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/tickets")
 public class TicketController {
@@ -35,8 +33,16 @@ public class TicketController {
     }
 
     @GetMapping("/new")
-    public String createTicketForm(Model model) {
-        model.addAttribute("ticket", new Ticket());
+    public String createTicketForm(Model model, @RequestParam(required = false) Long flightId, @RequestParam(required = false) Long passengerId) {
+        Ticket ticket = new Ticket();
+        if (flightId != null) {
+            ticket.setFlight(flightRepository.findById(flightId).orElse(null));
+        }
+        if (passengerId != null) {
+            ticket.setPassenger(passengerRepository.findById(passengerId).orElse(null));
+        }
+
+        model.addAttribute("ticket", ticket);
         model.addAttribute("passengers", passengerRepository.findAll());
         model.addAttribute("flights", flightRepository.findAll());
         return "tickets/form";
@@ -64,7 +70,8 @@ public class TicketController {
         ticket.setFlight(flight);
 
         ticketRepository.save(ticket);
-        return "redirect:/tickets";
+
+        return "redirect:/tickets"; // Redirecționare la Index
     }
 
     @GetMapping("/edit/{id}")
@@ -82,7 +89,8 @@ public class TicketController {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid ticket Id:" + id));
         ticketRepository.delete(ticket);
-        return "redirect:/tickets";
+
+        return "redirect:/tickets"; // Redirecționare la Index
     }
 
     @GetMapping("/details/{id}")

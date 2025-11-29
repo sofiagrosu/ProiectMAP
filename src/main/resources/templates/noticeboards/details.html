@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>NoticeBoard Details</title>
+    <title>Notice Board Details</title>
 </head>
 <body>
-<h1>NoticeBoard Details</h1>
+
+<h2>Notice Board Details: <span th:text="${noticeBoard.date}"></span></h2>
+
 <p><strong>ID:</strong> <span th:text="${noticeBoard.id}"></span></p>
 <p><strong>Date:</strong> <span th:text="${noticeBoard.date}"></span></p>
-<h3>Flights of the Day:</h3>
-<ul>
-    <li th:each="f : ${noticeBoard.flightsOfTheDay}" th:text="${f.name}">Flight Name</li>
-</ul>
-<a th:href="@{/noticeboards}">Back</a>
+
+<hr/>
+
+<h3>Flights on this Board</h3>
+<table border="1">
+    <thead>
+    <tr><th>ID</th><th>Flight Name</th><th>Gate Number</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="flight : ${noticeBoard.flightsOfTheDay}">
+        <td th:text="${flight.id}"></td>
+        <td th:text="${flight.name}"></td>
+        <td th:text="${flight.gateNumber}"></td>
+        <td><a th:href="@{/flights/details/{id}(id=${flight.id})}">Details</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<hr/>
+<a th:href="@{/noticeboards}">Back to List</a>
+
 </body>
 </html>

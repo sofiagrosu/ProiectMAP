@@ -1,53 +1,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Flight Details</title>
 </head>
 <body>
-<h2>Flight Details</h2>
+
+<h2>Flight Details: <span th:text="${flight.name}"></span></h2>
 
 <p><strong>ID:</strong> <span th:text="${flight.id}"></span></p>
 <p><strong>Name:</strong> <span th:text="${flight.name}"></span></p>
 <p><strong>Gate:</strong> <span th:text="${flight.gateNumber}"></span></p>
 
-<h3>Tickets</h3>
-<table border="1" cellpadding="5" cellspacing="0">
+<p>
+    <strong>Airplane:</strong>
+    <a th:href="@{/airplanes/details/{id}(id=${flight.airplane.id})}" th:text="${'ID ' + flight.airplane.id + ' (Number: ' + flight.airplane.number + ')'}"></a>
+</p>
+<p>
+    <strong>Notice Board:</strong>
+    <a th:href="@{/noticeboards/details/{id}(id=${flight.noticeBoard.id})}" th:text="${'ID ' + flight.noticeBoard.id + ' (Date: ' + flight.noticeBoard.date + ')'}"></a>
+</p>
+
+<hr/>
+
+<h3>Associated Tickets</h3>
+
+<table border="1">
     <thead>
     <tr>
         <th>ID</th>
         <th>Passenger</th>
-        <th>Seat</th>
         <th>Price</th>
+        <th>Seat</th>
+        <th>Luggage Count</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="t : ${flight.tickets}">
-        <td th:text="${t.id}"></td>
-        <td th:text="${t.passenger.name}"></td>
-        <td th:text="${t.seatNumber}"></td>
-        <td th:text="${t.price}"></td>
+    <tr th:each="ticket : ${flight.tickets}">
+        <td th:text="${ticket.id}"></td>
+        <td th:text="${ticket.passenger.name}"></td>
+        <td th:text="${ticket.price}"></td>
+        <td th:text="${ticket.seatNumber}"></td>
+        <td th:text="${#lists.size(ticket.luggages)}"></td>
+        <td><a th:href="@{/tickets/details/{id}(id=${ticket.id})}">Details</a></td>
     </tr>
     </tbody>
 </table>
 
-<h3>Flight Assignments</h3>
-<table border="1" cellpadding="5" cellspacing="0">
+<hr/>
+
+<h3>Staff Assignments</h3>
+
+<table border="1">
     <thead>
     <tr>
-        <th>Staff</th>
-        <th>Date</th>
+        <th>ID</th>
+        <th>Staff Member</th>
+        <th>Assignment Date</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="fa : ${flight.flightAssignments}">
-        <td th:text="${fa.airlineEmployee.name}"></td>
-        <td th:text="${fa.date}"></td>
+        <td th:text="${fa.id}"></td>
+        <td th:text="${fa.staff.name}"></td>
+        <td th:text="${fa.assignmentDate}"></td>
+        <td><a th:href="@{/assignments/details/{id}(id=${fa.id})}">Details</a></td>
     </tr>
     </tbody>
 </table>
 
-<a th:href="@{/flights}">Back</a>
+<hr/>
+<a th:href="@{/flights}">Back to List</a>
 
 </body>
 </html>

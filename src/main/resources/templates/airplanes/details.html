@@ -1,33 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Airplane Details</title>
 </head>
 <body>
-<h2>Airplane Details</h2>
+
+<h2>Airplane Details: <span th:text="${airplane.number}"></span></h2>
 
 <p><strong>ID:</strong> <span th:text="${airplane.id}"></span></p>
 <p><strong>Number:</strong> <span th:text="${airplane.number}"></span></p>
 
-<h3>Flights Assigned</h3>
-<table border="1" cellpadding="5" cellspacing="0">
+<hr/>
+
+<h3>Associated Flights</h3>
+<table border="1">
     <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Gate</th>
-    </tr>
+    <tr><th>ID</th><th>Flight Name</th><th>Gate Number</th><th>Actions</th></tr>
     </thead>
     <tbody>
-    <tr th:each="f : ${airplane.flights}">
-        <td th:text="${f.id}"></td>
-        <td th:text="${f.name}"></td>
-        <td th:text="${f.gateNumber}"></td>
+    <tr th:each="flight : ${airplane.flights}">
+        <td th:text="${flight.id}"></td>
+        <td th:text="${flight.name}"></td>
+        <td th:text="${flight.gateNumber}"></td>
+        <td><a th:href="@{/flights/details/{id}(id=${flight.id})}">Details</a></td>
     </tr>
     </tbody>
 </table>
 
-<a th:href="@{/airplanes}">Back</a>
+<hr/>
+<a th:href="@{/airplanes}">Back to List</a>
+
 </body>
 </html>

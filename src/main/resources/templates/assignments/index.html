@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Flight Assignments</title>
+    <title>Flight Assignments List</title>
 </head>
 <body>
 
-<h2>Flight Assignments</h2>
-
-<a th:href="@{/assignments/new}">Add New Assignment</a>
-
-<table border="1" cellpadding="5" cellspacing="0">
+<h2>Flight Assignments List</h2>
+<a th:href="@{/assignments/new}">Create New Assignment</a>
+<table border="1">
     <thead>
     <tr>
         <th>ID</th>
         <th>Flight</th>
-        <th>Staff</th>
+        <th>Staff Member</th>
         <th>Date</th>
         <th>Actions</th>
     </tr>
     </thead>
-
     <tbody>
-    <tr th:each="a : ${assignments}">
-        <td th:text="${a.id}"></td>
-        <td th:text="${a.flight != null ? a.flight.name : '—'}"></td>
-        <td th:text="${a.staff != null ? a.staff.name : '—'}"></td>
-        <td th:text="${a.assignmentDate}"></td>
+    <tr th:each="assignment : ${assignments}">
+        <td th:text="${assignment.id}"></td>
+        <td th:text="${assignment.flight.name}"></td>
+        <td th:text="${assignment.staff.name}"></td>
+        <td th:text="${assignment.assignmentDate}"></td>
         <td>
-            <a th:href="@{|/assignments/details/${a.id}|}">Details</a> |
-            <a th:href="@{|/assignments/edit/${a.id}|}">Edit</a> |
-            <a th:href="@{|/assignments/delete/${a.id}|}" onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/assignments/details/{id}(id=${assignment.id})}">Details</a> |
+            <a th:href="@{/assignments/edit/{id}(id=${assignment.id})}">Edit</a> |
+            <a th:href="@{/assignments/delete/{id}(id=${assignment.id})}" onclick="return confirm('Are you sure you want to delete this assignment?');">Delete</a>
         </td>
     </tr>
     </tbody>

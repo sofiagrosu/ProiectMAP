@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>NoticeBoards</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Notice Board List</title>
 </head>
 <body>
-<h1>NoticeBoards</h1>
-<a th:href="@{/noticeboards/new}">New NoticeBoard</a>
+
+<h2>Notice Board List</h2>
+<a th:href="@{/noticeboards/new}">Create New Notice Board</a>
 <table border="1">
     <thead>
     <tr>
         <th>ID</th>
         <th>Date</th>
-        <th>Flights of the Day</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="nb : ${noticeboards}">
-        <td th:text="${nb.id}">ID</td>
-        <td th:text="${nb.date}">Date</td>
+        <td th:text="${nb.id}"></td>
+        <td th:text="${nb.date}"></td>
         <td>
-            <ul>
-                <li th:each="f : ${nb.flightsOfTheDay}" th:text="${f.name}">Flight Name</li>
-            </ul>
-        </td>
-        <td>
-            <a th:href="@{'/noticeboards/details/' + ${nb.id}}">Details</a> |
-            <a th:href="@{'/noticeboards/edit/' + ${nb.id}}">Edit</a> |
-            <a th:href="@{'/noticeboards/delete/' + ${nb.id}}"
-               onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/noticeboards/details/{id}(id=${nb.id})}">Details</a> |
+            <a th:href="@{/noticeboards/edit/{id}(id=${nb.id})}">Edit</a> |
+            <a th:href="@{/noticeboards/delete/{id}(id=${nb.id})}" onclick="return confirm('Are you sure you want to delete this notice board?');">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

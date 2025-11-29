@@ -1,46 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Assignment Form</title>
+    <title>Flight Assignment Form</title>
+    <style> .error { color: red; } </style>
 </head>
 <body>
 
-<h2 th:text="${assignment.id == null} ? 'Add Assignment' : 'Edit Assignment'"></h2>
+<h2><span th:text="${assignment.id} ? 'Edit Assignment' : 'Create New Assignment'"></span></h2>
 
 <form th:action="@{/assignments/save}" th:object="${assignment}" method="post">
+    <input type="hidden" th:field="*{id}" />
 
-    <input type="hidden" th:field="*{id}">
+    <div>
+        <label for="assignmentDate">Assignment Date:</label>
+        <input type="date" id="assignmentDate" th:field="*{assignmentDate}" />
+        <span class="error" th:if="${#fields.hasErrors('assignmentDate')}" th:errors="*{assignmentDate}">Date Error</span>
+    </div>
+    <br/>
 
-    <label>Flight:</label>
-    <select th:field="*{flight}">
-        <option value="">-- select flight --</option>
-        <option th:each="f : ${flights}"
-                th:value="${f.id}"
-                th:text="${f.name}">
-        </option>
-    </select>
-    <br><br>
+    <div>
+        <label for="flightId">Flight:</label>
+        <select id="flightId" name="flightId">
+            <option th:each="f : ${flights}"
+                    th:value="${f.id}"
+                    th:text="${f.name}"
+                    th:selected="${assignment.flight != null and assignment.flight.id == f.id}">
+                Flight
+            </option>
+        </select>
+        <span class="error" th:if="${#fields.hasErrors('flight')}" th:errors="*{flight}">Flight Error</span>
+    </div>
+    <br/>
 
-    <label>Staff:</label>
-    <select th:field="*{staff}">
-        <option value="">-- select staff --</option>
-        <option th:each="s : ${staff}"
-                th:value="${s.id}"
-                th:text="${s.name}">
-        </option>
-    </select>
-    <br><br>
-
-    <label>Date:</label>
-    <input type="date" th:field="*{assignmentDate}">
-    <br><br>
+    <div>
+        <label for="staffId">Staff Member:</label>
+        <select id="staffId" name="staffId">
+            <option th:each="s : ${staff}"
+                    th:value="${s.id}"
+                    th:text="${s.name}"
+                    th:selected="${assignment.staff != null and assignment.staff.id == s.id}">
+                Staff
+            </option>
+        </select>
+        <span class="error" th:if="${#fields.hasErrors('staff')}" th:errors="*{staff}">Staff Error</span>
+    </div>
+    <br/>
 
     <button type="submit">Save</button>
+    <a th:href="@{/assignments}">Cancel</a>
 </form>
-
-<br>
-<a th:href="@{/assignments}">Back</a>
-
 </body>
 </html>

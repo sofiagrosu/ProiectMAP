@@ -39,7 +39,7 @@ public class NoticeBoardController {
     @GetMapping("/edit/{id}")
     public String editNoticeBoardForm(@PathVariable("id") Long id, Model model) {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid noticeboard Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
         model.addAttribute("noticeBoard", noticeBoard);
         return "noticeboards/form";
     }
@@ -47,7 +47,7 @@ public class NoticeBoardController {
     @GetMapping("/delete/{id}")
     public String deleteNoticeBoard(@PathVariable("id") Long id) {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid noticeboard Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
         noticeBoardRepository.delete(noticeBoard);
         return "redirect:/noticeboards";
     }
@@ -55,7 +55,7 @@ public class NoticeBoardController {
     @GetMapping("/details/{id}")
     public String noticeBoardDetails(@PathVariable("id") Long id, Model model) {
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid noticeboard Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
         model.addAttribute("noticeBoard", noticeBoard);
         return "noticeboards/details";
     }

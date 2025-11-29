@@ -4,14 +4,33 @@
     <title>Ticket Details</title>
 </head>
 <body>
-<h1>Ticket Details</h1>
-<p><b>ID:</b> <span th:text="${ticket.id}"></span></p>
-<p><b>Passenger:</b> <span th:text="${ticket.passenger != null ? ticket.passenger.name : 'No Passenger'}"></span></p>
-<p><b>Flight:</b> <span th:text="${ticket.flight != null ? ticket.flight.name : 'No Flight'}"></span></p>
-<p><b>Seat:</b> <span th:text="${ticket.seatNumber}"></span></p>
-<p><b>Price:</b> <span th:text="${ticket.price}"></span></p>
 
-<a href="/tickets">Back to list</a>
-<a th:href="@{'/tickets/edit/' + ${ticket.id}}">Edit Ticket</a>
+<h2>Ticket Details: <span th:text="${ticket.id}"></span></h2>
+
+<p><strong>Pasager:</strong> <a th:href="@{/passengers/details/{id}(id=${ticket.passenger.id})}" th:text="${ticket.passenger.name}"></a></p>
+<p><strong>Zbor:</strong> <a th:href="@{/flights/details/{id}(id=${ticket.flight.id})}" th:text="${ticket.flight.name}"></a></p>
+<p><strong>Preț:</strong> <span th:text="${ticket.price}"></span></p>
+<p><strong>Loc:</strong> <span th:text="${ticket.seatNumber}"></span></p>
+
+<hr/>
+
+<h3>Bagaje Asociate</h3>
+<a th:href="@{/luggages/new?ticketId={id}(id=${ticket.id})}">Adaugă Bagaj Nou</a>
+<table border="1">
+    <thead>
+    <tr><th>ID</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="luggage : ${ticket.luggages}">
+        <td th:text="${luggage.id}"></td>
+        <td th:text="${luggage.status}"></td>
+        <td><a th:href="@{/luggages/details/{id}(id=${luggage.id})}">Details</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<hr/>
+<a th:href="@{/tickets}">Back to List</a>
+
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.example.flight_management_system.controller;
 
 import com.example.flight_management_system.model.Luggage;
 import com.example.flight_management_system.model.Ticket;
+import com.example.flight_management_system.model.Status;
 import com.example.flight_management_system.repository.LuggageRepository;
 import com.example.flight_management_system.repository.TicketRepository;
 import jakarta.validation.Valid;
@@ -28,9 +29,15 @@ public class LuggageController {
     }
 
     @GetMapping("/new")
-    public String createLuggageForm(Model model) {
-        model.addAttribute("luggage", new Luggage());
+    public String createLuggageForm(Model model, @RequestParam(required = false) Long ticketId) {
+        Luggage luggage = new Luggage();
+        if (ticketId != null) {
+            luggage.setTicket(ticketRepository.findById(ticketId).orElse(null));
+        }
+
+        model.addAttribute("luggage", luggage);
         model.addAttribute("tickets", ticketRepository.findAll());
+        model.addAttribute("statuses", Status.values());
         return "luggages/form";
     }
 
@@ -40,6 +47,7 @@ public class LuggageController {
                               BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("tickets", ticketRepository.findAll());
+            model.addAttribute("statuses", Status.values());
             return "luggages/form";
         }
 
@@ -48,7 +56,8 @@ public class LuggageController {
 
         luggage.setTicket(ticket);
         luggageRepository.save(luggage);
-        return "redirect:/luggages";
+
+        return "redirect:/luggages"; // Redirecționare la Index
     }
 
     @GetMapping("/edit/{id}")
@@ -57,6 +66,7 @@ public class LuggageController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
         model.addAttribute("luggage", luggage);
         model.addAttribute("tickets", ticketRepository.findAll());
+        model.addAttribute("statuses", Status.values());
         return "luggages/form";
     }
 
@@ -65,7 +75,8 @@ public class LuggageController {
         Luggage luggage = luggageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
         luggageRepository.delete(luggage);
-        return "redirect:/luggages";
+
+        return "redirect:/luggages"; // Redirecționare la Index
     }
 
     @GetMapping("/details/{id}")

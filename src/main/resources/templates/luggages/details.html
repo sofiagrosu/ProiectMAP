@@ -4,10 +4,15 @@
     <title>Luggage Details</title>
 </head>
 <body>
-<h1>Luggage Details</h1>
-<p><b>ID:</b> <span th:text="${luggage.id}">ID</span></p>
-<p><b>Ticket:</b> <span th:text="${luggage.ticket != null ? luggage.ticket.passenger.name + ' - ' + luggage.ticket.flight.name : 'No Ticket'}">Ticket</span></p>
-<p><b>Status:</b> <span th:text="${luggage.status}">Status</span></p>
-<a th:href="@{/luggages}">Back</a>
+
+<h2>Luggage Details: <span th:text="${luggage.id}"></span></h2>
+
+<p><strong>ID:</strong> <span th:text="${luggage.id}"></span></p>
+<p><strong>Status:</strong> <span th:text="${luggage.status}"></span></p>
+<p><strong>Associated Ticket:</strong> <a th:href="@{/tickets/details/{id}(id=${luggage.ticket.id})}" th:text="${luggage.ticket.id}"></a></p>
+
+<hr/>
+<a th:href="@{/luggages}">Back to List</a>
+
 </body>
 </html>

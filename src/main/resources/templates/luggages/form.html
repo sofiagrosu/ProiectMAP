@@ -2,29 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Luggage Form</title>
+    <style> .error { color: red; } </style>
 </head>
 <body>
-<h1 th:text="${luggage.id != null ? 'Edit Luggage' : 'New Luggage'}">Luggage Form</h1>
+
+<h2><span th:text="${luggage.id} ? 'Edit Luggage' : 'Create New Luggage'"></span></h2>
 
 <form th:action="@{/luggages/save}" th:object="${luggage}" method="post">
-    <input type="hidden" th:if="${luggage.id != null}" th:field="*{id}"/>
+    <input type="hidden" th:field="*{id}" />
 
-    <label>Ticket:</label>
-    <select name="ticketId">
-        <option th:each="t : ${tickets}" th:value="${t.id}" th:text="${t.passenger.name} + ' - ' + ${t.flight.name}" th:selected="${luggage.ticket != null} ? ${t.id} == ${luggage.ticket.id} : false"></option>
-    </select>
+    <div>
+        <label for="ticketId">Associated Ticket:</label>
+        <select id="ticketId" name="ticketId">
+            <option th:each="t : ${tickets}"
+                    th:value="${t.id}"
+                    th:text="${'ID: ' + t.id + ' (Flight: ' + t.flight.name + ')'}"
+                    th:selected="${luggage.ticket != null and luggage.ticket.id == t.id}">
+                Ticket
+            </option>
+        </select>
+    </div>
     <br/>
 
-    <label>Status:</label>
-    <select th:field="*{status}">
-        <option th:value="CHECKED_IN">CHECKED_IN</option>
-        <option th:value="LOADED">LOADED</option>
-        <option th:value="DELIVERED">DELIVERED</option>
-    </select>
-    <br/><br/>
+    <div>
+        <label for="status">Status:</label>
+        <select id="status" th:field="*{status}">
+            <option th:each="s : ${statuses}"
+                    th:value="${s}"
+                    th:text="${s}">
+                Status
+            </option>
+        </select>
+        <span class="error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Status Error</span>
+    </div>
+    <br/>
 
     <button type="submit">Save</button>
+    <a th:href="@{/luggages}">Cancel</a>
 </form>
-<a th:href="@{/luggages}">Back</a>
 </body>
 </html>

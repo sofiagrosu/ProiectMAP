@@ -2,33 +2,57 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Ticket Form</title>
+    <style> .error { color: red; } </style>
 </head>
 <body>
-<h1 th:text="${ticket.id != null ? 'Edit Ticket' : 'New Ticket'}"></h1>
+
+<h2><span th:text="${ticket.id} ? 'Edit Ticket' : 'Create New Ticket'"></span></h2>
 
 <form th:action="@{/tickets/save}" th:object="${ticket}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <label>Passenger:</label>
-    <select name="passengerId">
-        <option th:each="p : ${passengers}" th:value="${p.id}" th:text="${p.name}"
-                th:selected="${ticket.passenger != null && ticket.passenger.id == p.id}"></option>
-    </select><br/>
+    <input type="hidden" th:field="*{id}" />
 
-    <label>Flight:</label>
-    <select name="flightId">
-        <option th:each="f : ${flights}" th:value="${f.id}" th:text="${f.name}"
-                th:selected="${ticket.flight != null && ticket.flight.id == f.id}"></option>
-    </select><br/>
+    <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" th:field="*{price}" />
+        <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
+    </div>
+    <br/>
 
-    <label>Seat Number:</label>
-    <input type="text" th:field="*{seatNumber}"/><br/>
+    <div>
+        <label for="seatNumber">Seat Number:</label>
+        <input type="text" id="seatNumber" th:field="*{seatNumber}" />
+        <span class="error" th:if="${#fields.hasErrors('seatNumber')}" th:errors="*{seatNumber}">Seat Number Error</span>
+    </div>
+    <br/>
 
-    <label>Price:</label>
-    <input type="number" th:field="*{price}" step="0.01"/><br/>
+    <div>
+        <label for="passengerId">Passenger:</label>
+        <select id="passengerId" name="passengerId">
+            <option th:each="p : ${passengers}"
+                    th:value="${p.id}"
+                    th:text="${p.name}"
+                    th:selected="${ticket.passenger != null and ticket.passenger.id == p.id}">
+                Passenger
+            </option>
+        </select>
+    </div>
+    <br/>
+
+    <div>
+        <label for="flightId">Flight:</label>
+        <select id="flightId" name="flightId">
+            <option th:each="f : ${flights}"
+                    th:value="${f.id}"
+                    th:text="${f.name}"
+                    th:selected="${ticket.flight != null and ticket.flight.id == f.id}">
+                Flight
+            </option>
+        </select>
+    </div>
+    <br/>
 
     <button type="submit">Save</button>
+    <a th:href="@{/tickets}">Cancel</a>
 </form>
-
-<a href="/tickets">Back to list</a>
 </body>
 </html>
