@@ -1,39 +1,22 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Airline Employees</title>
-</head>
-<body>
 <h1>Airline Employees</h1>
-
-<a th:href="@{/airline-employees/new}">Add airline employee</a><br/><br/>
-
-<table border="1" cellpadding="6" cellspacing="0">
-    <thead>
+<a th:href="@{/airline-employees/new}">Add New Employee</a>
+<table border="1" cellpadding="5">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Role</th>
+        <th>Company</th>
         <th>Actions</th>
     </tr>
-    </thead>
-    <tbody>
-    <tr th:each="e : ${airlineEmployees}">
-        <td th:text="${e.id}">ID</td>
-        <td th:text="${e.name}">Jane Smith</td>
-        <td th:text="${e.role}">Pilot</td>
+    <tr th:each="ae : ${employees}">
+        <td th:text="${ae.id}"></td>
+        <td th:text="${ae.name}"></td>
+        <td th:text="${ae.role}"></td>
+        <td th:text="${ae.company}"></td>
         <td>
-            <!-- Buton edit -->
-            <a th:href="@{'/airline-employees/' + ${e.id} + '/edit'}">Edit</a>
-
-            <!-- Buton delete -->
-            <form th:action="@{'/airline-employees/' + ${e.id} + '/delete'}" method="post" style="display:inline;">
-                <button type="submit">Delete</button>
-            </form>
+            <a th:href="@{/airline-employees/edit/{id}(id=${ae.id})}">Edit</a>
+            <a th:href="@{/airline-employees/delete/{id}(id=${ae.id})}">Delete</a>
+            <a th:href="@{/airline-employees/details/{id}(id=${ae.id})}">Details</a>
         </td>
     </tr>
-    </tbody>
 </table>
-</body>
-</html>

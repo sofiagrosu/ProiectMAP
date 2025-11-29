@@ -1,31 +1,17 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Flight Assignment Form</title>
-</head>
-<body>
-<h1 th:text="${assignment.id == null} ? 'Create Flight Assignment' : 'Edit Flight Assignment'"></h1>
+<h1 th:text="${assignment.id == null} ? 'Add Assignment' : 'Edit Assignment'"></h1>
+<form th:action="@{/assignments/save}" th:object="${assignment}" method="post">
+    <label>Flight:</label>
+    <select th:field="*{flightId}">
+        <option th:each="f : ${flights}" th:value="${f.id}" th:text="${f.name}"></option>
+    </select>
 
-<form th:action="@{${assignment.id == null} ? '/flight-assignments' : '/flight-assignments/' + ${assignment.id} + '/edit'}"
-      th:object="${assignment}"
-      method="post">
+    <label>Staff:</label>
+    <select th:field="*{staffId}">
+        <option th:each="s : ${staffs}" th:value="${s.id}" th:text="${s.name}"></option>
+    </select>
 
-    <div>
-        <label>Flight Id</label>
-        <input th:field="*{flightId}" placeholder="F-1"/>
-    </div>
+    <label>Assignment Date:</label>
+    <input type="date" th:field="*{assigmentDate}" />
 
-    <div>
-        <label>Staff Id</label>
-        <input th:field="*{staffId}" placeholder="S-1"/>
-    </div>
-
-    <div style="margin-top:10px;">
-        <button type="submit" th:text="${assignment.id == null} ? 'Save' : 'Update'"></button>
-        <a th:href="@{/flight-assignments}">Back</a>
-    </div>
-
+    <button type="submit">Save</button>
 </form>
-</body>
-</html>

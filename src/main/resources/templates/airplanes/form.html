@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Airplane Form</title>
+    <meta charset="UTF-8">
+    <title th:text="${airplane.id == null ? 'Add Airplane' : 'Edit Airplane'}">Airplane Form</title>
 </head>
 <body>
-<h1 th:text="${airplane.id == null} ? 'Create Airplane' : 'Edit Airplane'"></h1>
+<h2 th:text="${airplane.id == null ? 'Add Airplane' : 'Edit Airplane'}"></h2>
 
-<form th:action="@{${airplane.id == null} ? '/airplanes' : '/airplanes/' + ${airplane.id} + '/edit'}"
-      th:object="${airplane}"
-      method="post">
+<form th:action="@{/airplanes/save}" th:object="${airplane}" method="post">
+    <input type="hidden" th:field="*{id}"/>
 
     <div>
-        <label>Number</label>
-        <input th:field="*{number}" type="number" min="0" placeholder="e.g., 320"/>
+        <label>Number:</label>
+        <input type="number" th:field="*{number}" required/>
     </div>
 
-    <div style="margin-top:10px;">
-        <button type="submit" th:text="${airplane.id == null} ? 'Save' : 'Update'"></button>
+    <div>
+        <button type="submit">Save</button>
         <a th:href="@{/airplanes}">Back</a>
     </div>
-
 </form>
 </body>
 </html>

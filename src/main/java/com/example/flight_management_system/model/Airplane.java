@@ -9,22 +9,22 @@ import java.util.List;
 public class Airplane implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private int number;
 
     @OneToMany(mappedBy = "airplane", cascade = CascadeType.ALL)
     private List<Flight> flights = new ArrayList<>();
 
-    public Airplane() { this.id = null; this.number = 0; }
-    public Airplane(String id, int number) { this.id = id; this.number = number; }
+    public Airplane() { this.number = 0; }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    public Airplane(int number) { this.number = number; }
 
+    @Override public Long getId() { return id; }
+    @Override public void setId(Long id) { this.id = id; }
     public int getNumber() { return number; }
     public void setNumber(int number) { this.number = number; }
-
     public List<Flight> getFlights() { return flights; }
     public void setFlights(List<Flight> flights) { this.flights = flights; }
 }

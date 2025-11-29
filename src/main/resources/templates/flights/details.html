@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Details</title>
+</head>
+<body>
+<h2>Flight Details</h2>
+
+<p><strong>ID:</strong> <span th:text="${flight.id}"></span></p>
+<p><strong>Name:</strong> <span th:text="${flight.name}"></span></p>
+<p><strong>Gate:</strong> <span th:text="${flight.gateNumber}"></span></p>
+
+<h3>Tickets</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Passenger</th>
+        <th>Seat</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="t : ${flight.tickets}">
+        <td th:text="${t.id}"></td>
+        <td th:text="${t.passenger.name}"></td>
+        <td th:text="${t.seatNumber}"></td>
+        <td th:text="${t.price}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Flight Assignments</h3>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Staff</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="fa : ${flight.flightAssignments}">
+        <td th:text="${fa.airlineEmployee.name}"></td>
+        <td th:text="${fa.date}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/flights}">Back</a>
+
+</body>
+</html>

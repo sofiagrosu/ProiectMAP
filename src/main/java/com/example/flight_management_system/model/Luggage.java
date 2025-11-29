@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 public class Luggage implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id")
@@ -16,15 +17,24 @@ public class Luggage implements BaseMethods {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Luggage() { this.id = null; this.status = Status.CHECKED_IN; }
-    public Luggage(String id, Ticket ticket, Status status) { this.id = id; this.ticket = ticket; this.status = status; }
+    public Luggage() { this.status = Status.CHECKED_IN; }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    public Luggage(Ticket ticket, Status status) {
+        this.ticket = ticket;
+        this.status = status;
+    }
+
+    @Override
+    public Long getId() { return id; }
+
+    @Override
+    public void setId(Long id) { this.id = id; }
 
     public Ticket getTicket() { return ticket; }
+
     public void setTicket(Ticket ticket) { this.ticket = ticket; }
 
     public Status getStatus() { return status; }
+
     public void setStatus(Status status) { this.status = status; }
 }

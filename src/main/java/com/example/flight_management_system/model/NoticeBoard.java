@@ -10,23 +10,22 @@ import java.util.List;
 public class NoticeBoard implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private LocalDate date;
 
-    @OneToMany
-    @JoinColumn(name = "noticeboard_id")
+    @OneToMany(mappedBy = "noticeBoard", cascade = CascadeType.ALL)
     private List<Flight> flightsOfTheDay = new ArrayList<>();
 
-    public NoticeBoard() { this.id = null; this.date = LocalDate.now(); }
-    public NoticeBoard(String id, LocalDate date) { this.id = id; this.date = date; }
+    public NoticeBoard() { this.date = LocalDate.now(); }
+    public NoticeBoard(LocalDate date) { this.date = date; }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    @Override public Long getId() { return id; }
+    @Override public void setId(Long id) { this.id = id; }
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }
-
     public List<Flight> getFlightsOfTheDay() { return flightsOfTheDay; }
     public void setFlightsOfTheDay(List<Flight> flightsOfTheDay) { this.flightsOfTheDay = flightsOfTheDay; }
 }

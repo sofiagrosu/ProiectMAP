@@ -1,38 +1,62 @@
 package com.example.flight_management_system.controller;
 
 import com.example.flight_management_system.model.NoticeBoard;
-import com.example.flight_management_system.service.CrudService;
+import com.example.flight_management_system.repository.NoticeBoardRepository;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/noticeboards")
-public class NoticeBoardController extends AbstractCrudController<NoticeBoard> {
+public class NoticeBoardController {
 
-    public NoticeBoardController(CrudService<NoticeBoard> service) {
-        super(service,
-                "/noticeboards",
-                "noticeboards/index",   // folder+view
-                "noticeboards/form",
-                "noticeboards",         // << list model key
-                "noticeboard",          // << form model key
-                NoticeBoard::new);
-    }
+    @Autowired
+    private NoticeBoardRepository noticeBoardRepository;
 
-    // (opțional – ajută la debug, sigur că folosești exact cheia din view)
-    @Override
     @GetMapping
-    public String list(org.springframework.ui.Model model) {
-        model.addAttribute("noticeboards", service.findAll());
+    public String listNoticeBoards(Model model) {
+        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
         return "noticeboards/index";
     }
 
-    @Override
     @GetMapping("/new")
-    public String form(org.springframework.ui.Model model) {
-        model.addAttribute("noticeboard", new NoticeBoard());
+    public String createNoticeBoardForm(Model model) {
+        model.addAttribute("noticeBoard", new NoticeBoard());
         return "noticeboards/form";
     }
+
+    @PostMapping("/save")
+    public String saveNoticeBoard(@Valid @ModelAttribute("noticeBoard") NoticeBoard noticeBoard,
+                                  BindingResult result) {
+        if (result.hasErrors()) return "noticeboards/form";
+        noticeBoardRepository.save(noticeBoard);
+        return "redirect:/noticeboards";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editNoticeBoardForm(@PathVariable("id") Long id, Model model) {
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid noticeboard Id:" + id));
+        model.addAttribute("noticeBoard", noticeBoard);
+        return "noticeboards/form";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteNoticeBoard(@PathVariable("id") Long id) {
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid noticeboard Id:" + id));
+        noticeBoardRepository.delete(noticeBoard);
+        return "redirect:/noticeboards";
+    }
+
+    @GetMapping("/details/{id}")
+    public String noticeBoardDetails(@PathVariable("id") Long id, Model model) {
+        NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid noticeboard Id:" + id));
+        model.addAttribute("noticeBoard", noticeBoard);
+        return "noticeboards/details";
+    }
 }
-
-

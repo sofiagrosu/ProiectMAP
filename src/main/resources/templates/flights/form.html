@@ -1,36 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Flight Form</title>
+    <meta charset="UTF-8">
+    <title th:text="${flight.id == null ? 'Add Flight' : 'Edit Flight'}">Flight Form</title>
 </head>
 <body>
-<h1 th:text="${flight.id == null} ? 'Add a new Flight' : 'Edit Flight'"></h1>
+<h2 th:text="${flight.id == null ? 'Add Flight' : 'Edit Flight'}"></h2>
 
-<form th:action="@{${flight.id == null} ? '/flights' : '/flights/' + ${flight.id} + '/edit'}"
-      th:object="${flight}"
-      method="post">
+<form th:action="@{/flights/save}" th:object="${flight}" method="post">
+    <input type="hidden" th:field="*{id}"/>
 
     <div>
-        <label>Name: <input type="text" th:field="*{name}" /></label>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required/>
     </div>
 
     <div>
-        <label>NoticeBoardId: <input type="text" th:field="*{noticeBoardId}" /></label>
+        <label>Gate Number:</label>
+        <input type="text" th:field="*{gateNumber}" required/>
     </div>
 
     <div>
-        <label>AirplaneId: <input type="text" th:field="*{airplaneId}" /></label>
-    </div>
-
-    <div>
-        <label>Gate Number: <input type="text" th:field="*{gateNumber}" /></label>
-    </div>
-
-    <div style="margin-top:10px;">
-        <button type="submit" th:text="${flight.id == null} ? 'Save' : 'Update'"></button>
+        <button type="submit">Save</button>
         <a th:href="@{/flights}">Back</a>
     </div>
-
 </form>
+
 </body>
 </html>

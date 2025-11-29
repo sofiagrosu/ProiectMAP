@@ -8,7 +8,8 @@ import java.time.LocalDate;
 public class FlightAssignment implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
@@ -20,13 +21,16 @@ public class FlightAssignment implements BaseMethods {
 
     private LocalDate assignmentDate;
 
-    public FlightAssignment() { this.id = null; this.assignmentDate = LocalDate.now(); }
-    public FlightAssignment(String id, Flight flight, Staff staff, LocalDate assignmentDate) {
-        this.id = id; this.flight = flight; this.staff = staff; this.assignmentDate = assignmentDate;
+    public FlightAssignment() { this.assignmentDate = LocalDate.now(); }
+
+    public FlightAssignment(Flight flight, Staff staff, LocalDate assignmentDate) {
+        this.flight = flight;
+        this.staff = staff;
+        this.assignmentDate = assignmentDate;
     }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    @Override public Long getId() { return id; }
+    @Override public void setId(Long id) { this.id = id; }
 
     public Flight getFlight() { return flight; }
     public void setFlight(Flight flight) { this.flight = flight; }

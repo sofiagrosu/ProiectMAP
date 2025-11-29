@@ -10,7 +10,7 @@ public class NoticeBoardService {
     private final NoticeBoardRepository repo;
     public NoticeBoardService(NoticeBoardRepository repo){ this.repo = repo; }
     public List<NoticeBoard> findAll(){ return repo.findAll(); }
-    public NoticeBoard findById(String id){ return repo.findById(id).orElse(null); }
+    public NoticeBoard findById(Long id){ return repo.findById(id).orElse(null); }
     public NoticeBoard save(NoticeBoard n){ return repo.save(n); }
-    public void delete(String id){ repo.findById(id).ifPresent(repo::delete); }
+    public void delete(Long id){ repo.findById(id).ifPresent(repo::delete); }
 }

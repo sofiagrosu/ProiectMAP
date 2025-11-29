@@ -1,40 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
     <title>Tickets</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <h1>Tickets</h1>
-
-<a th:href="@{/tickets/new}">Add ticket</a><br/><br/>
-
-<table border="1" cellpadding="6" cellspacing="0">
+<a href="/tickets/new">Add Ticket</a>
+<table border="1">
     <thead>
     <tr>
         <th>ID</th>
-        <th>Passenger Id</th>
-        <th>Flight Id</th>
-        <th>Price</th>
+        <th>Passenger</th>
+        <th>Flight</th>
         <th>Seat</th>
+        <th>Price</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="t : ${tickets}">
-        <td th:text="${t.id}">ID</td>
-        <td th:text="${t.passengerId}">P-1</td>
-        <td th:text="${t.flightId}">F-1</td>
-        <td th:text="${t.price}">199.99</td>
-        <td th:text="${t.seatNumber}">12A</td>
+        <td th:text="${t.id}"></td>
+        <td th:text="${t.passenger != null ? t.passenger.name : 'No Passenger'}"></td>
+        <td th:text="${t.flight != null ? t.flight.name : 'No Flight'}"></td>
+        <td th:text="${t.seatNumber}"></td>
+        <td th:text="${t.price}"></td>
         <td>
-            <!-- Link pentru editare -->
-            <a th:href="@{'/tickets/' + ${t.id} + '/edit'}">Edit</a>
-
-            <!-- Formular pentru stergere -->
-            <form th:action="@{'/tickets/' + ${t.id} + '/delete'}" method="post" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
+            <a th:href="@{'/tickets/edit/' + ${t.id}}">Edit</a> |
+            <a th:href="@{'/tickets/delete/' + ${t.id}}">Delete</a> |
+            <a th:href="@{'/tickets/details/' + ${t.id}}">Details</a>
         </td>
     </tr>
     </tbody>

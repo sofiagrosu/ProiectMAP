@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Passenger Details</title>
+</head>
+<body>
+<h1>Passenger Details</h1>
+
+<p><strong>ID:</strong> <span th:text="${passenger.id}"></span></p>
+<p><strong>Name:</strong> <span th:text="${passenger.name}"></span></p>
+<p><strong>Currency:</strong> <span th:text="${passenger.currency}"></span></p>
+<p><strong>Checked In:</strong> <span th:text="${passenger.checkedIn}"></span></p>
+
+<h2>Tickets</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Flight</th>
+        <th>Seat Number</th>
+        <th>Price</th>
+        <th>Luggages</th>
+    </tr>
+    <tr th:each="ticket : ${passenger.tickets}">
+        <td th:text="${ticket.id}"></td>
+        <td th:text="${ticket.flight.name}"></td>
+        <td th:text="${ticket.seatNumber}"></td>
+        <td th:text="${ticket.price}"></td>
+        <td>
+            <ul>
+                <li th:each="l : ${ticket.luggages}" th:text="${l.id + ' (' + l.status + ')'}"></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+
+<a th:href="@{/passengers}">Back to list</a>
+</body>
+</html>

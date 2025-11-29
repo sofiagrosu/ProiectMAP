@@ -10,7 +10,8 @@ import java.util.List;
 public class Passenger implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank
     @Column(nullable = false)
@@ -24,11 +25,15 @@ public class Passenger implements BaseMethods {
 
     private boolean isCheckedIn;
 
-    public Passenger() { this.id = null; this.name = ""; this.currency = ""; this.isCheckedIn = false; }
-    public Passenger(String id, String name, String currency) { this.id = id; this.name = name; this.currency = currency; }
+    public Passenger() { this.name = ""; this.currency = ""; this.isCheckedIn = false; }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    public Passenger(String name, String currency) {
+        this.name = name;
+        this.currency = currency;
+    }
+
+    @Override public Long getId() { return id; }
+    @Override public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

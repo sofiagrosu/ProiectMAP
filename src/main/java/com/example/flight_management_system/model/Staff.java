@@ -8,17 +8,23 @@ import jakarta.persistence.*;
 public abstract class Staff implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    public Staff() { this.id = null; this.name = ""; }
-    public Staff(String id, String name) { this.id = id; this.name = name; }
+    public Staff() { this.name = ""; }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    public Staff(String name) { this.name = name; }
+
+    @Override
+    public Long getId() { return id; }
+
+    @Override
+    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
+
     public void setName(String name) { this.name = name; }
 }

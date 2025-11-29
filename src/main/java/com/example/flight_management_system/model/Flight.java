@@ -10,12 +10,12 @@ import java.util.List;
 public class Flight implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank
     private String name;
 
-    private String noticeBoardId; // we will also map NoticeBoard relation
     @ManyToOne
     @JoinColumn(name = "airplane_id")
     private Airplane airplane;
@@ -28,29 +28,32 @@ public class Flight implements BaseMethods {
 
     private String gateNumber;
 
-    public Flight() { this.id = null; this.name = ""; this.noticeBoardId = ""; this.gateNumber = ""; }
-    public Flight(String id, String name, String noticeBoardId, Airplane airplane, String gateNumber){
-        this.id = id; this.name = name; this.noticeBoardId = noticeBoardId; this.airplane = airplane; this.gateNumber = gateNumber;
+    @ManyToOne
+    @JoinColumn(name = "noticeboard_id")
+    private NoticeBoard noticeBoard;
+
+    public Flight() { this.name = ""; this.gateNumber = ""; }
+
+    public Flight(String name, Airplane airplane, String gateNumber, NoticeBoard noticeBoard){
+        this.name = name;
+        this.airplane = airplane;
+        this.gateNumber = gateNumber;
+        this.noticeBoard = noticeBoard;
     }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    @Override public Long getId() { return id; }
+    @Override public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-
-    public String getNoticeBoardId() { return noticeBoardId; }
-    public void setNoticeBoardId(String noticeBoardId) { this.noticeBoardId = noticeBoardId; }
-
     public Airplane getAirplane() { return airplane; }
     public void setAirplane(Airplane airplane) { this.airplane = airplane; }
-
     public List<Ticket> getTickets() { return tickets; }
     public void setTickets(List<Ticket> tickets) { this.tickets = tickets; }
-
     public List<FlightAssignment> getFlightAssignments() { return flightAssignments; }
     public void setFlightAssignments(List<FlightAssignment> flightAssignments) { this.flightAssignments = flightAssignments; }
-
     public String getGateNumber() { return gateNumber; }
     public void setGateNumber(String gateNumber) { this.gateNumber = gateNumber; }
+    public NoticeBoard getNoticeBoard() { return noticeBoard; }
+    public void setNoticeBoard(NoticeBoard noticeBoard) { this.noticeBoard = noticeBoard; }
 }

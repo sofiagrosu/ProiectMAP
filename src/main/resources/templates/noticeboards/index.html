@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Notice Boards</title>
+    <title>NoticeBoards</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1>Notice Boards</h1>
-
-<a th:href="@{/noticeboards/new}">Add Notice Board</a><br/><br/>
-
-<table border="1" cellpadding="6" cellspacing="0">
+<h1>NoticeBoards</h1>
+<a th:href="@{/noticeboards/new}">New NoticeBoard</a>
+<table border="1">
     <thead>
     <tr>
         <th>ID</th>
         <th>Date</th>
+        <th>Flights of the Day</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="n : ${noticeboards}">
-        <td th:text="${n.id}">ID</td>
-        <td th:text="${n.date}">2025-11-02</td>
+    <tr th:each="nb : ${noticeboards}">
+        <td th:text="${nb.id}">ID</td>
+        <td th:text="${nb.date}">Date</td>
         <td>
-            <!-- Link pentru editare -->
-            <a th:href="@{'/noticeboards/' + ${n.id} + '/edit'}">Edit</a>
-
-            <!-- Formular pentru stergere -->
-            <form th:action="@{'/noticeboards/' + ${n.id} + '/delete'}" method="post" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
+            <ul>
+                <li th:each="f : ${nb.flightsOfTheDay}" th:text="${f.name}">Flight Name</li>
+            </ul>
+        </td>
+        <td>
+            <a th:href="@{'/noticeboards/details/' + ${nb.id}}">Details</a> |
+            <a th:href="@{'/noticeboards/edit/' + ${nb.id}}">Edit</a> |
+            <a th:href="@{'/noticeboards/delete/' + ${nb.id}}"
+               onclick="return confirm('Are you sure?')">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
-
 </body>
 </html>

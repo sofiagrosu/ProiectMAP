@@ -6,7 +6,7 @@ public interface GenericRepository<T> {
     public void save(T item);
     public boolean delete(T item);
     public List<T> findAll();
-    public T findById(String id);
+    public T findById(Long id);
     void update(T item);
 
 }

@@ -10,7 +10,7 @@ public class LuggageService {
     private final LuggageRepository repo;
     public LuggageService(LuggageRepository repo){ this.repo = repo; }
     public List<Luggage> findAll(){ return repo.findAll(); }
-    public Luggage findById(String id){ return repo.findById(id).orElse(null); }
+    public Luggage findById(Long id){ return repo.findById(id).orElse(null); }
     public Luggage save(Luggage l){ return repo.save(l); }
-    public void delete(String id){ repo.findById(id).ifPresent(repo::delete); }
+    public void delete(Long id){ repo.findById(id).ifPresent(repo::delete); }
 }

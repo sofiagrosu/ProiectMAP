@@ -1,41 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
     <title>Ticket Form</title>
 </head>
 <body>
-<h1 th:text="${ticket.id == null} ? 'Create Ticket' : 'Edit Ticket'"></h1>
+<h1 th:text="${ticket.id != null ? 'Edit Ticket' : 'New Ticket'}"></h1>
 
-<form th:action="@{${ticket.id == null} ? '/tickets' : '/tickets/' + ${ticket.id} + '/edit'}"
-      th:object="${ticket}"
-      method="post">
+<form th:action="@{/tickets/save}" th:object="${ticket}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label>Passenger:</label>
+    <select name="passengerId">
+        <option th:each="p : ${passengers}" th:value="${p.id}" th:text="${p.name}"
+                th:selected="${ticket.passenger != null && ticket.passenger.id == p.id}"></option>
+    </select><br/>
 
-    <div>
-        <label>Passenger Id</label>
-        <input th:field="*{passengerId}" placeholder="P-1"/>
-    </div>
+    <label>Flight:</label>
+    <select name="flightId">
+        <option th:each="f : ${flights}" th:value="${f.id}" th:text="${f.name}"
+                th:selected="${ticket.flight != null && ticket.flight.id == f.id}"></option>
+    </select><br/>
 
-    <div>
-        <label>Flight Id</label>
-        <input th:field="*{flightId}" placeholder="F-1"/>
-    </div>
+    <label>Seat Number:</label>
+    <input type="text" th:field="*{seatNumber}"/><br/>
 
-    <div>
-        <label>Price</label>
-        <input th:field="*{price}" type="number" step="0.01" min="0" placeholder="199.99"/>
-    </div>
+    <label>Price:</label>
+    <input type="number" th:field="*{price}" step="0.01"/><br/>
 
-    <div>
-        <label>Seat Number</label>
-        <input th:field="*{seatNumber}" placeholder="12A"/>
-    </div>
-
-    <div style="margin-top:10px;">
-        <button type="submit" th:text="${ticket.id == null} ? 'Save' : 'Update'"></button>
-        <a th:href="@{/tickets}">Back</a>
-    </div>
-
+    <button type="submit">Save</button>
 </form>
+
+<a href="/tickets">Back to list</a>
 </body>
 </html>

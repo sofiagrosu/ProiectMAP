@@ -1,39 +1,22 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Passengers</title>
-</head>
-<body>
 <h1>Passengers</h1>
-
-<a th:href="@{/passengers/new}">Add passenger</a><br/><br/>
-
-<table border="1" cellpadding="6" cellspacing="0">
-    <thead>
+<a th:href="@{/passengers/new}">Add New Passenger</a>
+<table border="1" cellpadding="5">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Currency</th>
+        <th>Checked In</th>
         <th>Actions</th>
     </tr>
-    </thead>
-    <tbody>
     <tr th:each="p : ${passengers}">
-        <td th:text="${p.id}">ID</td>
-        <td th:text="${p.name}">John Doe</td>
-        <td th:text="${p.currency}">EUR</td>
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.currency}"></td>
+        <td th:text="${p.checkedIn}"></td>
         <td>
-            <!-- Link pentru editare -->
-            <a th:href="@{'/passengers/' + ${p.id} + '/edit'}">Edit</a>
-
-            <!-- Formular pentru stergere -->
-            <form th:action="@{'/passengers/' + ${p.id} + '/delete'}" method="post" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
+            <a th:href="@{/passengers/edit/{id}(id=${p.id})}">Edit</a>
+            <a th:href="@{/passengers/delete/{id}(id=${p.id})}">Delete</a>
+            <a th:href="@{/passengers/details/{id}(id=${p.id})}">Details</a>
         </td>
     </tr>
-    </tbody>
 </table>
-</body>
-</html>

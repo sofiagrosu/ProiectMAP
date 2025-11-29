@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Flights</title>
 </head>
 <body>
-<h1>Flights</h1>
+<h2>Flights</h2>
 
-<a th:href="@{/flights/new}">Add new flight</a><br/><br/>
+<a th:href="@{/flights/new}">Add New Flight</a>
 
-<table border="1" cellpadding="6" cellspacing="0">
+<table border="1" cellpadding="5" cellspacing="0">
     <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Airplane</th>
         <th>Gate</th>
+        <th>Tickets Count</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="flight : ${flights}">
-        <td th:text="${flight.id}">ID</td>
-        <td th:text="${flight.name}">Flight Name</td>
-        <td th:text="${flight.airplaneId}">Airplane</td>
-        <td th:text="${flight.gateNumber}">Gate</td>
+    <tr th:each="f : ${flights}">
+        <td th:text="${f.id}"></td>
+        <td th:text="${f.name}"></td>
+        <td th:text="${f.gateNumber}"></td>
+        <td th:text="${f.tickets.size()}"></td>
         <td>
-            <!-- Link pentru editare -->
-            <a th:href="@{'/flights/' + ${flight.id} + '/edit'}">Edit</a>
-
-            <!-- Formular pentru stergere -->
-            <form th:action="@{'/flights/' + ${flight.id} + '/delete'}" method="post" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
+            <a th:href="@{|/flights/details/${f.id}|}">Details</a> |
+            <a th:href="@{|/flights/edit/${f.id}|}">Edit</a> |
+            <a th:href="@{|/flights/delete/${f.id}|}" onclick="return confirm('Are you sure?')">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

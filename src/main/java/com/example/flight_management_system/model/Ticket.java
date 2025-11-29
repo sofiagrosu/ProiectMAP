@@ -2,7 +2,6 @@ package com.example.flight_management_system.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,8 @@ import java.util.List;
 public class Ticket implements BaseMethods {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "passenger_id")
@@ -29,13 +29,17 @@ public class Ticket implements BaseMethods {
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Luggage> luggages = new ArrayList<>();
 
-    public Ticket() { this.id = null; this.price = 0; this.seatNumber = ""; }
-    public Ticket(String id, Passenger passenger, Flight flight, double price, String seatNumber) {
-        this.id = id; this.passenger = passenger; this.flight = flight; this.price = price; this.seatNumber = seatNumber;
+    public Ticket() { this.price = 0; this.seatNumber = ""; }
+
+    public Ticket(Passenger passenger, Flight flight, double price, String seatNumber) {
+        this.passenger = passenger;
+        this.flight = flight;
+        this.price = price;
+        this.seatNumber = seatNumber;
     }
 
-    @Override public String getId() { return id; }
-    @Override public void setId(String id) { this.id = id; }
+    @Override public Long getId() { return id; }
+    @Override public void setId(Long id) { this.id = id; }
 
     public Passenger getPassenger() { return passenger; }
     public void setPassenger(Passenger passenger) { this.passenger = passenger; }

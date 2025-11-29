@@ -1,41 +1,13 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${airlineEmployee.id != null} ? 'Edit Airline Employee' : 'New Airline Employee'">Airline Employee</title>
-</head>
-<body>
-<h1 th:text="${airlineEmployee.id != null} ? 'Edit Airline Employee' : 'Create Airline Employee'">Create Airline Employee</h1>
+<h1 th:text="${employee.id == null} ? 'Add Airline Employee' : 'Edit Airline Employee'"></h1>
+<form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" />
 
-<form th:action="${airlineEmployee.id != null} ? @{/airline-employees/{id}/edit(id=${airlineEmployee.id})} : @{/airline-employees}"
-      th:object="${airlineEmployee}"
-      method="post">
+    <label>Role:</label>
+    <input type="text" th:field="*{role}" />
 
-    <div>
-        <label>Name</label>
-        <input th:field="*{name}" placeholder="Jane Smith"/>
-    </div>
+    <label>Company:</label>
+    <input type="text" th:field="*{company}" />
 
-    <div>
-        <label>Role</label>
-        <select th:field="*{role}">
-            <option th:each="r : ${T(com.example.flight_management_system.model.Role).values()}"
-                    th:value="${r}"
-                    th:text="${r}">
-            </option>
-        </select>
-    </div>
-
-    <div>
-        <label>Company</label>
-        <input th:field="*{company}" placeholder="e.g. BlueAir"/>
-    </div>
-
-    <div style="margin-top:10px;">
-        <button type="submit" th:text="${airlineEmployee.id != null} ? 'Update' : 'Save'">Save</button>
-        <a th:href="@{/airline-employees}">Back</a>
-    </div>
-
+    <button type="submit">Save</button>
 </form>
-</body>
-</html>

@@ -10,7 +10,7 @@ public class TicketService {
     private final TicketRepository repo;
     public TicketService(TicketRepository repo){ this.repo = repo; }
     public List<Ticket> findAll(){ return repo.findAll(); }
-    public Ticket findById(String id){ return repo.findById(id).orElse(null); }
+    public Ticket findById(Long id){ return repo.findById(id).orElse(null); }
     public Ticket save(Ticket t){ return repo.save(t); }
-    public void delete(String id){ repo.findById(id).ifPresent(repo::delete); }
+    public void delete(Long id){ repo.findById(id).ifPresent(repo::delete); }
 }

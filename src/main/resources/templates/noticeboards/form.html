@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Notice Board Form</title>
+    <title th:text="${noticeBoard.id != null} ? 'Edit NoticeBoard' : 'New NoticeBoard'">Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<h1 th:text="${noticeboard.id == null} ? 'Create Notice Board' : 'Edit Notice Board'"></h1>
-
-<form th:action="@{${noticeboard.id == null} ? '/noticeboards' : '/noticeboards/' + ${noticeboard.id} + '/edit'}"
-      th:object="${noticeboard}"
-      method="post">
-
-    <div>
-        <label>Date</label>
-        <input th:field="*{date}" type="date"/>
-    </div>
-
-    <div style="margin-top:10px;">
-        <button type="submit" th:text="${noticeboard.id == null} ? 'Save' : 'Update'"></button>
-        <a th:href="@{/noticeboards}">Back</a>
-    </div>
-
+<h1 th:text="${noticeBoard.id != null} ? 'Edit NoticeBoard' : 'New NoticeBoard'">Form</h1>
+<form th:action="@{/noticeboards/save}" th:object="${noticeBoard}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <label>Date:</label>
+    <input type="date" th:field="*{date}" required />
+    <br/><br/>
+    <button type="submit">Save</button>
+    <a th:href="@{/noticeboards}">Cancel</a>
 </form>
 </body>
 </html>
