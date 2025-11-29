@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.*;
 public class AirportEmployeeController {
 
     @Autowired
-    private AirportEmployeeRepository repository;
+    private AirportEmployeeRepository airportEmployeeRepository;
 
     @GetMapping
     public String listEmployees(Model model) {
-        model.addAttribute("employees", repository.findAll());
+        model.addAttribute("employees", airportEmployeeRepository.findAll());
         return "airport-employees/index";
     }
 
     @GetMapping("/new")
-    public String createEmployeeForm(Model model) {
+    public String createForm(Model model) {
         model.addAttribute("employee", new AirportEmployee());
         return "airport-employees/form";
     }
@@ -32,29 +32,29 @@ public class AirportEmployeeController {
     public String saveEmployee(@Valid @ModelAttribute("employee") AirportEmployee employee,
                                BindingResult result) {
         if (result.hasErrors()) return "airport-employees/form";
-        repository.save(employee);
+        airportEmployeeRepository.save(employee);
         return "redirect:/airport-employees";
     }
 
     @GetMapping("/edit/{id}")
-    public String editEmployeeForm(@PathVariable("id") String id, Model model) {
-        AirportEmployee employee = repository.findById(id)
+    public String editForm(@PathVariable("id") Long id, Model model) {
+        AirportEmployee employee = airportEmployeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
         model.addAttribute("employee", employee);
         return "airport-employees/form";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable("id") String id) {
-        AirportEmployee employee = repository.findById(id)
+    public String deleteEmployee(@PathVariable("id") Long id) {
+        AirportEmployee employee = airportEmployeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
-        repository.delete(employee);
+        airportEmployeeRepository.delete(employee);
         return "redirect:/airport-employees";
     }
 
     @GetMapping("/details/{id}")
-    public String employeeDetails(@PathVariable("id") String id, Model model) {
-        AirportEmployee employee = repository.findById(id)
+    public String details(@PathVariable("id") Long id, Model model) {
+        AirportEmployee employee = airportEmployeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
         model.addAttribute("employee", employee);
         return "airport-employees/details";

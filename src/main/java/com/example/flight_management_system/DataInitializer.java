@@ -145,6 +145,6 @@ public class DataInitializer implements CommandLineRunner {
             airlineEmployees.get(i % airlineEmployees.size()).getFlightAssignments().add(fa);
         }
 
-        System.out.println("✅ DataInitializer: All entities created successfully!");
+        System.out.println("DataInitializer: All entities created successfully!");
     }
 }

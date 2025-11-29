@@ -10,7 +10,7 @@ public class AirlineEmployeeService {
     private final AirlineEmployeeRepository repo;
     public AirlineEmployeeService(AirlineEmployeeRepository repo){ this.repo = repo; }
     public List<AirlineEmployee> findAll(){ return repo.findAll(); }
-    public AirlineEmployee findById(String id){ return repo.findById(id).orElse(null); }
+    public AirlineEmployee findById(Long id){ return repo.findById(id).orElse(null); }
     public AirlineEmployee save(AirlineEmployee e){ return repo.save(e); }
-    public void delete(String id){ repo.findById(id).ifPresent(repo::delete); }
+    public void delete(Long id){ repo.findById(id).ifPresent(repo::delete); }
 }

@@ -10,7 +10,7 @@ public class FlightAssignmentService {
     private final FlightAssignmentRepository repo;
     public FlightAssignmentService(FlightAssignmentRepository repo){ this.repo = repo; }
     public List<FlightAssignment> findAll(){ return repo.findAll(); }
-    public FlightAssignment findById(String id){ return repo.findById(id).orElse(null); }
+    public FlightAssignment findById(Long id){ return repo.findById(id).orElse(null); }
     public FlightAssignment save(FlightAssignment fa){ return repo.save(fa); }
-    public void delete(String id){ repo.findById(id).ifPresent(repo::delete); }
+    public void delete(Long id){ repo.findById(id).ifPresent(repo::delete); }
 }

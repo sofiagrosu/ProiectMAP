@@ -1,17 +1,46 @@
-<h1 th:text="${assignment.id == null} ? 'Add Assignment' : 'Edit Assignment'"></h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment Form</title>
+</head>
+<body>
+
+<h2 th:text="${assignment.id == null} ? 'Add Assignment' : 'Edit Assignment'"></h2>
+
 <form th:action="@{/assignments/save}" th:object="${assignment}" method="post">
+
+    <input type="hidden" th:field="*{id}">
+
     <label>Flight:</label>
-    <select th:field="*{flightId}">
-        <option th:each="f : ${flights}" th:value="${f.id}" th:text="${f.name}"></option>
+    <select th:field="*{flight}">
+        <option value="">-- select flight --</option>
+        <option th:each="f : ${flights}"
+                th:value="${f.id}"
+                th:text="${f.name}">
+        </option>
     </select>
+    <br><br>
 
     <label>Staff:</label>
-    <select th:field="*{staffId}">
-        <option th:each="s : ${staffs}" th:value="${s.id}" th:text="${s.name}"></option>
+    <select th:field="*{staff}">
+        <option value="">-- select staff --</option>
+        <option th:each="s : ${staff}"
+                th:value="${s.id}"
+                th:text="${s.name}">
+        </option>
     </select>
+    <br><br>
 
-    <label>Assignment Date:</label>
-    <input type="date" th:field="*{assigmentDate}" />
+    <label>Date:</label>
+    <input type="date" th:field="*{assignmentDate}">
+    <br><br>
 
     <button type="submit">Save</button>
 </form>
+
+<br>
+<a th:href="@{/assignments}">Back</a>
+
+</body>
+</html>

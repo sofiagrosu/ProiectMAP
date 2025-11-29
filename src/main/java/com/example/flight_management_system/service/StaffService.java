@@ -21,7 +21,7 @@ public class StaffService {
     }
 
     /** Caută după ID (funcționează pentru AirlineEmployee și AirportEmployee) */
-    public Staff findById(String id) {
+    public Staff findById(Long id) {
         return staffRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Staff not found with id: " + id));
     }
@@ -32,7 +32,7 @@ public class StaffService {
     }
 
     /** Șterge un angajat după ID */
-    public void delete(String id) {
+    public void delete(Long id) {
         staffRepository.deleteById(id);
     }
 }

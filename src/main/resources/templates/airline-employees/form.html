@@ -1,13 +1,29 @@
-<h1 th:text="${employee.id == null} ? 'Add Airline Employee' : 'Edit Airline Employee'"></h1>
-<form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" />
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Airline Employee Form</title>
+</head>
+<body>
+<div>
+    <h2 th:text="${employee.id == null ? 'Add Employee' : 'Edit Employee'}"></h2>
+    <form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
+        <input type="hidden" th:field="*{id}" />
 
-    <label>Role:</label>
-    <input type="text" th:field="*{role}" />
+        <div>
+            <label>Name:</label>
+            <input type="text" th:field="*{name}" required />
+        </div>
 
-    <label>Company:</label>
-    <input type="text" th:field="*{company}" />
+        <div>
+            <label>Role:</label>
+            <input type="text" th:field="*{role}" required />
+        </div>
 
-    <button type="submit">Save</button>
-</form>
+        <div>
+            <button type="submit">Save</button>
+            <a th:href="@{/airline-employees}">Back</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

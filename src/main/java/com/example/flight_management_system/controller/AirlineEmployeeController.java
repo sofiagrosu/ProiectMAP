@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class AirlineEmployeeController {
 
     @Autowired
-    private AirlineEmployeeRepository repository;
+    private AirlineEmployeeRepository employeeRepository;
 
     @GetMapping
     public String listEmployees(Model model) {
-        model.addAttribute("employees", repository.findAll());
+        model.addAttribute("employees", employeeRepository.findAll());
         return "airline-employees/index";
     }
 
@@ -32,29 +32,42 @@ public class AirlineEmployeeController {
     public String saveEmployee(@Valid @ModelAttribute("employee") AirlineEmployee employee,
                                BindingResult result) {
         if (result.hasErrors()) return "airline-employees/form";
-        repository.save(employee);
+
+        // 1. Preluăm obiectul existent din DB dacă are ID
+        if (employee.getId() != null) {
+            AirlineEmployee existing = employeeRepository.findById(employee.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + employee.getId()));
+            existing.setName(employee.getName());
+            existing.setRole(employee.getRole());
+            employeeRepository.save(existing);
+        } else {
+            // 2. Dacă e nou
+            employeeRepository.save(employee);
+        }
+
         return "redirect:/airline-employees";
     }
 
+
     @GetMapping("/edit/{id}")
-    public String editEmployeeForm(@PathVariable("id") String id, Model model) {
-        AirlineEmployee employee = repository.findById(id)
+    public String editEmployeeForm(@PathVariable("id") Long id, Model model) {
+        AirlineEmployee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
         model.addAttribute("employee", employee);
         return "airline-employees/form";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable("id") String id) {
-        AirlineEmployee employee = repository.findById(id)
+    public String deleteEmployee(@PathVariable("id") Long id) {
+        AirlineEmployee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
-        repository.delete(employee);
+        employeeRepository.delete(employee);
         return "redirect:/airline-employees";
     }
 
     @GetMapping("/details/{id}")
-    public String employeeDetails(@PathVariable("id") String id, Model model) {
-        AirlineEmployee employee = repository.findById(id)
+    public String employeeDetails(@PathVariable("id") Long id, Model model) {
+        AirlineEmployee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
         model.addAttribute("employee", employee);
         return "airline-employees/details";
