@@ -1,15 +1,41 @@
-<h1 th:text="${passenger.id == null} ? 'Add Passenger' : 'Edit Passenger'"></h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Passenger Form</title>
+    <style> .error { color: red; } </style>
+</head>
+<body>
+
+<h2><span th:text="${passenger.id} ? 'Edit Passenger' : 'Create New Passenger'"></span></h2>
+
 <form th:action="@{/passengers/save}" th:object="${passenger}" method="post">
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" />
-    <p th:errors="*{name}"></p>
+    <input type="hidden" th:field="*{id}" />
 
-    <label>Currency:</label>
-    <input type="text" th:field="*{currency}" />
-    <p th:errors="*{currency}"></p>
+    <!-- Name Field with @NotBlank Validation Error Display (1.6 a & c) -->
+    <div>
+        <label for="name">Name (required):</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+    </div>
+    <br/>
 
-    <label>Checked In:</label>
-    <input type="checkbox" th:field="*{checkedIn}" />
+    <!-- Currency Field with @NotBlank Validation Error Display (1.6 a & c) -->
+    <div>
+        <label for="currency">Currency (required):</label>
+        <input type="text" id="currency" th:field="*{currency}" />
+        <span class="error" th:if="${#fields.hasErrors('currency')}" th:errors="*{currency}">Currency Error</span>
+    </div>
+    <br/>
+
+    <!-- isCheckedIn Field (Checkbox) -->
+    <div>
+        <input type="checkbox" id="isCheckedIn" th:field="*{checkedIn}" />
+        <label for="isCheckedIn">Is Checked In</label>
+    </div>
+    <br/>
 
     <button type="submit">Save</button>
+    <a th:href="@{/passengers}">Cancel</a>
 </form>
+</body>
+</html>

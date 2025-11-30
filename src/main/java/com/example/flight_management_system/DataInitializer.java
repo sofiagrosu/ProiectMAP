@@ -159,7 +159,9 @@ public class DataInitializer implements CommandLineRunner {
             AirportEmployee ae = new AirportEmployee(
                     "Staff AE " + i,
                     "Dept " + ((i % 3) + 1),
-                    "Desig " + i
+                    "Desig " + i,
+                    // NOUL ARGUMENT: employeeNumber (trebuie să fie String și unic)
+                    "AEMP" + (2000 + i)
             );
             airportEmployeeRepository.save(ae);
             airportEmployees.add(ae);

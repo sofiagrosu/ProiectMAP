@@ -1,6 +1,7 @@
 package com.example.flight_management_system.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -19,6 +20,7 @@ public class FlightAssignment implements BaseMethods {
     @JoinColumn(name = "staff_id")
     private Staff staff;
 
+    @NotNull(message = "Assignment Date is required")
     private LocalDate assignmentDate;
 
     public FlightAssignment() { this.assignmentDate = LocalDate.now(); }

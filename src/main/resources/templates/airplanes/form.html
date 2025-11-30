@@ -12,9 +12,13 @@
     <input type="hidden" th:field="*{id}" />
 
     <div>
-        <label for="number">Airplane Number:</label>
+        <label for="number">Airplane Number (required, unique, positive):</label>
         <input type="number" id="number" th:field="*{number}" />
-        <span class="error" th:if="${#fields.hasErrors('number')}" th:errors="*{number}">Number Error</span>
+        <span class="error"
+              th:if="${#fields.hasErrors('number')}"
+              th:errors="*{number}">
+            Number Error
+        </span>
     </div>
     <br/>
 

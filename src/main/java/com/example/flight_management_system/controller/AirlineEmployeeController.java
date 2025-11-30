@@ -1,6 +1,7 @@
 package com.example.flight_management_system.controller;
 
 import com.example.flight_management_system.model.AirlineEmployee;
+import com.example.flight_management_system.model.Role;
 import com.example.flight_management_system.repository.AirlineEmployeeRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,26 +26,29 @@ public class AirlineEmployeeController {
     @GetMapping("/new")
     public String createEmployeeForm(Model model) {
         model.addAttribute("employee", new AirlineEmployee());
+        model.addAttribute("roles", Role.values());
         return "airline-employees/form";
     }
 
     @PostMapping("/save")
     public String saveEmployee(@Valid @ModelAttribute("employee") AirlineEmployee employee,
-                               BindingResult result) {
-        if (result.hasErrors()) return "airline-employees/form";
+                               BindingResult result,
+                               Model model) {
 
-        // 1. Preluăm obiectul existent din DB dacă are ID
-        if (employee.getId() != null) {
-            AirlineEmployee existing = employeeRepository.findById(employee.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + employee.getId()));
-            existing.setName(employee.getName());
-            existing.setRole(employee.getRole());
-            employeeRepository.save(existing);
-        } else {
-            // 2. Dacă e nou
-            employeeRepository.save(employee);
+        if (result.hasErrors()) {
+            model.addAttribute("roles", Role.values());
+            return "airline-employees/form";
         }
 
+        AirlineEmployee existingEmployee = employeeRepository.findByEmployeeNumber(employee.getEmployeeNumber());
+
+        if (existingEmployee != null && !existingEmployee.getId().equals(employee.getId())) {
+            result.rejectValue("employeeNumber", "unique", "This employee number already exists.");
+            model.addAttribute("roles", Role.values());
+            return "airline-employees/form";
+        }
+
+        employeeRepository.save(employee);
         return "redirect:/airline-employees";
     }
 
@@ -54,6 +58,7 @@ public class AirlineEmployeeController {
         AirlineEmployee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid employee Id:" + id));
         model.addAttribute("employee", employee);
+        model.addAttribute("roles", Role.values());
         return "airline-employees/form";
     }
 

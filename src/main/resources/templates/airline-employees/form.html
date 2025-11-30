@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Airline Employee Form</title>
+    <style> .error { color: red; } </style>
 </head>
 <body>
 <div>
@@ -10,14 +11,39 @@
         <input type="hidden" th:field="*{id}" />
 
         <div>
-            <label>Name:</label>
-            <input type="text" th:field="*{name}" required />
+            <label>Name (inherited from Staff):</label>
+            <input type="text" th:field="*{name}" />
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
         </div>
+        <br>
 
         <div>
-            <label>Role:</label>
-            <input type="text" th:field="*{role}" required />
+            <label>Employee Number (required, unique):</label>
+            <input type="text" th:field="*{employeeNumber}" />
+            <span class="error" th:if="${#fields.hasErrors('employeeNumber')}" th:errors="*{employeeNumber}">Employee Number Error</span>
         </div>
+        <br>
+
+        <div>
+            <label>Company (required):</label>
+            <input type="text" th:field="*{company}" />
+            <span class="error" th:if="${#fields.hasErrors('company')}" th:errors="*{company}">Company Error</span>
+        </div>
+        <br>
+
+        <div>
+            <label>Role (required):</label>
+            <select th:field="*{role}">
+                <option value="">-- Select Role --</option>
+                <option th:each="r : ${roles}"
+                        th:value="${r}"
+                        th:text="${r}">
+                    Role
+                </option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</span>
+        </div>
+        <br>
 
         <div>
             <button type="submit">Save</button>

@@ -31,7 +31,17 @@ public class AirportEmployeeController {
     @PostMapping("/save")
     public String saveEmployee(@Valid @ModelAttribute("employee") AirportEmployee employee,
                                BindingResult result) {
+
         if (result.hasErrors()) return "airport-employees/form";
+
+        // Business Rule: Check for unique employee number
+        AirportEmployee existingEmployee = airportEmployeeRepository.findByEmployeeNumber(employee.getEmployeeNumber());
+
+        if (existingEmployee != null && !existingEmployee.getId().equals(employee.getId())) {
+            result.rejectValue("employeeNumber", "unique", "An employee with this number already exists.");
+            return "airport-employees/form";
+        }
+
         airportEmployeeRepository.save(employee);
         return "redirect:/airport-employees";
     }

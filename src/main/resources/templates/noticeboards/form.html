@@ -11,8 +11,9 @@
 <form th:action="@{/noticeboards/save}" th:object="${noticeBoard}" method="post">
     <input type="hidden" th:field="*{id}" />
 
+    <!-- Date Field (@NotNull Validation) -->
     <div>
-        <label for="date">Date:</label>
+        <label for="date">Date (required):</label>
         <input type="date" id="date" th:field="*{date}" />
         <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</span>
     </div>

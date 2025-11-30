@@ -12,15 +12,20 @@
     <input type="hidden" th:field="*{id}" />
 
     <div>
-        <label for="assignmentDate">Assignment Date:</label>
+        <label for="assignmentDate">Assignment Date (required):</label>
         <input type="date" id="assignmentDate" th:field="*{assignmentDate}" />
-        <span class="error" th:if="${#fields.hasErrors('assignmentDate')}" th:errors="*{assignmentDate}">Date Error</span>
+        <span class="error"
+              th:if="${#fields.hasErrors('assignmentDate')}"
+              th:errors="*{assignmentDate}">
+            Date Error
+        </span>
     </div>
     <br/>
 
     <div>
-        <label for="flightId">Flight:</label>
+        <label for="flightId">Flight (required):</label>
         <select id="flightId" name="flightId">
+            <option value="">-- Select Flight --</option>
             <option th:each="f : ${flights}"
                     th:value="${f.id}"
                     th:text="${f.name}"
@@ -28,13 +33,19 @@
                 Flight
             </option>
         </select>
-        <span class="error" th:if="${#fields.hasErrors('flight')}" th:errors="*{flight}">Flight Error</span>
+
+        <span class="error"
+              th:if="${#fields.hasErrors('flight')}"
+              th:errors="*{flight}">
+            Flight Selection Error
+        </span>
     </div>
     <br/>
 
     <div>
-        <label for="staffId">Staff Member:</label>
+        <label for="staffId">Staff Member (required):</label>
         <select id="staffId" name="staffId">
+            <option value="">-- Select Staff Member --</option>
             <option th:each="s : ${staff}"
                     th:value="${s.id}"
                     th:text="${s.name}"
@@ -42,7 +53,12 @@
                 Staff
             </option>
         </select>
-        <span class="error" th:if="${#fields.hasErrors('staff')}" th:errors="*{staff}">Staff Error</span>
+
+        <span class="error"
+              th:if="${#fields.hasErrors('staff')}"
+              th:errors="*{staff}">
+            Staff Selection Error
+        </span>
     </div>
     <br/>
 

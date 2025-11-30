@@ -31,7 +31,11 @@ public class NoticeBoardController {
     @PostMapping("/save")
     public String saveNoticeBoard(@Valid @ModelAttribute("noticeBoard") NoticeBoard noticeBoard,
                                   BindingResult result) {
+        // JSR-303 Validation check (Requirement 1.6 a)
         if (result.hasErrors()) return "noticeboards/form";
+
+        // No complex Business Validation implemented here (assuming Date uniqueness is not required)
+
         noticeBoardRepository.save(noticeBoard);
         return "redirect:/noticeboards";
     }
@@ -46,6 +50,7 @@ public class NoticeBoardController {
 
     @GetMapping("/delete/{id}")
     public String deleteNoticeBoard(@PathVariable("id") Long id) {
+        // GlobalExceptionHandler will catch DataIntegrityViolationException if relations exist (Requirement 1.6 b & c)
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
         noticeBoardRepository.delete(noticeBoard);

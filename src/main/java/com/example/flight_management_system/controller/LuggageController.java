@@ -43,21 +43,43 @@ public class LuggageController {
 
     @PostMapping("/save")
     public String saveLuggage(@Valid @ModelAttribute("luggage") Luggage luggage,
-                              @RequestParam("ticketId") Long ticketId,
+                              @RequestParam(value = "ticketId", required = false) Long ticketId, // Made optional to prevent error on validation failure
                               BindingResult result, Model model) {
+
+
         if (result.hasErrors()) {
+            if (ticketId != null) {
+                Ticket selectedTicket = new Ticket();
+                selectedTicket.setId(ticketId);
+                luggage.setTicket(selectedTicket);
+            }
+
             model.addAttribute("tickets", ticketRepository.findAll());
             model.addAttribute("statuses", Status.values());
             return "luggages/form";
         }
 
-        Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid ticket Id:" + ticketId));
+        try {
+            if (ticketId == null) {
+                result.rejectValue("ticket", "notnull", "Ticket must be selected");
+            }
+            if (result.hasErrors()) {
+                model.addAttribute("tickets", ticketRepository.findAll());
+                model.addAttribute("statuses", Status.values());
+                return "luggages/form";
+            }
 
-        luggage.setTicket(ticket);
+            // Final association and existence check
+            Ticket ticket = ticketRepository.findById(ticketId)
+                    .orElseThrow(() -> new IllegalArgumentException("Ticket not found for ID: " + ticketId));
+            luggage.setTicket(ticket);
+
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+
         luggageRepository.save(luggage);
-
-        return "redirect:/luggages"; // Redirecționare la Index
+        return "redirect:/luggages";
     }
 
     @GetMapping("/edit/{id}")
@@ -76,7 +98,7 @@ public class LuggageController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
         luggageRepository.delete(luggage);
 
-        return "redirect:/luggages"; // Redirecționare la Index
+        return "redirect:/luggages";
     }
 
     @GetMapping("/details/{id}")

@@ -31,7 +31,11 @@ public class PassengerController {
     @PostMapping("/save")
     public String savePassenger(@Valid @ModelAttribute("passenger") Passenger passenger,
                                 BindingResult result) {
+        // JSR-303 Validation check (Requirement 1.6 a)
         if (result.hasErrors()) return "passengers/form";
+
+        // No complex Business Validation implemented here (assuming Name/Currency uniqueness is not required)
+
         passengerRepository.save(passenger);
         return "redirect:/passengers";
     }
@@ -46,6 +50,7 @@ public class PassengerController {
 
     @GetMapping("/delete/{id}")
     public String deletePassenger(@PathVariable("id") Long id) {
+        // GlobalExceptionHandler will catch DataIntegrityViolationException if relations exist (Requirement 1.6 b & c)
         Passenger passenger = passengerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid passenger Id:" + id));
         passengerRepository.delete(passenger);

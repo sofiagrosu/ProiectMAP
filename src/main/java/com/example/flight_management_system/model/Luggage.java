@@ -1,6 +1,7 @@
 package com.example.flight_management_system.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "luggage")
@@ -15,26 +16,18 @@ public class Luggage implements BaseMethods {
     private Ticket ticket;
 
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Status is required")
     private Status status;
 
     public Luggage() { this.status = Status.CHECKED_IN; }
-
     public Luggage(Ticket ticket, Status status) {
         this.ticket = ticket;
         this.status = status;
     }
-
-    @Override
-    public Long getId() { return id; }
-
-    @Override
-    public void setId(Long id) { this.id = id; }
-
+    @Override public Long getId() { return id; }
+    @Override public void setId(Long id) { this.id = id; }
     public Ticket getTicket() { return ticket; }
-
     public void setTicket(Ticket ticket) { this.ticket = ticket; }
-
     public Status getStatus() { return status; }
-
     public void setStatus(Status status) { this.status = status; }
 }

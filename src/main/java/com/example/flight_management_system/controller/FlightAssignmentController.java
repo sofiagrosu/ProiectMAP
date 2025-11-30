@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/assignments")
@@ -51,17 +51,32 @@ public class FlightAssignmentController {
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("assignment") FlightAssignment assignment,
                        BindingResult result,
-                       @RequestParam("flightId") Long flightId,
-                       @RequestParam("staffId") Long staffId,
+                       @RequestParam(value = "flightId", required = false) Long flightId,
+                       @RequestParam(value = "staffId", required = false) Long staffId,
                        Model model) {
 
+        if (flightId == null || flightId <= 0) {
+            result.rejectValue("flight", "NotNull", "Flight must be selected.");
+        }
+        if (staffId == null || staffId <= 0) {
+            result.rejectValue("staff", "NotNull", "Staff member must be selected.");
+        }
+
         if (result.hasErrors()) {
+
             model.addAttribute("flights", flightRepo.findAll());
             model.addAttribute("staff", staffRepo.findAll());
+
+            if (flightId != null && flightId > 0) {
+                assignment.setFlight(flightRepo.findById(flightId).orElse(null));
+            }
+            if (staffId != null && staffId > 0) {
+                assignment.setStaff(staffRepo.findById(staffId).orElse(null));
+            }
+
             return "assignments/form";
         }
 
-        // Associate parent entities
         Flight flight = flightRepo.findById(flightId).orElseThrow(() -> new IllegalArgumentException("Invalid Flight Id"));
         Staff staff = staffRepo.findById(staffId).orElseThrow(() -> new IllegalArgumentException("Invalid Staff Id"));
 
@@ -70,7 +85,7 @@ public class FlightAssignmentController {
 
         assignmentRepo.save(assignment);
 
-        return "redirect:/assignments"; // Redirect to Index
+        return "redirect:/assignments";
     }
 
     @GetMapping("/edit/{id}")
@@ -87,7 +102,7 @@ public class FlightAssignmentController {
         FlightAssignment assignment = assignmentRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Assignment Id"));
         assignmentRepo.deleteById(id);
 
-        return "redirect:/assignments"; // Redirect to Index
+        return "redirect:/assignments";
     }
 
     @GetMapping("/details/{id}")

@@ -31,7 +31,16 @@ public class AirplaneController {
     @PostMapping("/save")
     public String saveAirplane(@Valid @ModelAttribute("airplane") Airplane airplane,
                                BindingResult result) {
+
         if (result.hasErrors()) return "airplanes/form";
+
+        Airplane existingAirplane = airplaneRepository.findByNumber(airplane.getNumber());
+
+        if (existingAirplane != null && !existingAirplane.getId().equals(airplane.getId())) {
+            result.rejectValue("number", "unique", "An airplane with this number already exists.");
+            return "airplanes/form";
+        }
+
         airplaneRepository.save(airplane);
         return "redirect:/airplanes";
     }
