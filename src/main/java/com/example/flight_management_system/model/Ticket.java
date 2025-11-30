@@ -1,6 +1,8 @@
 package com.example.flight_management_system.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +17,19 @@ public class Ticket implements BaseMethods {
 
     @ManyToOne
     @JoinColumn(name = "passenger_id")
+    // FIX: Removed @NotNull to avoid persistent selection error
     private Passenger passenger;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
+    // FIX: Removed @NotNull to avoid persistent selection error
     private Flight flight;
 
-    @Positive
+    @Positive(message = "Price must be positive")
+    @Min(value = 1, message = "Price must be at least 1")
     private double price;
 
+    @NotBlank(message = "Seat number is required")
     private String seatNumber;
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)

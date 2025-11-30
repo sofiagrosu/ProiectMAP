@@ -2,12 +2,15 @@ package com.example.flight_management_system.controller;
 
 import com.example.flight_management_system.model.Flight;
 import com.example.flight_management_system.repository.FlightRepository;
+import com.example.flight_management_system.repository.AirplaneRepository;
+import com.example.flight_management_system.repository.NoticeBoardRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/flights")
@@ -15,6 +18,10 @@ public class FlightController {
 
     @Autowired
     private FlightRepository flightRepository;
+    @Autowired
+    private AirplaneRepository airplaneRepository;
+    @Autowired
+    private NoticeBoardRepository noticeBoardRepository;
 
     @GetMapping
     public String listFlights(Model model) {
@@ -25,13 +32,65 @@ public class FlightController {
     @GetMapping("/new")
     public String createFlightForm(Model model) {
         model.addAttribute("flight", new Flight());
+        model.addAttribute("airplanes", airplaneRepository.findAll());
+        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
         return "flights/form";
     }
 
     @PostMapping("/save")
     public String saveFlight(@Valid @ModelAttribute("flight") Flight flight,
-                             BindingResult result) {
-        if (result.hasErrors()) return "flights/form";
+                             BindingResult result,
+                             @RequestParam(value = "airplaneId", required = false) Long airplaneId,
+                             @RequestParam(value = "noticeBoardId", required = false) Long noticeBoardId,
+                             Model model) {
+
+        // 1. BUSINESS VALIDATION: Flight Name must be unique
+        Optional<Flight> existingFlightOpt = flightRepository.findByName(flight.getName());
+
+        if (existingFlightOpt.isPresent()) {
+            Flight existingFlight = existingFlightOpt.get();
+            if (flight.getId() == null || !flight.getId().equals(existingFlight.getId())) {
+                result.rejectValue("name", "name.duplicate", "A flight with this name already exists. It must be unique.");
+            }
+        }
+
+        // 1.5. MANUAL VALIDATION for required relationships (now that @NotNull is removed from model)
+        if (airplaneId == null) {
+            result.rejectValue("airplane", "notnull", "Airplane must be selected");
+        }
+        if (noticeBoardId == null) {
+            result.rejectValue("noticeBoard", "notnull", "Notice Board must be selected");
+        }
+
+        // 2. JSR-303 Validation check
+        if (result.hasErrors()) {
+            // CRITICAL FIX: Manually set dummy objects to retain selected IDs in the dropdowns (th:selected)
+            if (airplaneId != null) {
+                flight.setAirplane(new com.example.flight_management_system.model.Airplane((int)(long)airplaneId)); // Using dummy Airplane instance
+            }
+            if (noticeBoardId != null) {
+                flight.setNoticeBoard(new com.example.flight_management_system.model.NoticeBoard()); // Using dummy NoticeBoard instance
+                flight.getNoticeBoard().setId(noticeBoardId);
+            }
+
+            model.addAttribute("airplanes", airplaneRepository.findAll());
+            model.addAttribute("noticeboards", noticeBoardRepository.findAll());
+            return "flights/form";
+        }
+
+        // 3. FINAL MAPPING and EXISTENCE CHECK (Post-validation)
+        try {
+            // Associate and validate existence
+            flight.setAirplane(airplaneRepository.findById(airplaneId)
+                    .orElseThrow(() -> new IllegalArgumentException("Airplane not found for ID: " + airplaneId)));
+
+            flight.setNoticeBoard(noticeBoardRepository.findById(noticeBoardId)
+                    .orElseThrow(() -> new IllegalArgumentException("Notice Board not found for ID: " + noticeBoardId)));
+
+        } catch (IllegalArgumentException e) {
+            throw e; // Relaunch the exception to be caught by GlobalExceptionHandler
+        }
+
         flightRepository.save(flight);
         return "redirect:/flights";
     }
@@ -41,6 +100,8 @@ public class FlightController {
         Flight flight = flightRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
         model.addAttribute("flight", flight);
+        model.addAttribute("airplanes", airplaneRepository.findAll());
+        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
         return "flights/form";
     }
 

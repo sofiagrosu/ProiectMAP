@@ -13,11 +13,12 @@ public class Flight implements BaseMethods {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Flight name is required")
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "airplane_id")
+    // FIX: Removed @NotNull to stop validation error when re-loading form
     private Airplane airplane;
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -26,24 +27,23 @@ public class Flight implements BaseMethods {
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FlightAssignment> flightAssignments = new ArrayList<>();
 
+    @NotBlank(message = "Gate number is required")
     private String gateNumber;
 
     @ManyToOne
     @JoinColumn(name = "noticeboard_id")
+    // FIX: Removed @NotNull to stop validation error when re-loading form
     private NoticeBoard noticeBoard;
 
     public Flight() { this.name = ""; this.gateNumber = ""; }
-
     public Flight(String name, Airplane airplane, String gateNumber, NoticeBoard noticeBoard){
         this.name = name;
         this.airplane = airplane;
         this.gateNumber = gateNumber;
         this.noticeBoard = noticeBoard;
     }
-
     @Override public Long getId() { return id; }
     @Override public void setId(Long id) { this.id = id; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public Airplane getAirplane() { return airplane; }

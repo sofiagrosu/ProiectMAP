@@ -2,6 +2,7 @@ package com.example.flight_management_system;
 
 import com.example.flight_management_system.model.*;
 import com.example.flight_management_system.repository.*;
+import jakarta.persistence.EntityManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,38 +20,74 @@ public class DataInitializer implements CommandLineRunner {
     private final PassengerRepository passengerRepository;
     private final TicketRepository ticketRepository;
     private final LuggageRepository luggageRepository;
-    private final StaffRepository staffRepository;
     private final AirlineEmployeeRepository airlineEmployeeRepository;
+    private final StaffRepository staffRepository;
     private final AirportEmployeeRepository airportEmployeeRepository;
     private final FlightAssignmentRepository flightAssignmentRepository;
     private final NoticeBoardRepository noticeBoardRepository;
+
+    private final EntityManager entityManager;
 
     public DataInitializer(AirplaneRepository airplaneRepository,
                            FlightRepository flightRepository,
                            PassengerRepository passengerRepository,
                            TicketRepository ticketRepository,
                            LuggageRepository luggageRepository,
-                           StaffRepository staffRepository,
                            AirlineEmployeeRepository airlineEmployeeRepository,
+                           StaffRepository staffRepository,
                            AirportEmployeeRepository airportEmployeeRepository,
                            FlightAssignmentRepository flightAssignmentRepository,
-                           NoticeBoardRepository noticeBoardRepository) {
+                           NoticeBoardRepository noticeBoardRepository,
+                           EntityManager entityManager) {
         this.airplaneRepository = airplaneRepository;
         this.flightRepository = flightRepository;
         this.passengerRepository = passengerRepository;
         this.ticketRepository = ticketRepository;
         this.luggageRepository = luggageRepository;
-        this.staffRepository = staffRepository;
         this.airlineEmployeeRepository = airlineEmployeeRepository;
+        this.staffRepository = staffRepository;
         this.airportEmployeeRepository = airportEmployeeRepository;
         this.flightAssignmentRepository = flightAssignmentRepository;
         this.noticeBoardRepository = noticeBoardRepository;
+        this.entityManager = entityManager;
+    }
+
+    private void resetAutoIncrement(String tableName) {
+        // Interogare nativă MySQL
+        entityManager.createNativeQuery("ALTER TABLE " + tableName + " AUTO_INCREMENT = 1").executeUpdate();
     }
 
     @Override
     public void run(String... args) throws Exception {
 
-        // 1️⃣ Airplanes
+        luggageRepository.deleteAll();
+        ticketRepository.deleteAll();
+        flightAssignmentRepository.deleteAll();
+
+        airlineEmployeeRepository.deleteAll();
+        airportEmployeeRepository.deleteAll();
+        staffRepository.deleteAll();
+
+        flightRepository.deleteAll();
+        passengerRepository.deleteAll();
+        airplaneRepository.deleteAll();
+        noticeBoardRepository.deleteAll();
+
+
+        System.out.println("DataInitializer: Resetting AUTO_INCREMENT counters...");
+        resetAutoIncrement("luggage");
+        resetAutoIncrement("tickets");
+        resetAutoIncrement("flight_assignments");
+        resetAutoIncrement("staff"); // Resetarea tabelului părinte este crucială
+        resetAutoIncrement("flights");
+        resetAutoIncrement("passengers");
+        resetAutoIncrement("airplanes");
+        resetAutoIncrement("noticeboards");
+
+        System.out.println("DataInitializer: Existing data cleared and AUTO_INCREMENT counters reset. Proceeding with new initialization.");
+
+
+
         List<Airplane> airplanes = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Airplane airplane = new Airplane(100 + i);
@@ -58,7 +95,7 @@ public class DataInitializer implements CommandLineRunner {
             airplanes.add(airplane);
         }
 
-        // 2️⃣ NoticeBoards
+
         List<NoticeBoard> boards = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             NoticeBoard nb = new NoticeBoard(LocalDate.now().plusDays(i));
@@ -66,7 +103,7 @@ public class DataInitializer implements CommandLineRunner {
             boards.add(nb);
         }
 
-        // 3️⃣ Flights
+
         List<Flight> flights = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Flight flight = new Flight(
@@ -79,7 +116,7 @@ public class DataInitializer implements CommandLineRunner {
             flights.add(flight);
         }
 
-        // 4️⃣ Passengers
+
         List<Passenger> passengers = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Passenger p = new Passenger("Passenger " + i, "USD");
@@ -87,7 +124,7 @@ public class DataInitializer implements CommandLineRunner {
             passengers.add(p);
         }
 
-        // 5️⃣ Tickets & Luggage
+
         for (int i = 0; i < 10; i++) {
             Ticket ticket = new Ticket(
                     passengers.get(i % passengers.size()),
@@ -97,18 +134,14 @@ public class DataInitializer implements CommandLineRunner {
             );
             ticketRepository.save(ticket);
 
-            passengers.get(i % passengers.size()).getTickets().add(ticket);
-            flights.get(i % flights.size()).getTickets().add(ticket);
 
-            // 2 Luggage per ticket
             for (int j = 1; j <= 2; j++) {
                 Luggage l = new Luggage(ticket, Status.CHECKED_IN);
                 luggageRepository.save(l);
-                ticket.getLuggages().add(l);
             }
         }
 
-        // 6️⃣ Staff: AirlineEmployee
+
         List<AirlineEmployee> airlineEmployees = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             AirlineEmployee ae = new AirlineEmployee(
@@ -120,7 +153,7 @@ public class DataInitializer implements CommandLineRunner {
             airlineEmployees.add(ae);
         }
 
-        // 7️⃣ Staff: AirportEmployee
+
         List<AirportEmployee> airportEmployees = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             AirportEmployee ae = new AirportEmployee(
@@ -132,7 +165,6 @@ public class DataInitializer implements CommandLineRunner {
             airportEmployees.add(ae);
         }
 
-        // 8️⃣ FlightAssignments
         for (int i = 0; i < 10; i++) {
             FlightAssignment fa = new FlightAssignment(
                     flights.get(i % flights.size()),
@@ -140,11 +172,8 @@ public class DataInitializer implements CommandLineRunner {
                     LocalDate.now().plusDays(i)
             );
             flightAssignmentRepository.save(fa);
-
-            flights.get(i % flights.size()).getFlightAssignments().add(fa);
-            airlineEmployees.get(i % airlineEmployees.size()).getFlightAssignments().add(fa);
         }
 
-        System.out.println("DataInitializer: All entities created successfully!");
+        System.out.println("DataInitializer: All 10+ entities created successfully!");
     }
 }

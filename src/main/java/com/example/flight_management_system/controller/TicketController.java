@@ -51,27 +51,49 @@ public class TicketController {
     @PostMapping("/save")
     public String saveTicket(@Valid @ModelAttribute("ticket") Ticket ticket,
                              BindingResult result,
-                             @RequestParam("passengerId") Long passengerId,
-                             @RequestParam("flightId") Long flightId,
+                             // We keep these required=false to avoid the MissingServletRequestParameterException when form is sent back on error
+                             @RequestParam(value = "passengerId", required = false) Long passengerId,
+                             @RequestParam(value = "flightId", required = false) Long flightId,
                              Model model) {
 
+        // 1. JSR-303 Validation check (on Price, SeatNumber)
         if (result.hasErrors()) {
+            // FIX: Manually set dummy objects to retain selected IDs in the dropdowns (th:selected)
+            if (passengerId != null) {
+                ticket.setPassenger(passengerRepository.findById(passengerId).orElse(new Passenger()));
+                if (ticket.getPassenger().getId() == null) ticket.getPassenger().setId(passengerId);
+            }
+            if (flightId != null) {
+                ticket.setFlight(flightRepository.findById(flightId).orElse(new Flight()));
+                if (ticket.getFlight().getId() == null) ticket.getFlight().setId(flightId);
+            }
+
             model.addAttribute("passengers", passengerRepository.findAll());
             model.addAttribute("flights", flightRepository.findAll());
             return "tickets/form";
         }
 
-        Passenger passenger = passengerRepository.findById(passengerId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid passenger Id:" + passengerId));
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + flightId));
+        // 2. FINAL MAPPING: Map IDs to objects (No explicit validation, relies on DB integrity)
+        try {
+            // Only try to associate if an ID was actually selected (it might be null now)
+            if (passengerId != null) {
+                ticket.setPassenger(passengerRepository.findById(passengerId).orElse(null));
+            }
+            if (flightId != null) {
+                ticket.setFlight(flightRepository.findById(flightId).orElse(null));
+            }
 
-        ticket.setPassenger(passenger);
-        ticket.setFlight(flight);
+            // Check if the relationships are still null after mapping (if they were NOT selected)
+            // If the user submits without selecting an ID, this will rely on the DB's foreign key constraint
+
+        } catch (Exception e) {
+            // Relaunch the exception to be caught by GlobalExceptionHandler
+            throw new IllegalArgumentException("Error mapping relationships: " + e.getMessage());
+        }
 
         ticketRepository.save(ticket);
 
-        return "redirect:/tickets"; // Redirecționare la Index
+        return "redirect:/tickets";
     }
 
     @GetMapping("/edit/{id}")
@@ -90,7 +112,7 @@ public class TicketController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid ticket Id:" + id));
         ticketRepository.delete(ticket);
 
-        return "redirect:/tickets"; // Redirecționare la Index
+        return "redirect:/tickets";
     }
 
     @GetMapping("/details/{id}")

@@ -1,30 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${flight.id == null ? 'Add Flight' : 'Edit Flight'}">Flight Form</title>
+    <title>Flight Form</title>
+    <style> .error { color: red; } </style>
 </head>
 <body>
-<h2 th:text="${flight.id == null ? 'Add Flight' : 'Edit Flight'}"></h2>
+
+<h2><span th:text="${flight.id} ? 'Edit Flight' : 'Create New Flight'"></span></h2>
 
 <form th:action="@{/flights/save}" th:object="${flight}" method="post">
-    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{id}" />
 
+    <!-- Flight Name Field: Validates @NotBlank and Business Uniqueness -->
     <div>
-        <label>Name:</label>
-        <input type="text" th:field="*{name}" required/>
+        <label for="name">Flight Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
     </div>
+    <br/>
 
+    <!-- Gate Number Field: Validates @NotBlank -->
     <div>
-        <label>Gate Number:</label>
-        <input type="text" th:field="*{gateNumber}" required/>
+        <label for="gateNumber">Gate Number:</label>
+        <input type="text" id="gateNumber" th:field="*{gateNumber}" />
+        <span class="error" th:if="${#fields.hasErrors('gateNumber')}" th:errors="*{gateNumber}">Gate Error</span>
     </div>
+    <br/>
 
+    <!-- Many-to-One: Airplane -->
     <div>
-        <button type="submit">Save</button>
-        <a th:href="@{/flights}">Back</a>
+        <label for="airplaneId">Airplane:</label>
+        <!-- Name attribute is crucial for @RequestParam binding -->
+        <select id="airplaneId" name="airplaneId">
+            <option value="">-- Select Airplane --</option>
+            <!-- Th:selected checks the object field populated by the controller FIX -->
+            <option th:each="ap : ${airplanes}"
+                    th:value="${ap.id}"
+                    th:text="${'ID: ' + ap.id + ' - Number: ' + ap.number}"
+                    th:selected="${flight.airplane?.id == ap.id}">
+                Airplane
+            </option>
+        </select>
+        <!-- Error is manually tied to the object field name for clean display -->
+        <span class="error" th:if="${#fields.hasErrors('airplane')}" th:errors="*{airplane}">Airplane Selection Error</span>
     </div>
+    <br/>
+
+    <!-- Many-to-One: NoticeBoard -->
+    <div>
+        <label for="noticeBoardId">Notice Board:</label>
+        <select id="noticeBoardId" name="noticeBoardId">
+            <option value="">-- Select Notice Board --</option>
+            <option th:each="nb : ${noticeboards}"
+                    th:value="${nb.id}"
+                    th:text="${'ID: ' + nb.id + ' - Date: ' + nb.date}"
+                    th:selected="${flight.noticeBoard?.id == nb.id}">
+                Notice Board
+            </option>
+        </select>
+        <!-- Error is manually tied to the object field name for clean display -->
+        <span class="error" th:if="${#fields.hasErrors('noticeBoard')}" th:errors="*{noticeBoard}">Notice Board Selection Error</span>
+    </div>
+    <br/>
+
+    <button type="submit">Save</button>
+    <a th:href="@{/flights}">Cancel</a>
 </form>
-
 </body>
 </html>

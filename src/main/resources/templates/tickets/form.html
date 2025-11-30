@@ -11,23 +11,28 @@
 <form th:action="@{/tickets/save}" th:object="${ticket}" method="post">
     <input type="hidden" th:field="*{id}" />
 
+    <!-- Price Field (@Positive/@Min Validation) -->
     <div>
-        <label for="price">Price:</label>
+        <label for="price">Price (must be positive):</label>
         <input type="number" id="price" th:field="*{price}" />
         <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
     </div>
     <br/>
 
+    <!-- Seat Number Field (@NotBlank Validation) -->
     <div>
-        <label for="seatNumber">Seat Number:</label>
+        <label for="seatNumber">Seat Number (required):</label>
         <input type="text" id="seatNumber" th:field="*{seatNumber}" />
         <span class="error" th:if="${#fields.hasErrors('seatNumber')}" th:errors="*{seatNumber}">Seat Number Error</span>
     </div>
     <br/>
 
+    <!-- Many-to-One: Passenger (Now optional) -->
     <div>
         <label for="passengerId">Passenger:</label>
         <select id="passengerId" name="passengerId">
+            <option value="">-- Select Passenger --</option>
+            <!-- Th:selected relies on the object ID repopulated in the Controller FIX -->
             <option th:each="p : ${passengers}"
                     th:value="${p.id}"
                     th:text="${p.name}"
@@ -38,9 +43,11 @@
     </div>
     <br/>
 
+    <!-- Many-to-One: Flight (Now optional) -->
     <div>
         <label for="flightId">Flight:</label>
         <select id="flightId" name="flightId">
+            <option value="">-- Select Flight --</option>
             <option th:each="f : ${flights}"
                     th:value="${f.id}"
                     th:text="${f.name}"
