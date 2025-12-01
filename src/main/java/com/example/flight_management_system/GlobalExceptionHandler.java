@@ -6,10 +6,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpServletRequest;
 
-/**
- * Global error handler to catch exceptions and prevent Whitelabel Error Pages.
- * Fulfills Requirement 1.6 c)
- */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

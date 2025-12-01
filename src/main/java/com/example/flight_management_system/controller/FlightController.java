@@ -44,7 +44,7 @@ public class FlightController {
                              @RequestParam(value = "noticeBoardId", required = false) Long noticeBoardId,
                              Model model) {
 
-        // 1. BUSINESS VALIDATION: Flight Name must be unique
+
         Optional<Flight> existingFlightOpt = flightRepository.findByName(flight.getName());
 
         if (existingFlightOpt.isPresent()) {
@@ -54,7 +54,6 @@ public class FlightController {
             }
         }
 
-        // 1.5. MANUAL VALIDATION for required relationships (now that @NotNull is removed from model)
         if (airplaneId == null) {
             result.rejectValue("airplane", "notnull", "Airplane must be selected");
         }
@@ -62,14 +61,12 @@ public class FlightController {
             result.rejectValue("noticeBoard", "notnull", "Notice Board must be selected");
         }
 
-        // 2. JSR-303 Validation check
         if (result.hasErrors()) {
-            // CRITICAL FIX: Manually set dummy objects to retain selected IDs in the dropdowns (th:selected)
             if (airplaneId != null) {
-                flight.setAirplane(new com.example.flight_management_system.model.Airplane((int)(long)airplaneId)); // Using dummy Airplane instance
+                flight.setAirplane(new com.example.flight_management_system.model.Airplane((int)(long)airplaneId));
             }
             if (noticeBoardId != null) {
-                flight.setNoticeBoard(new com.example.flight_management_system.model.NoticeBoard()); // Using dummy NoticeBoard instance
+                flight.setNoticeBoard(new com.example.flight_management_system.model.NoticeBoard());
                 flight.getNoticeBoard().setId(noticeBoardId);
             }
 
@@ -78,9 +75,7 @@ public class FlightController {
             return "flights/form";
         }
 
-        // 3. FINAL MAPPING and EXISTENCE CHECK (Post-validation)
         try {
-            // Associate and validate existence
             flight.setAirplane(airplaneRepository.findById(airplaneId)
                     .orElseThrow(() -> new IllegalArgumentException("Airplane not found for ID: " + airplaneId)));
 
@@ -88,7 +83,7 @@ public class FlightController {
                     .orElseThrow(() -> new IllegalArgumentException("Notice Board not found for ID: " + noticeBoardId)));
 
         } catch (IllegalArgumentException e) {
-            throw e; // Relaunch the exception to be caught by GlobalExceptionHandler
+            throw e;
         }
 
         flightRepository.save(flight);

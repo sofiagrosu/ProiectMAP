@@ -50,7 +50,6 @@ public class PassengerController {
 
     @GetMapping("/delete/{id}")
     public String deletePassenger(@PathVariable("id") Long id) {
-        // GlobalExceptionHandler will catch DataIntegrityViolationException if relations exist (Requirement 1.6 b & c)
         Passenger passenger = passengerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid passenger Id:" + id));
         passengerRepository.delete(passenger);

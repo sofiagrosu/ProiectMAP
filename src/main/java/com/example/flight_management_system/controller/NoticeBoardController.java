@@ -50,7 +50,6 @@ public class NoticeBoardController {
 
     @GetMapping("/delete/{id}")
     public String deleteNoticeBoard(@PathVariable("id") Long id) {
-        // GlobalExceptionHandler will catch DataIntegrityViolationException if relations exist (Requirement 1.6 b & c)
         NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
         noticeBoardRepository.delete(noticeBoard);

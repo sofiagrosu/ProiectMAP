@@ -43,7 +43,7 @@ public class LuggageController {
 
     @PostMapping("/save")
     public String saveLuggage(@Valid @ModelAttribute("luggage") Luggage luggage,
-                              @RequestParam(value = "ticketId", required = false) Long ticketId, // Made optional to prevent error on validation failure
+                              @RequestParam(value = "ticketId", required = false) Long ticketId,
                               BindingResult result, Model model) {
 
 
@@ -69,7 +69,6 @@ public class LuggageController {
                 return "luggages/form";
             }
 
-            // Final association and existence check
             Ticket ticket = ticketRepository.findById(ticketId)
                     .orElseThrow(() -> new IllegalArgumentException("Ticket not found for ID: " + ticketId));
             luggage.setTicket(ticket);

@@ -18,7 +18,6 @@ public class Flight implements BaseMethods {
 
     @ManyToOne
     @JoinColumn(name = "airplane_id")
-    // FIX: Removed @NotNull to stop validation error when re-loading form
     private Airplane airplane;
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -32,7 +31,6 @@ public class Flight implements BaseMethods {
 
     @ManyToOne
     @JoinColumn(name = "noticeboard_id")
-    // FIX: Removed @NotNull to stop validation error when re-loading form
     private NoticeBoard noticeBoard;
 
     public Flight() { this.name = ""; this.gateNumber = ""; }

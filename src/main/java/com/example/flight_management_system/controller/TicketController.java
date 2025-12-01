@@ -73,9 +73,7 @@ public class TicketController {
             return "tickets/form";
         }
 
-        // 2. FINAL MAPPING: Map IDs to objects (No explicit validation, relies on DB integrity)
         try {
-            // Only try to associate if an ID was actually selected (it might be null now)
             if (passengerId != null) {
                 ticket.setPassenger(passengerRepository.findById(passengerId).orElse(null));
             }
@@ -83,11 +81,8 @@ public class TicketController {
                 ticket.setFlight(flightRepository.findById(flightId).orElse(null));
             }
 
-            // Check if the relationships are still null after mapping (if they were NOT selected)
-            // If the user submits without selecting an ID, this will rely on the DB's foreign key constraint
 
         } catch (Exception e) {
-            // Relaunch the exception to be caught by GlobalExceptionHandler
             throw new IllegalArgumentException("Error mapping relationships: " + e.getMessage());
         }
 
