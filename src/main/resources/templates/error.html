@@ -1,51 +1,51 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Application Error | Flight Management System</title>
-    <style>
-        /* Stiluri simple pentru afișarea consistentă a erorilor */
-        body { font-family: Arial, sans-serif; background-color: #f0f2f5; color: #333; padding: 20px; text-align: center; }
-        .error-container {
-            background-color: #ffffff;
-            border: 1px solid #dc3545;
-            border-radius: 8px;
-            padding: 30px;
-            max-width: 700px;
-            margin: 50px auto;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            text-align: left;
-        }
-        h1 { color: #dc3545; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .message { font-size: 1.2em; font-weight: bold; margin-bottom: 25px; color: #555; }
-        .details { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #ccc; font-size: 0.95em; }
-        .details p { margin: 8px 0; line-height: 1.4; }
-        .details strong { color: #333; display: inline-block; width: 120px; }
-        .back-link { margin-top: 30px; }
-    </style>
-</head>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Application Error | Flight Management System</title>-->
+<!--    <style>-->
+<!--        /* Stiluri simple pentru afișarea consistentă a erorilor */-->
+<!--        body { font-family: Arial, sans-serif; background-color: #f0f2f5; color: #333; padding: 20px; text-align: center; }-->
+<!--        .error-container {-->
+<!--            background-color: #ffffff;-->
+<!--            border: 1px solid #dc3545;-->
+<!--            border-radius: 8px;-->
+<!--            padding: 30px;-->
+<!--            max-width: 700px;-->
+<!--            margin: 50px auto;-->
+<!--            box-shadow: 0 6px 12px rgba(0,0,0,0.1);-->
+<!--            text-align: left;-->
+<!--        }-->
+<!--        h1 { color: #dc3545; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }-->
+<!--        .message { font-size: 1.2em; font-weight: bold; margin-bottom: 25px; color: #555; }-->
+<!--        .details { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #ccc; font-size: 0.95em; }-->
+<!--        .details p { margin: 8px 0; line-height: 1.4; }-->
+<!--        .details strong { color: #333; display: inline-block; width: 120px; }-->
+<!--        .back-link { margin-top: 30px; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
 
-<div class="error-container">
-    <h1>🛑 Eroare de Sistem</h1>
+<!--<div class="error-container">-->
+<!--    <h1>🛑 Eroare de Sistem</h1>-->
 
-    <p class="message" th:text="${errorMessage}">
-        A intervenit o eroare neașteptată. Vă rugăm să verificați datele introduse sau să contactați suportul.
-    </p>
+<!--    <p class="message" th:text="${errorMessage}">-->
+<!--        A intervenit o eroare neașteptată. Vă rugăm să verificați datele introduse sau să contactați suportul.-->
+<!--    </p>-->
 
-    <div class="details">
-        <h3>Detalii Tranzacție</h3>
+<!--    <div class="details">-->
+<!--        <h3>Detalii Tranzacție</h3>-->
 
-        <p><strong>URL Cerere:</strong> <span th:text="${url}"></span></p>
+<!--        <p><strong>URL Cerere:</strong> <span th:text="${url}"></span></p>-->
 
-        <p><strong>Momentul Erorii:</strong> <span th:text="${timestamp}"></span></p>
+<!--        <p><strong>Momentul Erorii:</strong> <span th:text="${timestamp}"></span></p>-->
 
-    </div>
+<!--    </div>-->
 
-    <div class="back-link">
-        <a th:href="@{/}" style="color: #007bff; text-decoration: none; font-weight: bold;">← Înapoi la Pagina Principală</a>
-    </div>
-</div>
+<!--    <div class="back-link">-->
+<!--        <a th:href="@{/}" style="color: #007bff; text-decoration: none; font-weight: bold;">← Înapoi la Pagina Principală</a>-->
+<!--    </div>-->
+<!--</div>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

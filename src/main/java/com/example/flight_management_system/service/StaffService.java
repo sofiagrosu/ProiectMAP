@@ -15,23 +15,19 @@ public class StaffService {
         this.staffRepository = staffRepository;
     }
 
-    /** Returnează toți angajații (Airline + Airport) */
     public List<Staff> findAll() {
         return staffRepository.findAll();
     }
 
-    /** Caută după ID (funcționează pentru AirlineEmployee și AirportEmployee) */
     public Staff findById(Long id) {
         return staffRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Staff not found with id: " + id));
     }
 
-    /** Creează sau actualizează un angajat */
     public Staff save(Staff staff) {
         return staffRepository.save(staff);
     }
 
-    /** Șterge un angajat după ID */
     public void delete(Long id) {
         staffRepository.deleteById(id);
     }

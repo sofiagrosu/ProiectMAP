@@ -14,7 +14,7 @@ public class NoticeBoard implements BaseMethods {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Date is required") // Requirement 1.6 a) - Mandatory field
+    @NotNull(message = "Date is required")
     private LocalDate date;
 
     @OneToMany(mappedBy = "noticeBoard", cascade = CascadeType.ALL)

@@ -51,14 +51,11 @@ public class TicketController {
     @PostMapping("/save")
     public String saveTicket(@Valid @ModelAttribute("ticket") Ticket ticket,
                              BindingResult result,
-                             // We keep these required=false to avoid the MissingServletRequestParameterException when form is sent back on error
                              @RequestParam(value = "passengerId", required = false) Long passengerId,
                              @RequestParam(value = "flightId", required = false) Long flightId,
                              Model model) {
 
-        // 1. JSR-303 Validation check (on Price, SeatNumber)
         if (result.hasErrors()) {
-            // FIX: Manually set dummy objects to retain selected IDs in the dropdowns (th:selected)
             if (passengerId != null) {
                 ticket.setPassenger(passengerRepository.findById(passengerId).orElse(new Passenger()));
                 if (ticket.getPassenger().getId() == null) ticket.getPassenger().setId(passengerId);

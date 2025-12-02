@@ -31,10 +31,8 @@ public class PassengerController {
     @PostMapping("/save")
     public String savePassenger(@Valid @ModelAttribute("passenger") Passenger passenger,
                                 BindingResult result) {
-        // JSR-303 Validation check (Requirement 1.6 a)
         if (result.hasErrors()) return "passengers/form";
 
-        // No complex Business Validation implemented here (assuming Name/Currency uniqueness is not required)
 
         passengerRepository.save(passenger);
         return "redirect:/passengers";

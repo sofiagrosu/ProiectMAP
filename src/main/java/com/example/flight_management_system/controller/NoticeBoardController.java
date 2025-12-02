@@ -31,10 +31,8 @@ public class NoticeBoardController {
     @PostMapping("/save")
     public String saveNoticeBoard(@Valid @ModelAttribute("noticeBoard") NoticeBoard noticeBoard,
                                   BindingResult result) {
-        // JSR-303 Validation check (Requirement 1.6 a)
         if (result.hasErrors()) return "noticeboards/form";
 
-        // No complex Business Validation implemented here (assuming Date uniqueness is not required)
 
         noticeBoardRepository.save(noticeBoard);
         return "redirect:/noticeboards";

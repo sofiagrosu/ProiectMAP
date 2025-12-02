@@ -39,7 +39,7 @@ public class FlightController {
 
     @PostMapping("/save")
     public String saveFlight(@Valid @ModelAttribute("flight") Flight flight,
-                             BindingResult result,
+                             BindingResult result,  //colecteaza erorile de validare
                              @RequestParam(value = "airplaneId", required = false) Long airplaneId,
                              @RequestParam(value = "noticeBoardId", required = false) Long noticeBoardId,
                              Model model) {

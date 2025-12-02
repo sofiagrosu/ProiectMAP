@@ -17,12 +17,10 @@ public class Ticket implements BaseMethods {
 
     @ManyToOne
     @JoinColumn(name = "passenger_id")
-    // FIX: Removed @NotNull to avoid persistent selection error
     private Passenger passenger;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
-    // FIX: Removed @NotNull to avoid persistent selection error
     private Flight flight;
 
     @Positive(message = "Price must be positive")

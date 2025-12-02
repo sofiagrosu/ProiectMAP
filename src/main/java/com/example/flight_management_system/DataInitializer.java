@@ -53,7 +53,6 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void resetAutoIncrement(String tableName) {
-        // Interogare nativă MySQL
         entityManager.createNativeQuery("ALTER TABLE " + tableName + " AUTO_INCREMENT = 1").executeUpdate();
     }
 
@@ -74,17 +73,16 @@ public class DataInitializer implements CommandLineRunner {
         noticeBoardRepository.deleteAll();
 
 
-        System.out.println("DataInitializer: Resetting AUTO_INCREMENT counters...");
         resetAutoIncrement("luggage");
         resetAutoIncrement("tickets");
         resetAutoIncrement("flight_assignments");
-        resetAutoIncrement("staff"); // Resetarea tabelului părinte este crucială
+        resetAutoIncrement("staff");
         resetAutoIncrement("flights");
         resetAutoIncrement("passengers");
         resetAutoIncrement("airplanes");
         resetAutoIncrement("noticeboards");
 
-        System.out.println("DataInitializer: Existing data cleared and AUTO_INCREMENT counters reset. Proceeding with new initialization.");
+        //System.out.println("DataInitializer: Existing data cleared and AUTO_INCREMENT counters reset. Proceeding with new initialization.");
 
 
 
@@ -160,7 +158,6 @@ public class DataInitializer implements CommandLineRunner {
                     "Staff AE " + i,
                     "Dept " + ((i % 3) + 1),
                     "Desig " + i,
-                    // NOUL ARGUMENT: employeeNumber (trebuie să fie String și unic)
                     "AEMP" + (2000 + i)
             );
             airportEmployeeRepository.save(ae);
@@ -176,6 +173,6 @@ public class DataInitializer implements CommandLineRunner {
             flightAssignmentRepository.save(fa);
         }
 
-        System.out.println("DataInitializer: All 10+ entities created successfully!");
+        System.out.println("DataInitializer: Entities created successfully!");
     }
 }
