@@ -1,5 +1,26 @@
 <h1>Passengers</h1>
 <a th:href="@{/passengers/new}">Add New Passenger</a>
+<form th:action="@{/passengers}" method="get">
+    <input type="hidden" name="page" value="0"/>
+    <input type="hidden" name="size" th:value="${page != null ? page.size : 20}"/>
+
+    <label for="sortBy">Sort by:</label>
+    <select id="sortBy" name="sortBy">
+        <option value="id" th:selected="${sortBy == 'id'}">ID</option>
+        <option value="name" th:selected="${sortBy == 'name'}">Name</option>
+        <option value="currency" th:selected="${sortBy == 'currency'}">Currency</option>
+        <option value="isCheckedIn" th:selected="${sortBy == 'ischeckedIn'}">Checked-in</option>
+    </select>
+
+    <label for="ascending">Order:</label>
+    <select id="ascending" name="ascending">
+        <option value="true" th:selected="${ascending == true}">Ascending</option>
+        <option value="false" th:selected="${ascending == false}">Descending</option>
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
+
 <table border="1" cellpadding="5">
     <tr>
         <th>ID</th>
