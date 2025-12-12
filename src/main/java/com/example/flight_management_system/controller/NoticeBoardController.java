@@ -1,9 +1,15 @@
 package com.example.flight_management_system.controller;
 
+import com.example.flight_management_system.model.Luggage;
 import com.example.flight_management_system.model.NoticeBoard;
 import com.example.flight_management_system.repository.NoticeBoardRepository;
+import com.example.flight_management_system.service.NoticeBoardService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +20,37 @@ import org.springframework.web.bind.annotation.*;
 public class NoticeBoardController {
 
     @Autowired
-    private NoticeBoardRepository noticeBoardRepository;
+    private NoticeBoardService noticeBoardService;
 
     @GetMapping
-    public String listNoticeBoards(Model model) {
-        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
+    public String listNoticeBoards(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending,
+            Model model)
+    {
+
+        Sort sort = buildSort(sortBy, ascending);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<NoticeBoard> objectPage =  noticeBoardService.findAll(pageable);
+        model.addAttribute("noticeBoards", objectPage.getContent());     // pentru tabel
+        model.addAttribute("page", objectPage);                     // pentru paginare (opțional)
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("ascending", ascending);
+
         return "noticeboards/index";
+
+
+    }
+    private Sort buildSort(String sortBy, boolean ascending) {
+        Sort.Direction dir = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        return switch (sortBy) {
+            case "id" -> Sort.by(dir, "id");
+            case "date" -> Sort.by(dir, "date");
+            default -> Sort.by(Sort.Direction.ASC, "id");
+        };
     }
 
     @GetMapping("/new")
@@ -34,30 +65,30 @@ public class NoticeBoardController {
         if (result.hasErrors()) return "noticeboards/form";
 
 
-        noticeBoardRepository.save(noticeBoard);
+        noticeBoardService.save(noticeBoard);
         return "redirect:/noticeboards";
     }
 
     @GetMapping("/edit/{id}")
     public String editNoticeBoardForm(@PathVariable("id") Long id, Model model) {
-        NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
+        NoticeBoard noticeBoard = noticeBoardService.findById(id);
+               // .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
         model.addAttribute("noticeBoard", noticeBoard);
         return "noticeboards/form";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteNoticeBoard(@PathVariable("id") Long id) {
-        NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
-        noticeBoardRepository.delete(noticeBoard);
+        NoticeBoard noticeBoard = noticeBoardService.findById(id);
+                //.orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
+        noticeBoardService.delete(noticeBoard.getId());
         return "redirect:/noticeboards";
     }
 
     @GetMapping("/details/{id}")
     public String noticeBoardDetails(@PathVariable("id") Long id, Model model) {
-        NoticeBoard noticeBoard = noticeBoardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
+        NoticeBoard noticeBoard = noticeBoardService.findById(id);
+               // .orElseThrow(() -> new IllegalArgumentException("Invalid NoticeBoard Id:" + id));
         model.addAttribute("noticeBoard", noticeBoard);
         return "noticeboards/details";
     }
