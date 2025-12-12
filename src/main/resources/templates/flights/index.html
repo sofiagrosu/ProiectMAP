@@ -52,6 +52,20 @@
     </tr>
     </tbody>
 </table>
+<div>
+    <a th:if="${page.hasPrevious()}"
+       th:href="@{/assignments(page=${page.number-1}, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+        Prev
+    </a>
+
+    <span th:text="${page.number + 1}"></span> /
+    <span th:text="${page.totalPages}"></span>
+
+    <a th:if="${page.hasNext()}"
+       th:href="@{/assignments(page=${page.number+1}, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+        Next
+    </a>
+</div>
 
 </body>
 </html>
