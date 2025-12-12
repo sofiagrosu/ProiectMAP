@@ -7,6 +7,29 @@
 
 <h2>Ticket List</h2>
 <a th:href="@{/tickets/new}">Create New Ticket</a>
+<form th:action="@{/tickets}" method="get">
+    <!-- resetăm pagina la 0 când schimbăm sortarea -->
+    <input type="hidden" name="page" value="0"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
+
+    <label for="sortBy">Sort by:</label>
+    <select id="sortBy" name="sortBy">
+        <option value="id" th:selected="${sortBy == 'id'}">ID</option>
+        <option value="price" th:selected="${sortBy == 'price'}">Price</option>
+        <option value="seatNumber" th:selected="${sortBy == 'seatNumber'}">Seat Number</option>
+        <option value="passenger" th:selected="${sortBy == 'passenger'}">Passenger</option>
+        <option value="flight" th:selected="${sortBy == 'flight'}">Flight</option>
+    </select>
+
+    <label for="ascending">Order:</label>
+    <select id="ascending" name="ascending">
+        <option value="true" th:selected="${ascending == true}">Ascending</option>
+        <option value="false" th:selected="${ascending == false}">Descending</option>
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
+
 <table border="1">
     <thead>
     <tr>

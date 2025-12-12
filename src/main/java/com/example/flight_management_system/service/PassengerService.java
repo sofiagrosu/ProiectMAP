@@ -15,4 +15,8 @@ public class PassengerService {
     public Passenger findById(Long id){ return repo.findById(id).orElse(null); }
     public Passenger save(Passenger p){ return repo.save(p); }
     public void delete(Long id){ repo.findById(id).ifPresent(repo::delete); }
+
+    public List<Passenger> findAll() {
+        return repo.findAll();
+    }
 }
