@@ -7,6 +7,24 @@
 
 <h2>Airplane List</h2>
 <a th:href="@{/airplanes/new}">Create New Airplane</a>
+<form th:action="@{/airplanes}" method="get">
+    <input type="hidden" name="page" value="0"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
+
+    <label>Sort by:</label>
+    <select name="sortBy">
+        <option value="id" th:selected="${sortBy == 'id'}">ID</option>
+        <option value="number" th:selected="${sortBy == 'number'}">Number</option>
+    </select>
+
+    <label>Order:</label>
+    <select name="ascending">
+        <option value="true" th:selected="${ascending}">Ascending</option>
+        <option value="false" th:selected="${!ascending}">Descending</option>
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
 <table border="1">
     <thead>
     <tr>
