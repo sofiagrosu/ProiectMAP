@@ -1,11 +1,15 @@
 package com.example.flight_management_system.controller;
-
+import com.example.flight_management_system.service.FlightService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import com.example.flight_management_system.model.Flight;
 import com.example.flight_management_system.repository.FlightRepository;
 import com.example.flight_management_system.repository.AirplaneRepository;
 import com.example.flight_management_system.repository.NoticeBoardRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,17 +21,38 @@ import java.util.Optional;
 public class FlightController {
 
     @Autowired
-    private FlightRepository flightRepository;
+    private FlightService flightService;
     @Autowired
     private AirplaneRepository airplaneRepository;
     @Autowired
     private NoticeBoardRepository noticeBoardRepository;
 
+//    @GetMapping
+//    public String listFlights(Model model) {
+//        model.addAttribute("flights", flightService.findAll());
+//        return "flights/index";
+//    }
     @GetMapping
-    public String listFlights(Model model) {
-        model.addAttribute("flights", flightRepository.findAll());
+    public String getAllFlights(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size,
+        @RequestParam(defaultValue = "id") String sortBy,
+        @RequestParam(defaultValue = "true") boolean ascending,
+        Model model)
+    {
+
+    Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+    Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Flight> flightsPage = flightService.findAll(pageable);
+        model.addAttribute("flights", flightsPage.getContent());     // pentru tabel
+        model.addAttribute("page", flightsPage);                     // pentru paginare (opțional)
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("ascending", ascending);
+
         return "flights/index";
-    }
+
+
+}
 
     @GetMapping("/new")
     public String createFlightForm(Model model) {
@@ -45,7 +70,7 @@ public class FlightController {
                              Model model) {
 
 
-        Optional<Flight> existingFlightOpt = flightRepository.findByName(flight.getName());
+        Optional<Flight> existingFlightOpt = flightService.findByName(flight.getName());
 
         if (existingFlightOpt.isPresent()) {
             Flight existingFlight = existingFlightOpt.get();
@@ -86,14 +111,14 @@ public class FlightController {
             throw e;
         }
 
-        flightRepository.save(flight);
+        flightService.save(flight);
         return "redirect:/flights";
     }
 
     @GetMapping("/edit/{id}")
     public String editFlightForm(@PathVariable("id") Long id, Model model) {
-        Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
+        Flight flight = flightService.findById(id);
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
         model.addAttribute("flight", flight);
         model.addAttribute("airplanes", airplaneRepository.findAll());
         model.addAttribute("noticeboards", noticeBoardRepository.findAll());
@@ -102,16 +127,16 @@ public class FlightController {
 
     @GetMapping("/delete/{id}")
     public String deleteFlight(@PathVariable("id") Long id) {
-        Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
-        flightRepository.delete(flight);
+        Flight flight = flightService.findById(id);
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
+        flightService.delete(flight.getId());
         return "redirect:/flights";
     }
 
     @GetMapping("/details/{id}")
     public String flightDetails(@PathVariable("id") Long id, Model model) {
-        Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
+        Flight flight = flightService.findById(id);
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
         model.addAttribute("flight", flight);
         return "flights/details";
     }
