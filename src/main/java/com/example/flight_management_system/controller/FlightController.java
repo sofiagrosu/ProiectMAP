@@ -41,7 +41,7 @@ public class FlightController {
         Model model)
     {
 
-    Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Sort sort = buildSort(sortBy, ascending);
     Pageable pageable = PageRequest.of(page, size, sort);
         Page<Flight> flightsPage = flightService.findAll(pageable);
         model.addAttribute("flights", flightsPage.getContent());     // pentru tabel
@@ -53,7 +53,13 @@ public class FlightController {
 
 
 }
-
+    private Sort buildSort(String sortBy, boolean ascending) {
+        return switch (sortBy) {
+            case "id", "name", "gateNumber" -> ascending ? Sort.by(sortBy).ascending()
+                    : Sort.by(sortBy).descending();
+            default -> Sort.by("id").ascending();
+        };
+    }
     @GetMapping("/new")
     public String createFlightForm(Model model) {
         model.addAttribute("flight", new Flight());

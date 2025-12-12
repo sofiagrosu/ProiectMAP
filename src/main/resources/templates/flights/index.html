@@ -4,7 +4,27 @@
     <title>Flight List</title>
 </head>
 <body>
+<form th:action="@{/flights}" method="get">
+    <!-- păstrează pagina 0 când schimbi sortarea -->
+    <input type="hidden" name="page" value="0"/>
+    <input type="hidden" name="size" th:value="${page != null ? page.size : 5}"/>
 
+    <label for="sortBy">Sort by:</label>
+    <select id="sortBy" name="sortBy">
+        <option value="id" th:selected="${sortBy == 'id'}">ID</option>
+        <option value="name" th:selected="${sortBy == 'name'}">Name</option>
+        <option value="gateNumber" th:selected="${sortBy == 'gateNumber'}">Gate</option>
+        <!-- adaugă aici și alte câmpuri existente în Flight -->
+    </select>
+
+    <label for="ascending">Order:</label>
+    <select id="ascending" name="ascending">
+        <option value="true"  th:selected="${ascending == true}">Ascending</option>
+        <option value="false" th:selected="${ascending == false}">Descending</option>
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
 <h2>Flight List</h2>
 <a th:href="@{/flights/new}">Create New Flight</a>
 <table border="1">
