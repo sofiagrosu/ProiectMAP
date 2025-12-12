@@ -4,6 +4,9 @@
     <title>Flight List</title>
 </head>
 <body>
+
+<h2>Flight List</h2>
+<a th:href="@{/flights/new}">Create New Flight</a>
 <form th:action="@{/flights}" method="get">
     <!-- păstrează pagina 0 când schimbi sortarea -->
     <input type="hidden" name="page" value="0"/>
@@ -25,8 +28,6 @@
 
     <button type="submit">Apply</button>
 </form>
-<h2>Flight List</h2>
-<a th:href="@{/flights/new}">Create New Flight</a>
 <table border="1">
     <thead>
     <tr>

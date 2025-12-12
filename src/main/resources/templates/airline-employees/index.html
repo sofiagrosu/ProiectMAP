@@ -6,6 +6,9 @@
 <body>
 
 <div>
+
+    <h2>Airline Employees</h2>
+    <a th:href="@{/airline-employees/new}">Add New Employee</a>
     <form th:action="@{/airline-employees}" method="get">
         <input type="hidden" name="page" value="0" />
         <input type="hidden" name="size" th:value="${page.size}" />
@@ -27,8 +30,6 @@
 
         <button type="submit">Apply</button>
     </form>
-    <h2>Airline Employees</h2>
-    <a th:href="@{/airline-employees/new}">Add New Employee</a>
     <table border="1">
         <thead>
         <tr>
