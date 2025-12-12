@@ -22,4 +22,8 @@ public class FlightService {
     public Optional<Flight> findByName(String name) {
        return  repo.findByName(name);
     }
+
+    public List<Flight> findAll() {
+        return repo.findAll();
+    }
 }
