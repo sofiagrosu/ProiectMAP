@@ -10,6 +10,7 @@ import com.example.flight_management_system.repository.FlightRepository;
 import com.example.flight_management_system.service.FlightService;
 import com.example.flight_management_system.service.PassengerService;
 import com.example.flight_management_system.service.TicketService;
+import com.example.flight_management_system.specification.filter.TicketFilter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,12 +41,13 @@ public class TicketController {
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending,
+            @ModelAttribute("filter") TicketFilter filter,
             Model model)
     {
 
         Sort sort = buildSort(sortBy, ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Ticket> objectPage = ticketService.findAll(pageable);
+        Page<Ticket> objectPage = ticketService.search(filter,pageable);
         model.addAttribute("tickets", objectPage.getContent());     // pentru tabel
         model.addAttribute("page", objectPage);                     // pentru paginare (opțional)
         model.addAttribute("sortBy", sortBy);

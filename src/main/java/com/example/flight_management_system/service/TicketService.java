@@ -2,6 +2,8 @@ package com.example.flight_management_system.service;
 
 import com.example.flight_management_system.model.Ticket;
 import com.example.flight_management_system.repository.TicketRepository;
+import com.example.flight_management_system.specification.TicketSpecifications;
+import com.example.flight_management_system.specification.filter.TicketFilter;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -17,5 +19,8 @@ public class TicketService {
 
     public List<Ticket> findAll() {
         return repo.findAll();
+    }
+    public Page<Ticket> search(TicketFilter filter, Pageable pageable){
+        return repo.findAll(TicketSpecifications.withFilter(filter), pageable);
     }
 }
