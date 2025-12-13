@@ -8,6 +8,7 @@ import com.example.flight_management_system.repository.LuggageRepository;
 import com.example.flight_management_system.repository.TicketRepository;
 import com.example.flight_management_system.service.LuggageService;
 import com.example.flight_management_system.service.TicketService;
+import com.example.flight_management_system.specification.filter.LuggageFilter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,16 +36,18 @@ public class LuggageController {
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending,
+            @ModelAttribute("filter") LuggageFilter filter,
             Model model)
     {
 
         Sort sort = buildSort(sortBy, ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Luggage> objectPage = luggageService.findAll(pageable);
+        Page<Luggage> objectPage = luggageService.search(filter,pageable);
         model.addAttribute("luggages", objectPage.getContent());     // pentru tabel
         model.addAttribute("page", objectPage);                     // pentru paginare (opțional)
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("ascending", ascending);
+        model.addAttribute("statuses", Status.values());
 
         return "luggages/index";
 
