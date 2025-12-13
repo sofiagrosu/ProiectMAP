@@ -1,77 +1,134 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Notice Board List</title>
+    <title>NoticeBoards</title>
 </head>
 <body>
 
-<h2>Notice Board List</h2>
-<a th:href="@{/noticeboards/new}">Create New Notice Board</a>
-<form th:action="@{/noticeboards}" method="get">
+<h2>NoticeBoards</h2>
+<a th:href="@{/noticeboards/new}">Create New NoticeBoard</a>
+
+<hr/>
+
+<!-- ===================== FILTER FORM ===================== -->
+<h3>Filters</h3>
+<form th:action="@{/noticeboards}" method="get" th:object="${filter}">
+
+    <div>
+        <label>Date from</label>
+        <input type="date" th:field="*{dateFrom}"/>
+    </div>
+
+    <div>
+        <label>Date to</label>
+        <input type="date" th:field="*{dateTo}"/>
+    </div>
+
+    <!-- păstrăm sortarea -->
+    <input type="hidden" name="sortBy" th:value="${sortBy}"/>
+    <input type="hidden" name="ascending" th:value="${ascending}"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
     <input type="hidden" name="page" value="0"/>
-    <input type="hidden" name="size" th:value="${page != null ? page.size : 20}"/>
 
-    <label for="sortBy">Sort by:</label>
-    <select id="sortBy" name="sortBy">
-        <option value="id" th:selected="${sortBy == 'id'}">ID</option>
-        <option value="date" th:selected="${sortBy == 'date'}">Date</option>
-    </select>
+    <button type="submit">Apply filters</button>
 
-    <label for="ascending">Order:</label>
-    <select id="ascending" name="ascending">
-        <option value="true" th:selected="${ascending == true}">Ascending</option>
-        <option value="false" th:selected="${ascending == false}">Descending</option>
-    </select>
-
-    <button type="submit">Apply</button>
+    <a th:href="@{/noticeboards(
+            page=0,
+            size=${page.size},
+            sortBy=${sortBy},
+            ascending=${ascending}
+        )}">
+        Reset filters
+    </a>
 </form>
 
 <hr/>
 
+<!-- ===================== SORT FORM ===================== -->
+<h3>Sort</h3>
+<form th:action="@{/noticeboards}" method="get">
+
+    <!-- păstrăm filtrele -->
+    <input type="hidden" name="dateFrom" th:value="${filter.dateFrom}"/>
+    <input type="hidden" name="dateTo" th:value="${filter.dateTo}"/>
+
+    <input type="hidden" name="page" value="0"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
+
+    <label>Sort by:</label>
+    <select name="sortBy">
+        <option value="id" th:selected="${sortBy == 'id'}">ID</option>
+        <option value="date" th:selected="${sortBy == 'date'}">Date</option>
+    </select>
+
+    <label>Direction:</label>
+    <select name="ascending">
+        <option value="true" th:selected="${ascending}">Ascending</option>
+        <option value="false" th:selected="${!ascending}">Descending</option>
+    </select>
+
+    <button type="submit">Apply sort</button>
+</form>
+
+<hr/>
+
+<!-- ===================== TABLE ===================== -->
 <table border="1">
     <thead>
     <tr>
         <th>ID</th>
         <th>Date</th>
-        <th>Flights of the day</th>
         <th>Actions</th>
     </tr>
     </thead>
 
     <tbody>
+    <!-- IMPORTANT: controller-ul trimite "noticeBoards" -->
     <tr th:each="nb : ${noticeBoards}">
         <td th:text="${nb.id}"></td>
         <td th:text="${nb.date}"></td>
-
-        <!-- numărul de zboruri din board -->
-        <td th:text="${nb.flightsOfTheDay != null ? nb.flightsOfTheDay.size() : 0}"></td>
-
         <td>
             <a th:href="@{/noticeboards/details/{id}(id=${nb.id})}">Details</a> |
             <a th:href="@{/noticeboards/edit/{id}(id=${nb.id})}">Edit</a> |
             <a th:href="@{/noticeboards/delete/{id}(id=${nb.id})}"
-               onclick="return confirm('Delete this notice board?');">Delete</a>
+               onclick="return confirm('Are you sure you want to delete this noticeboard?');">
+                Delete
+            </a>
         </td>
     </tr>
     </tbody>
 </table>
 
-<!-- PAGINARE -->
-<div th:if="${page != null}">
+<!-- ===================== PAGINATION ===================== -->
+<div>
     <a th:if="${page.hasPrevious()}"
-       th:href="@{/noticeboards(page=${page.number - 1}, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+       th:href="@{/noticeboards(
+           page=${page.number - 1},
+           size=${page.size},
+           sortBy=${sortBy},
+           ascending=${ascending},
+           dateFrom=${filter.dateFrom},
+           dateTo=${filter.dateTo}
+       )}">
         Prev
     </a>
 
-    <span th:text="${page.number + 1}"></span> /
+    <span th:text="${page.number + 1}"></span>
+    /
     <span th:text="${page.totalPages}"></span>
 
     <a th:if="${page.hasNext()}"
-       th:href="@{/noticeboards(page=${page.number + 1}, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+       th:href="@{/noticeboards(
+           page=${page.number + 1},
+           size=${page.size},
+           sortBy=${sortBy},
+           ascending=${ascending},
+           dateFrom=${filter.dateFrom},
+           dateTo=${filter.dateTo}
+       )}">
         Next
     </a>
 </div>
-
 
 </body>
 </html>

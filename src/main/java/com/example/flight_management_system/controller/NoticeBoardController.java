@@ -4,6 +4,7 @@ import com.example.flight_management_system.model.Luggage;
 import com.example.flight_management_system.model.NoticeBoard;
 import com.example.flight_management_system.repository.NoticeBoardRepository;
 import com.example.flight_management_system.service.NoticeBoardService;
+import com.example.flight_management_system.specification.filter.NoticeBoardFilter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,16 +29,18 @@ public class NoticeBoardController {
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending,
+            @ModelAttribute("filter") NoticeBoardFilter filter,
             Model model)
     {
 
         Sort sort = buildSort(sortBy, ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<NoticeBoard> objectPage =  noticeBoardService.findAll(pageable);
+        Page<NoticeBoard> objectPage =  noticeBoardService.search(filter,pageable);
         model.addAttribute("noticeBoards", objectPage.getContent());     // pentru tabel
         model.addAttribute("page", objectPage);                     // pentru paginare (opțional)
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("ascending", ascending);
+        model.addAttribute("noticeBoards", objectPage.getContent());
 
         return "noticeboards/index";
 
