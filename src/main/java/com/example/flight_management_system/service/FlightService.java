@@ -1,5 +1,7 @@
 package com.example.flight_management_system.service;
 
+import com.example.flight_management_system.specification.FlightSpecifications;
+import com.example.flight_management_system.specification.filter.FlightFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,4 +28,8 @@ public class FlightService {
     public List<Flight> findAll() {
         return repo.findAll();
     }
+    public Page<Flight> search(FlightFilter filter, Pageable pageable) {
+        return repo.findAll(FlightSpecifications.withFilter(filter), pageable);
+    }
+
 }

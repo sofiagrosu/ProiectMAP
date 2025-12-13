@@ -1,5 +1,6 @@
 package com.example.flight_management_system.controller;
 import com.example.flight_management_system.service.FlightService;
+import com.example.flight_management_system.specification.filter.FlightFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,20 +35,24 @@ public class FlightController {
 //    }
     @GetMapping
     public String getAllFlights(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "20") int size,
-        @RequestParam(defaultValue = "id") String sortBy,
-        @RequestParam(defaultValue = "true") boolean ascending,
-        Model model)
+            @ModelAttribute("filter") FlightFilter filter,// pentru filtrare
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending,
+            Model model)
     {
 
         Sort sort = buildSort(sortBy, ascending);
     Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Flight> flightsPage = flightService.findAll(pageable);
+        Page<Flight> flightsPage = flightService.search(filter,pageable);
         model.addAttribute("flights", flightsPage.getContent());     // pentru tabel
         model.addAttribute("page", flightsPage);                     // pentru paginare (opțional)
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("ascending", ascending);
+        //pentru dropdown
+        model.addAttribute("airplanes", airplaneRepository.findAll());
+        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
 
         return "flights/index";
 

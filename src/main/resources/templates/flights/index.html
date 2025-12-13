@@ -7,27 +7,91 @@
 
 <h2>Flight List</h2>
 <a th:href="@{/flights/new}">Create New Flight</a>
-<form th:action="@{/flights}" method="get">
-    <!-- păstrează pagina 0 când schimbi sortarea -->
-    <input type="hidden" name="page" value="0"/>
-    <input type="hidden" name="size" th:value="${page != null ? page.size : 5}"/>
 
-    <label for="sortBy">Sort by:</label>
-    <select id="sortBy" name="sortBy">
+<hr/>
+
+<!-- ===================== FILTER FORM (GET) ===================== -->
+<h3>Filters</h3>
+<form th:action="@{/flights}" method="get" th:object="${filter}">
+    <div>
+        <label>Name</label>
+        <input type="text" th:field="*{name}" placeholder="Flight name"/>
+    </div>
+
+    <div>
+        <label>Gate</label>
+        <input type="text" th:field="*{gateNumber}" placeholder="Gate number"/>
+    </div>
+
+    <div>
+        <label>Airplane</label>
+        <select th:field="*{airplaneId}">
+            <option value="">All</option>
+            <option th:each="a : ${airplanes}"
+                    th:value="${a.id}"
+                    th:text="${a.id}">
+            </option>
+        </select>
+    </div>
+
+    <div>
+        <label>NoticeBoard</label>
+        <select th:field="*{noticeBoardId}">
+            <option value="">All</option>
+            <option th:each="n : ${noticeboards}"
+                    th:value="${n.id}"
+                    th:text="${n.id}">
+            </option>
+        </select>
+    </div>
+
+    <!-- păstrăm sortarea curentă când aplicăm filtre -->
+    <input type="hidden" name="sortBy" th:value="${sortBy}"/>
+    <input type="hidden" name="ascending" th:value="${ascending}"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
+    <input type="hidden" name="page" value="0"/>
+
+    <button type="submit">Apply filters</button>
+
+    <!-- Reset filtre (dar păstrează sort) -->
+    <a th:href="@{/flights(page=0, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+        Reset filters
+    </a>
+</form>
+
+<hr/>
+
+<!-- ===================== SORT FORM (GET) ===================== -->
+<h3>Sort</h3>
+<form th:action="@{/flights}" method="get">
+    <!-- păstrăm filtrele curente când schimbăm sortarea -->
+    <input type="hidden" name="name" th:value="${filter.name}"/>
+    <input type="hidden" name="gateNumber" th:value="${filter.gateNumber}"/>
+    <input type="hidden" name="airplaneId" th:value="${filter.airplaneId}"/>
+    <input type="hidden" name="noticeBoardId" th:value="${filter.noticeBoardId}"/>
+
+    <input type="hidden" name="page" value="0"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
+
+    <label>Sort by:</label>
+    <select name="sortBy">
         <option value="id" th:selected="${sortBy == 'id'}">ID</option>
         <option value="name" th:selected="${sortBy == 'name'}">Name</option>
         <option value="gateNumber" th:selected="${sortBy == 'gateNumber'}">Gate</option>
-        <!-- adaugă aici și alte câmpuri existente în Flight -->
     </select>
 
-    <label for="ascending">Order:</label>
-    <select id="ascending" name="ascending">
-        <option value="true"  th:selected="${ascending == true}">Ascending</option>
-        <option value="false" th:selected="${ascending == false}">Descending</option>
+    <label>Direction:</label>
+    <select name="ascending">
+        <option value="true" th:selected="${ascending}">Ascending</option>
+        <option value="false" th:selected="${!ascending}">Descending</option>
     </select>
 
-    <button type="submit">Apply</button>
+    <button type="submit">Apply sort</button>
 </form>
+
+<hr/>
+
+<!-- ===================== TABLE ===================== -->
 <table border="1">
     <thead>
     <tr>
@@ -38,23 +102,32 @@
         <th>Actions</th>
     </tr>
     </thead>
+
     <tbody>
     <tr th:each="flight : ${flights}">
         <td th:text="${flight.id}"></td>
         <td th:text="${flight.name}"></td>
-        <td th:text="${flight.airplane.id}"></td>
+        <td th:text="${flight.airplane != null ? flight.airplane.id : '-'}"></td>
         <td th:text="${flight.gateNumber}"></td>
         <td>
             <a th:href="@{/flights/details/{id}(id=${flight.id})}">Details</a> |
             <a th:href="@{/flights/edit/{id}(id=${flight.id})}">Edit</a> |
-            <a th:href="@{/flights/delete/{id}(id=${flight.id})}" onclick="return confirm('Are you sure you want to delete this flight?');">Delete</a>
+            <a th:href="@{/flights/delete/{id}(id=${flight.id})}"
+               onclick="return confirm('Are you sure you want to delete this flight?');">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
+
+<!-- ===================== PAGINATION (keeps filter+sort) ===================== -->
 <div>
     <a th:if="${page.hasPrevious()}"
-       th:href="@{/assignments(page=${page.number-1}, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+       th:href="@{/flights(
+           page=${page.number - 1}, size=${page.size},
+           sortBy=${sortBy}, ascending=${ascending},
+           name=${filter.name}, gateNumber=${filter.gateNumber},
+           airplaneId=${filter.airplaneId}, noticeBoardId=${filter.noticeBoardId}
+       )}">
         Prev
     </a>
 
@@ -62,7 +135,12 @@
     <span th:text="${page.totalPages}"></span>
 
     <a th:if="${page.hasNext()}"
-       th:href="@{/assignments(page=${page.number+1}, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+       th:href="@{/flights(
+           page=${page.number + 1}, size=${page.size},
+           sortBy=${sortBy}, ascending=${ascending},
+           name=${filter.name}, gateNumber=${filter.gateNumber},
+           airplaneId=${filter.airplaneId}, noticeBoardId=${filter.noticeBoardId}
+       )}">
         Next
     </a>
 </div>
