@@ -1,27 +1,92 @@
-<h1>Passengers</h1>
-<a th:href="@{/passengers/new}">Add New Passenger</a>
-<form th:action="@{/passengers}" method="get">
-    <input type="hidden" name="page" value="0"/>
-    <input type="hidden" name="size" th:value="${page != null ? page.size : 20}"/>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Passengers</title>
+</head>
+<body>
 
-    <label for="sortBy">Sort by:</label>
-    <select id="sortBy" name="sortBy">
+<h2>Passengers</h2>
+<a th:href="@{/passengers/new}">Create New Passenger</a>
+
+<hr/>
+
+<!-- ===================== FILTER FORM ===================== -->
+<h3>Filters</h3>
+<form th:action="@{/passengers}" method="get" th:object="${filter}">
+
+    <div>
+        <label>Name</label>
+        <input type="text" th:field="*{name}" placeholder="Passenger name"/>
+    </div>
+
+    <div>
+        <label>Currency</label>
+        <input type="text" th:field="*{currency}" placeholder="Currency"/>
+    </div>
+
+    <div>
+        <label>Checked In</label>
+        <select th:field="*{checkedIn}">
+            <option value="">All</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+
+    <!-- păstrăm sortarea -->
+    <input type="hidden" name="sortBy" th:value="${sortBy}"/>
+    <input type="hidden" name="ascending" th:value="${ascending}"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
+    <input type="hidden" name="page" value="0"/>
+
+    <button type="submit">Apply filters</button>
+
+    <a th:href="@{/passengers(
+            page=0,
+            size=${page.size},
+            sortBy=${sortBy},
+            ascending=${ascending}
+        )}">
+        Reset filters
+    </a>
+</form>
+
+<hr/>
+
+<!-- ===================== SORT FORM ===================== -->
+<h3>Sort</h3>
+<form th:action="@{/passengers}" method="get">
+
+    <!-- păstrăm filtrele -->
+    <input type="hidden" name="name" th:value="${filter.name}"/>
+    <input type="hidden" name="currency" th:value="${filter.currency}"/>
+    <input type="hidden" name="checkedIn" th:value="${filter.checkedIn}"/>
+
+    <input type="hidden" name="page" value="0"/>
+    <input type="hidden" name="size" th:value="${page.size}"/>
+
+    <label>Sort by:</label>
+    <select name="sortBy">
         <option value="id" th:selected="${sortBy == 'id'}">ID</option>
         <option value="name" th:selected="${sortBy == 'name'}">Name</option>
         <option value="currency" th:selected="${sortBy == 'currency'}">Currency</option>
-        <option value="isCheckedIn" th:selected="${sortBy == 'ischeckedIn'}">Checked-in</option>
+        <option value="isCheckedIn" th:selected="${sortBy == 'isCheckedIn'}">Checked In</option>
     </select>
 
-    <label for="ascending">Order:</label>
-    <select id="ascending" name="ascending">
-        <option value="true" th:selected="${ascending == true}">Ascending</option>
-        <option value="false" th:selected="${ascending == false}">Descending</option>
+    <label>Direction:</label>
+    <select name="ascending">
+        <option value="true" th:selected="${ascending}">Ascending</option>
+        <option value="false" th:selected="${!ascending}">Descending</option>
     </select>
 
-    <button type="submit">Apply</button>
+    <button type="submit">Apply sort</button>
 </form>
 
-<table border="1" cellpadding="5">
+<hr/>
+
+<!-- ===================== TABLE ===================== -->
+<table border="1">
+    <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -29,15 +94,58 @@
         <th>Checked In</th>
         <th>Actions</th>
     </tr>
+    </thead>
+
+    <tbody>
     <tr th:each="p : ${passengers}">
         <td th:text="${p.id}"></td>
         <td th:text="${p.name}"></td>
         <td th:text="${p.currency}"></td>
-        <td th:text="${p.checkedIn}"></td>
+        <td th:text="${p.checkedIn ? 'Yes' : 'No'}"></td>
         <td>
-            <a th:href="@{/passengers/edit/{id}(id=${p.id})}">Edit</a>
-            <a th:href="@{/passengers/delete/{id}(id=${p.id})}">Delete</a>
-            <a th:href="@{/passengers/details/{id}(id=${p.id})}">Details</a>
+            <a th:href="@{/passengers/details/{id}(id=${p.id})}">Details</a> |
+            <a th:href="@{/passengers/edit/{id}(id=${p.id})}">Edit</a> |
+            <a th:href="@{/passengers/delete/{id}(id=${p.id})}"
+               onclick="return confirm('Are you sure you want to delete this passenger?');">
+                Delete
+            </a>
         </td>
     </tr>
+    </tbody>
 </table>
+
+<!-- ===================== PAGINATION ===================== -->
+<div>
+    <a th:if="${page.hasPrevious()}"
+       th:href="@{/passengers(
+           page=${page.number - 1},
+           size=${page.size},
+           sortBy=${sortBy},
+           ascending=${ascending},
+           name=${filter.name},
+           currency=${filter.currency},
+           checkedIn=${filter.checkedIn}
+       )}">
+        Prev
+    </a>
+
+    <span th:text="${page.number + 1}"></span>
+    /
+    <span th:text="${page.totalPages}"></span>
+
+    <a th:if="${page.hasNext()}"
+       th:href="@{/passengers(
+           page=${page.number + 1},
+           size=${page.size},
+           sortBy=${sortBy},
+           ascending=${ascending},
+           name=${filter.name},
+           currency=${filter.currency},
+           checkedIn=${filter.checkedIn}
+       )}">
+        Next
+    </a>
+</div>
+
+</body>
+</html>
