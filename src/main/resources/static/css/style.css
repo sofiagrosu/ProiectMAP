@@ -75,10 +75,10 @@ body {
 }
 
 /* =========================================================
-   FLIGHTS PAGE — scoped: doar când body are .flights-page
+   FLIGHTS PAGE — scoped: doar când body are .list-page
    ========================================================= */
 
-.flights-page .pill-title{
+.list-page .pill-title{
     width: 520px;
     height: 46px;
     display: flex;
@@ -92,30 +92,30 @@ body {
     margin: 6px 0 18px;
 }
 
-.flights-page .content-grid{
+.list-page .content-grid{
     display: grid;
     grid-template-columns: 1fr 260px;
     gap: 24px;
     align-items: start;
 }
 
-.flights-page .table-area{
+.list-page .table-area{
     position: relative;
     min-height: 430px;
 }
 
-.flights-page .top-actions{
+.list-page .top-actions{
     margin: 6px 0 10px;
 }
 
-.flights-page .fms-table{
+.list-page .fms-table{
     width: 100%;
     border-collapse: collapse;
     background: #f6f2f7;
     box-shadow: 0 0 0 1px rgba(0,0,0,0.08) inset;
 }
 
-.flights-page .fms-table th{
+.list-page .fms-table th{
     background: #2f3a97;
     color: #fff;
     padding: 14px 10px;
@@ -123,47 +123,47 @@ body {
     border: 1px solid rgba(255,255,255,0.15);
 }
 
-.flights-page .fms-table td{
+.list-page .fms-table td{
     padding: 14px 10px;
     border: 1px solid rgba(0,0,0,0.08);
 }
 
-.flights-page .link{
+.list-page .link{
     color: #0b0b0b;
     text-decoration: underline;
 }
 
-.flights-page .link-danger{
+.list-page .link-danger{
     color: #ff2b2b;
 }
 
-.flights-page .pagination{
+.list-page .pagination{
     margin-top: 12px;
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-.flights-page .pageinfo{
+.list-page .pageinfo{
     font-weight: 700;
 }
 
-.flights-page .bottom-left{
+.list-page .bottom-left{
     margin-top: 18px;
 }
 
 /* RIGHT SIDE */
-.flights-page .side-area{
+.list-page .side-area{
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
-.flights-page .side-block{
+.list-page .side-block{
     border: 2px solid rgba(255,255,255,0.6);
 }
 
-.flights-page .side-header{
+.list-page .side-header{
     background: #070b55;
     color: #fff;
     font-weight: 800;
@@ -172,19 +172,19 @@ body {
     letter-spacing: 0.5px;
 }
 
-.flights-page .side-body{
+.list-page .side-body{
     background: #070b55;
     padding: 14px;
     min-height: 130px;
 }
 
-.flights-page .form-stack{
+.list-page .form-stack{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.flights-page .lbl{
+.list-page .lbl{
     color: #ffffff;
     font-size: 12px;
     font-weight: 700;
@@ -193,7 +193,7 @@ body {
 }
 
 /* INPUT / SELECT (cu fix pentru textul din dropdown) */
-.flights-page .input{
+.list-page .input{
     width: 100%;
     padding: 9px 10px;
     border: 1px solid rgba(255,255,255,0.35);
@@ -203,20 +203,20 @@ body {
     outline: none;
 }
 
-.flights-page .input::placeholder{ color: rgba(255,255,255,0.7); }
+.list-page .input::placeholder{ color: rgba(255,255,255,0.7); }
 
-.flights-page .input option{
+.list-page .input option{
     background-color: #ffffff;
     color: #000000;
     font-weight: 600;
 }
 
-.flights-page .input option:checked{
+.list-page .input option:checked{
     background-color: #2f3a97;
     color: #ffffff;
 }
 
-.flights-page .side-actions{
+.list-page .side-actions{
     display: flex;
     justify-content: flex-end;
     gap: 10px;
@@ -224,7 +224,7 @@ body {
 }
 
 /* BUTTONS */
-.flights-page .btn{
+.list-page .btn{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -235,24 +235,24 @@ body {
     font-weight: 700;
 }
 
-.flights-page .btn-primary{
+.list-page .btn-primary{
     background: #2f3a97;
     color: #fff;
 }
 
-.flights-page .btn-back{
+.list-page .btn-back{
     width: 140px;
     background: #070b55;
     color: #fff;
 }
 
-.flights-page .btn-small{
+.list-page .btn-small{
     padding: 8px 12px;
     background: #2f3a97;
     color: #fff;
 }
 
-.flights-page .btn-secondary{
+.list-page .btn-secondary{
     background: #2f3a97;
     color: #fff;
 }

@@ -1,155 +1,210 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8" />
     <title>Flight Assignments</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2>Flight Assignments</h2>
-<a th:href="@{/assignments/new}">Create New Assignment</a>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<hr/>
+        <div class="pill-title">Flight Assignments</div>
 
-<!-- ===================== FILTER FORM ===================== -->
-<h3>Filters</h3>
-<form th:action="@{/assignments}" method="get" th:object="${filter}">
+        <div class="content-grid">
 
-    <div>
-        <label>Flight ID</label>
-        <input type="number" th:field="*{flightId}" min="1" placeholder="e.g. 1"/>
+            <!-- LEFT: Table -->
+            <div class="table-area">
+
+                <div class="top-actions">
+                    <a class="btn btn-primary" th:href="@{/assignments/new}">
+                        Create New Assignment
+                    </a>
+                </div>
+
+                <table class="fms-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Flight ID</th>
+                        <th>Staff ID</th>
+                        <th>Date</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="a : ${assignments}">
+                        <td th:text="${a.id}"></td>
+                        <td th:text="${a.flight != null ? a.flight.id : '-'}"></td>
+                        <td th:text="${a.staff != null ? a.staff.id : '-'}"></td>
+                        <td th:text="${a.assignmentDate}"></td>
+
+                        <td>
+                            <a class="link"
+                               th:href="@{/assignments/details/{id}(id=${a.id})}">
+                                Details
+                            </a>
+                        </td>
+                        <td>
+                            <a class="link"
+                               th:href="@{/assignments/edit/{id}(id=${a.id})}">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a class="link link-danger"
+                               th:href="@{/assignments/delete/{id}(id=${a.id})}"
+                               onclick="return confirm('Are you sure you want to delete this assignment?');">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(assignments)}">
+                        <td colspan="7" class="empty">No assignments found.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination (keeps filter + sort) -->
+                <div class="pagination">
+                    <a class="link" th:if="${page.hasPrevious()}"
+                       th:href="@{/assignments(
+                           page=${page.number - 1},
+                           size=${page.size},
+                           sortBy=${sortBy},
+                           ascending=${ascending},
+                           flightId=${filter.flightId},
+                           staffId=${filter.staffId},
+                           dateFrom=${filter.dateFrom},
+                           dateTo=${filter.dateTo}
+                       )}">
+                        Prev
+                    </a>
+
+                    <span class="pageinfo">
+                        <span th:text="${page.number + 1}"></span> /
+                        <span th:text="${page.totalPages}"></span>
+                    </span>
+
+                    <a class="link" th:if="${page.hasNext()}"
+                       th:href="@{/assignments(
+                           page=${page.number + 1},
+                           size=${page.size},
+                           sortBy=${sortBy},
+                           ascending=${ascending},
+                           flightId=${filter.flightId},
+                           staffId=${filter.staffId},
+                           dateFrom=${filter.dateFrom},
+                           dateTo=${filter.dateTo}
+                       )}">
+                        Next
+                    </a>
+                </div>
+
+                <div class="bottom-left">
+                    <a class="btn btn-back" href="/">Back</a>
+                </div>
+            </div>
+
+            <!-- RIGHT: Sort + Filter -->
+            <div class="side-area">
+
+                <!-- SORT PANEL -->
+                <div class="side-block">
+                    <div class="side-header">SORT</div>
+                    <div class="side-body">
+
+                        <form th:action="@{/assignments}" method="get" class="form-stack">
+                            <!-- keep filters -->
+                            <input type="hidden" name="flightId" th:value="${filter.flightId}"/>
+                            <input type="hidden" name="staffId" th:value="${filter.staffId}"/>
+                            <input type="hidden" name="dateFrom" th:value="${filter.dateFrom}"/>
+                            <input type="hidden" name="dateTo" th:value="${filter.dateTo}"/>
+
+                            <input type="hidden" name="page" value="0"/>
+                            <input type="hidden" name="size" th:value="${page.size}"/>
+
+                            <label class="lbl">Sort by</label>
+                            <select class="input" name="sortBy">
+                                <option value="id" th:selected="${sortBy == 'id'}">ID</option>
+                                <option value="assignmentDate"
+                                        th:selected="${sortBy == 'assignmentDate'}">Date</option>
+                                <option value="flight" th:selected="${sortBy == 'flight'}">Flight ID</option>
+                                <option value="staff" th:selected="${sortBy == 'staff'}">Staff ID</option>
+                            </select>
+
+                            <label class="lbl">Direction</label>
+                            <select class="input" name="ascending">
+                                <option value="true" th:selected="${ascending}">Ascending</option>
+                                <option value="false" th:selected="${!ascending}">Descending</option>
+                            </select>
+
+                            <div class="side-actions">
+                                <button class="btn btn-small" type="submit">Apply</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- FILTER PANEL -->
+                <div class="side-block">
+                    <div class="side-header">Filter</div>
+                    <div class="side-body">
+
+                        <form th:action="@{/assignments}" method="get"
+                              th:object="${filter}" class="form-stack">
+
+                            <div>
+                                <label class="lbl">Flight ID</label>
+                                <input class="input" type="number"
+                                       th:field="*{flightId}" min="1" placeholder="e.g. 1"/>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Staff ID</label>
+                                <input class="input" type="number"
+                                       th:field="*{staffId}" min="1" placeholder="e.g. 2"/>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Date from</label>
+                                <input class="input" type="date" th:field="*{dateFrom}"/>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Date to</label>
+                                <input class="input" type="date" th:field="*{dateTo}"/>
+                            </div>
+
+                            <!-- keep sort -->
+                            <input type="hidden" name="sortBy" th:value="${sortBy}"/>
+                            <input type="hidden" name="ascending" th:value="${ascending}"/>
+                            <input type="hidden" name="size" th:value="${page.size}"/>
+                            <input type="hidden" name="page" value="0"/>
+
+                            <div class="side-actions">
+                                <button class="btn btn-small" type="submit">Apply</button>
+
+                                <a class="btn btn-small btn-secondary"
+                                   th:href="@{/assignments(page=0, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+                                    Reset
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
-
-    <div>
-        <label>Staff ID</label>
-        <input type="number" th:field="*{staffId}" min="1" placeholder="e.g. 2"/>
-    </div>
-
-    <div>
-        <label>Date from</label>
-        <input type="date" th:field="*{dateFrom}"/>
-    </div>
-
-    <div>
-        <label>Date to</label>
-        <input type="date" th:field="*{dateTo}"/>
-    </div>
-
-    <!-- păstrăm sortarea -->
-    <input type="hidden" name="sortBy" th:value="${sortBy}"/>
-    <input type="hidden" name="ascending" th:value="${ascending}"/>
-    <input type="hidden" name="size" th:value="${page.size}"/>
-    <input type="hidden" name="page" value="0"/>
-
-    <button type="submit">Apply filters</button>
-
-    <a th:href="@{/assignments(
-            page=0,
-            size=${page.size},
-            sortBy=${sortBy},
-            ascending=${ascending}
-        )}">
-        Reset filters
-    </a>
-</form>
-
-<hr/>
-
-<!-- ===================== SORT FORM ===================== -->
-<h3>Sort</h3>
-<form th:action="@{/assignments}" method="get">
-
-    <!-- păstrăm filtrele -->
-    <input type="hidden" name="flightId" th:value="${filter.flightId}"/>
-    <input type="hidden" name="staffId" th:value="${filter.staffId}"/>
-    <input type="hidden" name="dateFrom" th:value="${filter.dateFrom}"/>
-    <input type="hidden" name="dateTo" th:value="${filter.dateTo}"/>
-
-    <input type="hidden" name="page" value="0"/>
-    <input type="hidden" name="size" th:value="${page.size}"/>
-
-    <label>Sort by:</label>
-    <select name="sortBy">
-        <option value="id" th:selected="${sortBy == 'id'}">ID</option>
-        <option value="assignmentDate" th:selected="${sortBy == 'assignmentDate'}">Date</option>
-        <option value="flight" th:selected="${sortBy == 'flight'}">Flight ID</option>
-        <option value="staff" th:selected="${sortBy == 'staff'}">Staff ID</option>
-    </select>
-
-    <label>Direction:</label>
-    <select name="ascending">
-        <option value="true" th:selected="${ascending}">Ascending</option>
-        <option value="false" th:selected="${!ascending}">Descending</option>
-    </select>
-
-    <button type="submit">Apply sort</button>
-</form>
-
-<hr/>
-
-<!-- ===================== TABLE ===================== -->
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Flight ID</th>
-        <th>Staff ID</th>
-        <th>Date</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr th:each="a : ${assignments}">
-        <td th:text="${a.id}"></td>
-        <td th:text="${a.flight != null ? a.flight.id : '-'}"></td>
-        <td th:text="${a.staff != null ? a.staff.id : '-'}"></td>
-        <td th:text="${a.assignmentDate}"></td>
-        <td>
-            <a th:href="@{/assignments/details/{id}(id=${a.id})}">Details</a> |
-            <a th:href="@{/assignments/edit/{id}(id=${a.id})}">Edit</a> |
-            <a th:href="@{/assignments/delete/{id}(id=${a.id})}"
-               onclick="return confirm('Are you sure you want to delete this assignment?');">
-                Delete
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<!-- ===================== PAGINATION ===================== -->
-<div>
-    <a th:if="${page.hasPrevious()}"
-       th:href="@{/assignments(
-           page=${page.number - 1},
-           size=${page.size},
-           sortBy=${sortBy},
-           ascending=${ascending},
-           flightId=${filter.flightId},
-           staffId=${filter.staffId},
-           dateFrom=${filter.dateFrom},
-           dateTo=${filter.dateTo}
-       )}">
-        Prev
-    </a>
-
-    <span th:text="${page.number + 1}"></span>
-    /
-    <span th:text="${page.totalPages}"></span>
-
-    <a th:if="${page.hasNext()}"
-       th:href="@{/assignments(
-           page=${page.number + 1},
-           size=${page.size},
-           sortBy=${sortBy},
-           ascending=${ascending},
-           flightId=${filter.flightId},
-           staffId=${filter.staffId},
-           dateFrom=${filter.dateFrom},
-           dateTo=${filter.dateTo}
-       )}">
-        Next
-    </a>
 </div>
-
 </body>
 </html>

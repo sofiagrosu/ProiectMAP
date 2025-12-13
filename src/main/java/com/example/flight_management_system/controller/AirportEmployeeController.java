@@ -47,11 +47,17 @@ public class AirportEmployeeController {
     }
     private Sort buildSort(String sortBy, boolean ascending) {
         return switch (sortBy) {
-            case "id","departament", "name", "designation" , "number" -> ascending ? Sort.by(sortBy).ascending()
-                    : Sort.by(sortBy).descending();
+            case "id",
+                 "department",
+                 "name",
+                 "designation",
+                 "employeeNumber" ->
+                    ascending ? Sort.by(sortBy).ascending()
+                            : Sort.by(sortBy).descending();
             default -> Sort.by("id").ascending();
         };
     }
+
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("employee", new AirportEmployee());
