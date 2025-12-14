@@ -2,40 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Passenger Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2><span th:text="${passenger.id} ? 'Edit Passenger' : 'Create New Passenger'"></span></h2>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<form th:action="@{/passengers/save}" th:object="${passenger}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <div class="pill-title">
+            <span th:text="${passenger.id} ? 'Edit Passenger' : 'Create new Passenger'"></span>
+        </div>
 
-    <!-- Name Field with @NotBlank Validation Error Display (1.6 a & c) -->
-    <div>
-        <label for="name">Name (required):</label>
-        <input type="text" id="name" th:field="*{name}" />
-        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">PASSENGER FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/passengers/save}"
+                              th:object="${passenger}"
+                              method="post"
+                              class="form-stack">
+
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Name -->
+                            <div>
+                                <label class="lbl" for="name">Name</label>
+                                <input class="input" type="text" id="name" th:field="*{name}" placeholder="e.g. John Doe" />
+                                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+                            </div>
+
+                            <!-- Currency -->
+                            <div>
+                                <label class="lbl" for="currency">Currency</label>
+                                <input class="input" type="text" id="currency" th:field="*{currency}" placeholder="e.g. EUR" />
+                                <span class="error" th:if="${#fields.hasErrors('currency')}" th:errors="*{currency}">Currency Error</span>
+                            </div>
+
+                            <!-- Checked In (checkbox) -->
+                            <div>
+                                <label class="lbl" for="isCheckedIn">Checked In</label>
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <input type="checkbox" id="isCheckedIn" th:field="*{checkedIn}" />
+                                    <label for="isCheckedIn" style="color:#ffffff; font-weight:700; font-size:12px; margin:0;">
+                                        Is Checked In
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/passengers}">Cancel</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
+        </div>
+
     </div>
-    <br/>
-
-    <!-- Currency Field with @NotBlank Validation Error Display (1.6 a & c) -->
-    <div>
-        <label for="currency">Currency (required):</label>
-        <input type="text" id="currency" th:field="*{currency}" />
-        <span class="error" th:if="${#fields.hasErrors('currency')}" th:errors="*{currency}">Currency Error</span>
-    </div>
-    <br/>
-
-    <!-- isCheckedIn Field (Checkbox) -->
-    <div>
-        <input type="checkbox" id="isCheckedIn" th:field="*{checkedIn}" />
-        <label for="isCheckedIn">Is Checked In</label>
-    </div>
-    <br/>
-
-    <button type="submit">Save</button>
-    <a th:href="@{/passengers}">Cancel</a>
-</form>
+</div>
 </body>
 </html>

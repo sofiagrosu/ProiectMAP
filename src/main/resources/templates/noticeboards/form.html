@@ -2,25 +2,62 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Notice Board Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2><span th:text="${noticeBoard.id} ? 'Edit Notice Board' : 'Create New Notice Board'"></span></h2>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<form th:action="@{/noticeboards/save}" th:object="${noticeBoard}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <!-- Titlu -->
+        <div class="pill-title">
+            <span th:text="${noticeBoard.id} ? 'Edit Notice Board' : 'Create New Notice Board'"></span>
+        </div>
 
-    <!-- Date Field (@NotNull Validation) -->
-    <div>
-        <label for="date">Date (required):</label>
-        <input type="date" id="date" th:field="*{date}" />
-        <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date Error</span>
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">NOTICE BOARD FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/noticeboards/save}"
+                              th:object="${noticeBoard}"
+                              method="post"
+                              class="form-stack">
+
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Date -->
+                            <div>
+                                <label class="lbl" for="date">Date</label>
+                                <input class="input" type="date" id="date" th:field="*{date}" />
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('date')}"
+                                      th:errors="*{date}">
+                                    Date Error
+                                </span>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/noticeboards}">Cancel</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
+        </div>
+
     </div>
-    <br/>
-
-    <button type="submit">Save</button>
-    <a th:href="@{/noticeboards}">Cancel</a>
-</form>
+</div>
 </body>
 </html>

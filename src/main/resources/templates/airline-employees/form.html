@@ -2,54 +2,102 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Airline Employee Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<div>
-    <h2 th:text="${employee.id == null ? 'Add Employee' : 'Edit Employee'}"></h2>
-    <form th:action="@{/airline-employees/save}" th:object="${employee}" method="post">
-        <input type="hidden" th:field="*{id}" />
 
-        <div>
-            <label>Name (inherited from Staff):</label>
-            <input type="text" th:field="*{name}" />
-            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
-        </div>
-        <br>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-        <div>
-            <label>Employee Number (required, unique):</label>
-            <input type="text" th:field="*{employeeNumber}" />
-            <span class="error" th:if="${#fields.hasErrors('employeeNumber')}" th:errors="*{employeeNumber}">Employee Number Error</span>
+        <!-- Titlu -->
+        <div class="pill-title">
+            <span th:text="${employee.id == null ? 'Add Employee' : 'Edit Employee'}"></span>
         </div>
-        <br>
 
-        <div>
-            <label>Company (required):</label>
-            <input type="text" th:field="*{company}" />
-            <span class="error" th:if="${#fields.hasErrors('company')}" th:errors="*{company}">Company Error</span>
-        </div>
-        <br>
+        <div class="content-grid">
 
-        <div>
-            <label>Role (required):</label>
-            <select th:field="*{role}">
-                <option value="">-- Select Role --</option>
-                <option th:each="r : ${roles}"
-                        th:value="${r}"
-                        th:text="${r}">
-                    Role
-                </option>
-            </select>
-            <span class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</span>
-        </div>
-        <br>
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
 
-        <div>
-            <button type="submit">Save</button>
-            <a th:href="@{/airline-employees}">Back</a>
+                <div class="side-block">
+                    <div class="side-header">AIRLINE EMPLOYEE FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/airline-employees/save}"
+                              th:object="${employee}"
+                              method="post"
+                              class="form-stack">
+
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Name -->
+                            <div>
+                                <label class="lbl">Name</label>
+                                <input class="input" type="text" th:field="*{name}" placeholder="e.g. John Smith"/>
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('name')}"
+                                      th:errors="*{name}">
+                                    Name Error
+                                </span>
+                            </div>
+
+                            <!-- Employee Number -->
+                            <div>
+                                <label class="lbl">Employee Number</label>
+                                <input class="input" type="text" th:field="*{employeeNumber}" placeholder="e.g. EMP-102"/>
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('employeeNumber')}"
+                                      th:errors="*{employeeNumber}">
+                                    Employee Number Error
+                                </span>
+                            </div>
+
+                            <!-- Company -->
+                            <div>
+                                <label class="lbl">Company</label>
+                                <input class="input" type="text" th:field="*{company}" placeholder="e.g. Lufthansa"/>
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('company')}"
+                                      th:errors="*{company}">
+                                    Company Error
+                                </span>
+                            </div>
+
+                            <!-- Role -->
+                            <div>
+                                <label class="lbl">Role</label>
+                                <select class="input" th:field="*{role}">
+                                    <option value="">-- Select Role --</option>
+                                    <option th:each="r : ${roles}"
+                                            th:value="${r}"
+                                            th:text="${r}">
+                                        Role
+                                    </option>
+                                </select>
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('role')}"
+                                      th:errors="*{role}">
+                                    Role Error
+                                </span>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/airline-employees}">Back</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
         </div>
-    </form>
+
+    </div>
 </div>
 </body>
 </html>

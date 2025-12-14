@@ -2,28 +2,64 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Airplane Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2><span th:text="${airplane.id} ? 'Edit Airplane' : 'Create New Airplane'"></span></h2>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<form th:action="@{/airplanes/save}" th:object="${airplane}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <div class="pill-title">
+            <span th:text="${airplane.id} ? 'Edit Airplane' : 'Create New Airplane'"></span>
+        </div>
 
-    <div>
-        <label for="number">Airplane Number (required, unique, positive):</label>
-        <input type="number" id="number" th:field="*{number}" />
-        <span class="error"
-              th:if="${#fields.hasErrors('number')}"
-              th:errors="*{number}">
-            Number Error
-        </span>
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">AIRPLANE FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/airplanes/save}"
+                              th:object="${airplane}"
+                              method="post"
+                              class="form-stack">
+
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Airplane Number -->
+                            <div>
+                                <label class="lbl" for="number">Airplane Number</label>
+                                <input class="input"
+                                       type="number"
+                                       id="number"
+                                       th:field="*{number}"
+                                       placeholder="e.g. 101" />
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('number')}"
+                                      th:errors="*{number}">
+                                    Number Error
+                                </span>
+                            </div>
+
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/airplanes}">Cancel</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
+        </div>
+
     </div>
-    <br/>
-
-    <button type="submit">Save</button>
-    <a th:href="@{/airplanes}">Cancel</a>
-</form>
+</div>
 </body>
 </html>

@@ -3,46 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Airport Employee Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
-<h2 th:text="${employee.id == null ? 'Add Employee' : 'Edit Employee'}"></h2>
 
-<form th:action="@{/airport-employees/save}" th:object="${employee}" method="post">
-    <input type="hidden" th:field="*{id}"/>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-    <div>
-        <label>Name (required):</label>
-        <input type="text" th:field="*{name}"/>
-        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+        <div class="pill-title">
+            <span th:text="${employee.id == null ? 'Add Employee' : 'Edit Employee'}"></span>
+        </div>
+
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">AIRPORT EMPLOYEE FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/airport-employees/save}"
+                              th:object="${employee}"
+                              method="post"
+                              class="form-stack">
+
+                            <input type="hidden" th:field="*{id}"/>
+
+                            <div>
+                                <label class="lbl">Name</label>
+                                <input class="input" type="text" th:field="*{name}" placeholder="e.g. John Smith"/>
+                                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Employee Number</label>
+                                <input class="input" type="text" th:field="*{employeeNumber}" placeholder="e.g. AEMP-102"/>
+                                <span class="error" th:if="${#fields.hasErrors('employeeNumber')}" th:errors="*{employeeNumber}">Number Error</span>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Department</label>
+                                <input class="input" type="text" th:field="*{department}" placeholder="e.g. Operations"/>
+                                <span class="error" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">Department Error</span>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Designation</label>
+                                <input class="input" type="text" th:field="*{designation}" placeholder="e.g. Supervisor"/>
+                                <span class="error" th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}">Designation Error</span>
+                            </div>
+
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/airport-employees}">Back</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
+        </div>
+
     </div>
-    <br/>
-
-    <div>
-        <label>Employee Number (required, unique):</label>
-        <input type="text" th:field="*{employeeNumber}"/>
-        <span class="error" th:if="${#fields.hasErrors('employeeNumber')}" th:errors="*{employeeNumber}">Number Error</span>
-    </div>
-    <br/>
-
-    <div>
-        <label>Department (required):</label>
-        <input type="text" th:field="*{department}"/>
-        <span class="error" th:if="${#fields.hasErrors('department')}" th:errors="*{department}">Department Error</span>
-    </div>
-    <br/>
-
-    <div>
-        <label>Designation (required):</label>
-        <input type="text" th:field="*{designation}"/>
-        <span class="error" th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}">Designation Error</span>
-    </div>
-    <br/>
-
-    <div>
-        <button type="submit">Save</button>
-        <a th:href="@{/airport-employees}">Back</a>
-    </div>
-</form>
+</div>
 </body>
 </html>
