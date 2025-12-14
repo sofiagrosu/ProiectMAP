@@ -38,7 +38,7 @@
                     <tr th:each="flight : ${flights}">
                         <td th:text="${flight.id}"></td>
                         <td th:text="${flight.name}"></td>
-                        <td th:text="${flight.airplane != null ? flight.airplane.id : '-'}"></td>
+                        <td th:text="${flight.airplane != null ? flight.airplane.number : '-'}"></td>
                         <td th:text="${flight.gateNumber}"></td>
 
                         <td><a class="link" th:href="@{/flights/details/{id}(id=${flight.id})}">Details</a></td>
@@ -156,7 +156,7 @@
                                     <option value="">All</option>
                                     <option th:each="a : ${airplanes}"
                                             th:value="${a.id}"
-                                            th:text="${a.id}">
+                                            th:text="${a.number}">
                                     </option>
                                 </select>
                             </div>

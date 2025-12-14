@@ -84,7 +84,7 @@
 //
 //        // ====== ONLY VALUES CHANGED (data more varied) ======
 //
-//        // Airplanes: same logic, just nicer numbers
+//
 //        int[] airplaneNumbers = {180, 220, 189, 156, 250, 174, 200, 140, 260, 210};
 //
 //        // Flights: keep "Flight X" prefix + keep "Gx" pattern (UI-friendly)
