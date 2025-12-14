@@ -10,6 +10,8 @@ import com.example.flight_management_system.repository.StaffRepository;
 import com.example.flight_management_system.service.FlightAssignmentService;
 import com.example.flight_management_system.service.FlightService;
 import com.example.flight_management_system.service.StaffService;
+import com.example.flight_management_system.specification.filter.FlightAssignmentFilter;
+
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,14 +27,14 @@ import java.util.Optional;
 @RequestMapping("/assignments")
 public class FlightAssignmentController {
 
-    private final FlightAssignmentService assignementService;
+    private final FlightAssignmentService assignmentService;
     private final FlightService flightService;
     private final StaffService staffService;
 
-    public FlightAssignmentController(FlightAssignmentService assignementService,
+    public FlightAssignmentController(FlightAssignmentService assignmentService,
                                       FlightService flightService,
                                       StaffService staffService) {
-        this.assignementService = assignementService;
+        this.assignmentService = assignmentService;
         this.flightService = flightService;
         this.staffService = staffService;
     }
@@ -43,16 +45,18 @@ public class FlightAssignmentController {
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending,
+            @ModelAttribute("filter") FlightAssignmentFilter filter,// pentru filtrare
             Model model)
     {
 
         Sort sort = buildSort(sortBy, ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<FlightAssignment> objectPage = assignementService.findAll(pageable);
+        Page<FlightAssignment> objectPage = assignmentService.search(filter,pageable);
         model.addAttribute("assignments", objectPage.getContent());     // pentru tabel
         model.addAttribute("page", objectPage);                     // pentru paginare (opțional)
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("ascending", ascending);
+
 
         return "assignments/index";
 
@@ -63,8 +67,8 @@ public class FlightAssignmentController {
 
         return switch (sortBy) {
             case "id" -> Sort.by(dir, "id");
-            case "flight" -> Sort.by(dir, "flight.name");
-            case "staff" -> Sort.by(dir, "staff.name");
+            case "flight" -> Sort.by(dir, "flight.id");
+            case "staff" -> Sort.by(dir, "staff.id");
             case "assignmentDate" -> Sort.by(dir, "assignmentDate");
             default -> Sort.by(Sort.Direction.ASC, "id");
 
@@ -121,14 +125,14 @@ public class FlightAssignmentController {
         assignment.setFlight(flight);
         assignment.setStaff(staff);
 
-        assignementService.save(assignment);
+        assignmentService.save(assignment);
 
         return "redirect:/assignments";
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        FlightAssignment assignment = assignementService.findById(id);
+        FlightAssignment assignment = assignmentService.findById(id);
         //.orElseThrow(() -> new IllegalArgumentException("Invalid Assignment Id"));
         model.addAttribute("assignment", assignment);
         model.addAttribute("flights", flightService.findAll());
@@ -138,16 +142,16 @@ public class FlightAssignmentController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        FlightAssignment assignment = assignementService.findById(id);
+        FlightAssignment assignment = assignmentService.findById(id);
         //.orElseThrow(() -> new IllegalArgumentException("Invalid Assignment Id"));
-        assignementService.deleteById(id);
+        assignmentService.deleteById(id);
 
         return "redirect:/assignments";
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable Long id, Model model) {
-        FlightAssignment assignment = assignementService.findById(id);
+        FlightAssignment assignment = assignmentService.findById(id);
         //.orElseThrow(() -> new IllegalArgumentException("Invalid Assignment Id"));
         model.addAttribute("assignment", assignment);
         return "assignments/details";

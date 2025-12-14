@@ -2,6 +2,8 @@ package com.example.flight_management_system.service;
 
 import com.example.flight_management_system.model.FlightAssignment;
 import com.example.flight_management_system.repository.FlightAssignmentRepository;
+import com.example.flight_management_system.specification.FlightAssignmentSpecifications;
+import com.example.flight_management_system.specification.filter.FlightAssignmentFilter;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -17,5 +19,8 @@ public class FlightAssignmentService {
 
     public void deleteById(Long id) {
         repo.deleteById(id);
+    }
+    public Page<FlightAssignment> search (FlightAssignmentFilter filter, Pageable pageable){
+        return repo.findAll(FlightAssignmentSpecifications.withFilter(filter),pageable);
     }
 }

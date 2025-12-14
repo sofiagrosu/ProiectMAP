@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Flight Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="home-page">
+<div class="page">
+    <div class="panel">
+        <h1 class="title">Flight Management System</h1>
+
+        <nav class="menu">
+            <a class="menu-item" th:href="@{/flights}">
+                <span class="label">Flights</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/passengers}">
+                <span class="label">Passengers</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/tickets}">
+                <span class="label">Tickets</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/luggages}">
+                <span class="label">Luggages</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/airplanes}">
+                <span class="label">Airplanes</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/noticeboards}">
+                <span class="label">Notice boards</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/assignments}">
+                <span class="label">Flight Assignments</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/airport-employees}">
+                <span class="label">Airport Employees</span>
+                <span class="plane">✈</span>
+            </a>
+
+            <a class="menu-item" th:href="@{/airline-employees}">
+                <span class="label">Airline Employees</span>
+                <span class="plane">✈</span>
+            </a>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

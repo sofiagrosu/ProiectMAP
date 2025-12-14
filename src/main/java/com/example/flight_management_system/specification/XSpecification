@@ -1,0 +1,64 @@
+package com.example.flight_management_system.specification;
+
+
+import com.example.flight_management_system.model.X;
+import com.example.flight_management_system.specification.filter.XFilter;
+import org.springframework.data.jpa.domain.Specification;
+
+import java.time.LocalDate;
+
+public class XSpecifications {
+
+    private XSpecifications() {} // utility class
+
+  public static Specification<X> withFilter(XFilter f) {
+      if (f == null) {
+          return (root, query, cb) -> cb.conjunction();
+      }
+
+      return textContains("field", f.getText())
+              .and(equalsString("status", f.getStatus()))
+              .and(numberBetween("value", f.getMinValue(), f.getMaxValue()))
+              .and(dateBetween("date", f.getDateFrom(), f.getDateTo()));
+  }
+    // ---------- generic helpers (simple + readable) ----------
+
+    public static Specification<X> textContains(String field, String value) {
+        return (root, query, cb) -> {
+            if (value == null || value.isBlank()) return cb.conjunction();
+            return cb.like(cb.lower(root.get(field)), "%" + value.toLowerCase() + "%");
+        };
+    }
+
+    public static Specification<X> equalsString(String field, String value) {
+        return (root, query, cb) -> {
+            if (value == null || value.isBlank()) return cb.conjunction();
+            return cb.equal(root.get(field), value);
+        };
+    }
+
+    public static Specification<X> equalsLong(String field, Long value) {
+        return (root, query, cb) -> {
+            if (value == null) return cb.conjunction();
+            return cb.equal(root.get(field), value);
+        };
+    }
+
+    public static Specification<X> numberBetween(String field, Integer min, Integer max) {
+        return (root, query, cb) -> {
+            if (min == null && max == null) return cb.conjunction();
+            if (min != null && max != null) return cb.between(root.get(field), min, max);
+            if (min != null) return cb.greaterThanOrEqualTo(root.get(field), min);
+            return cb.lessThanOrEqualTo(root.get(field), max);
+        };
+    }
+
+    public static Specification<X> dateBetween(String field, LocalDate from, LocalDate to) {
+        return (root, query, cb) -> {
+            if (from == null && to == null) return cb.conjunction();
+            if (from != null && to != null) return cb.between(root.get(field), from, to);
+            if (from != null) return cb.greaterThanOrEqualTo(root.get(field), from);
+            return cb.lessThanOrEqualTo(root.get(field), to);
+        };
+    }
+}

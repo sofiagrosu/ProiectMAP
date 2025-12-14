@@ -4,6 +4,7 @@ import com.example.flight_management_system.model.Luggage;
 import com.example.flight_management_system.model.Passenger;
 import com.example.flight_management_system.repository.PassengerRepository;
 import com.example.flight_management_system.service.PassengerService;
+import com.example.flight_management_system.specification.filter.PassengerFilter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,12 +29,13 @@ public class PassengerController {
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending,
+            @ModelAttribute ("filter") PassengerFilter filter,
             Model model)
     {
 
         Sort sort = buildSort(sortBy, ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Passenger> objectPage = passengerService.findAll(pageable);
+        Page<Passenger> objectPage = passengerService.search(filter,pageable);
         model.addAttribute("passengers", objectPage.getContent());     // pentru tabel
         model.addAttribute("page", objectPage);                     // pentru paginare (opțional)
         model.addAttribute("sortBy", sortBy);

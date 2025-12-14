@@ -2,6 +2,9 @@ package com.example.flight_management_system.service;
 
 import com.example.flight_management_system.model.Airplane;
 import com.example.flight_management_system.repository.AirplaneRepository;
+import com.example.flight_management_system.specification.AirplaneSpecifications;
+import com.example.flight_management_system.specification.FlightSpecifications;
+import com.example.flight_management_system.specification.filter.AirplaneFilter;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -17,5 +20,8 @@ public class AirplaneService {
 
     public Airplane findByNumber(int number) {
         return repo.findByNumber(number);
+    }
+    public Page<Airplane> search (AirplaneFilter filter, Pageable pageable) {
+        return repo.findAll(AirplaneSpecifications.withFilter(filter), pageable);
     }
 }

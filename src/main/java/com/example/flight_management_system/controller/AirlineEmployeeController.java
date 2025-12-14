@@ -5,6 +5,7 @@ import com.example.flight_management_system.model.Flight;
 import com.example.flight_management_system.model.Role;
 import com.example.flight_management_system.repository.AirlineEmployeeRepository;
 import com.example.flight_management_system.service.AirlineEmployeeService;
+import com.example.flight_management_system.specification.filter.AirlineEmployeeFilter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ public class AirlineEmployeeController {
 
     @GetMapping
     public String getAllEmployees(
+            @ModelAttribute("filter") AirlineEmployeeFilter filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -34,11 +36,12 @@ public class AirlineEmployeeController {
 
         Sort sort = buildSort(sortBy, ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<AirlineEmployee> employeePage = employeeService.findAll(pageable);
+        Page<AirlineEmployee> employeePage = employeeService.search(filter,pageable);
         model.addAttribute("employees", employeePage.getContent());     // pentru tabel
         model.addAttribute("page", employeePage);                     // pentru paginare (opțional)
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("ascending", ascending);
+        model.addAttribute("roles", Role.values());
 
         return "airline-employees/index";
 

@@ -1,0 +1,258 @@
+/* ================== BASE ================== */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #dbe7ea;
+}
+
+.page { padding: 24px; }
+
+.panel {
+    max-width: 1200px;
+    min-height: 560px;
+    background: #d4e0e3;
+    padding: 22px 24px 26px;
+}
+
+/* =========================================================
+   HOME PAGE (MENU) — scoped: doar când body are .home-page
+   ========================================================= */
+.home-page .panel {
+    max-width: 1200px;
+    min-height: 540px;
+    background: #d4e0e3;
+}
+
+.home-page .title {
+    margin: 0 0 22px 0;
+    color: #2d2f8f;
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.home-page .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 700px;
+}
+
+.home-page .menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 44px;
+    padding: 0 18px 0 26px;
+
+    background: #1f2430;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 22px;
+
+    border-radius: 22px;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+    transition: transform .12s ease, filter .12s ease;
+}
+
+.home-page .menu-item:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.home-page .menu-item:active { transform: translateY(0px); filter: brightness(0.98); }
+
+.home-page .label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.home-page .plane {
+    font-size: 26px;
+    color: #7a78b7;
+    margin-left: 16px;
+    transform: translateX(22px);
+}
+
+/* =========================================================
+   FLIGHTS PAGE — scoped: doar când body are .list-page
+   ========================================================= */
+
+.list-page .pill-title{
+    width: 520px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    padding-left: 46px;
+    border-radius: 26px;
+    background: #1f2430;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 6px 0 18px;
+}
+
+.list-page .content-grid{
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 24px;
+    align-items: start;
+}
+
+.list-page .table-area{
+    position: relative;
+    min-height: 430px;
+}
+
+.list-page .top-actions{
+    margin: 6px 0 10px;
+}
+
+.list-page .fms-table{
+    width: 100%;
+    border-collapse: collapse;
+    background: #f6f2f7;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.08) inset;
+}
+
+.list-page .fms-table th{
+    background: #2f3a97;
+    color: #fff;
+    padding: 14px 10px;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.list-page .fms-table td{
+    padding: 14px 10px;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+.list-page .link{
+    color: #0b0b0b;
+    text-decoration: underline;
+}
+
+.list-page .link-danger{
+    color: #ff2b2b;
+}
+
+.list-page .pagination{
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.list-page .pageinfo{
+    font-weight: 700;
+}
+
+.list-page .bottom-left{
+    margin-top: 18px;
+}
+
+/* RIGHT SIDE */
+.list-page .side-area{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.list-page .side-block{
+    border: 2px solid rgba(255,255,255,0.6);
+}
+
+.list-page .side-header{
+    background: #070b55;
+    color: #fff;
+    font-weight: 800;
+    text-align: center;
+    padding: 12px 10px;
+    letter-spacing: 0.5px;
+}
+
+.list-page .side-body{
+    background: #070b55;
+    padding: 14px;
+    min-height: 130px;
+}
+
+.list-page .form-stack{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list-page .lbl{
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* INPUT / SELECT (cu fix pentru textul din dropdown) */
+.list-page .input{
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid rgba(255,255,255,0.35);
+    background-color: #1b1f6b;
+    color: #ffffff;
+    font-weight: 600;
+    outline: none;
+}
+
+.list-page .input::placeholder{ color: rgba(255,255,255,0.7); }
+
+.list-page .input option{
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 600;
+}
+
+.list-page .input option:checked{
+    background-color: #2f3a97;
+    color: #ffffff;
+}
+
+.list-page .side-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+/* BUTTONS */
+.list-page .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 14px;
+    font-weight: 700;
+}
+
+.list-page .btn-primary{
+    background: #2f3a97;
+    color: #fff;
+}
+
+.list-page .btn-back{
+    width: 140px;
+    background: #070b55;
+    color: #fff;
+}
+
+.list-page .btn-small{
+    padding: 8px 12px;
+    background: #2f3a97;
+    color: #fff;
+}
+
+.list-page .btn-secondary{
+    background: #2f3a97;
+    color: #fff;
+}

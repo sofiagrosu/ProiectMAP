@@ -1,64 +1,204 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8" />
     <title>Airline Employees</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<div>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-    <h2>Airline Employees</h2>
-    <a th:href="@{/airline-employees/new}">Add New Employee</a>
-    <form th:action="@{/airline-employees}" method="get">
-        <input type="hidden" name="page" value="0" />
-        <input type="hidden" name="size" th:value="${page.size}" />
+        <div class="pill-title">Airline Employees</div>
 
-        <label>Sort by:</label>
-        <select name="sortBy">
-            <option value="id" th:selected="${sortBy == 'id'}">ID</option>
-            <option value="name" th:selected="${sortBy == 'name'}">Name</option>
-            <option value="role" th:selected="${sortBy == 'role'}">Role</option>
-            <option value="employeeNumber" th:selected="${sortBy == 'employeeNumber'}">Employee Number</option>
-            <option value="company" th:selected="${sortBy == 'company'}">Company</option>
-        </select>
+        <div class="content-grid">
 
-        <label>Order:</label>
-        <select name="ascending">
-            <option value="true" th:selected="${ascending == true}">Ascending</option>
-            <option value="false" th:selected="${ascending == false}">Descending</option>
-        </select>
+            <!-- LEFT: Table -->
+            <div class="table-area">
 
-        <button type="submit">Apply</button>
-    </form>
-    <table border="1">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Employee Number</th>
-            <th>Company</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
+                <div class="top-actions">
+                    <a class="btn btn-primary" th:href="@{/airline-employees/new}">Create New Employee</a>
+                </div>
 
-        <tbody>
-        <tr th:each="employee : ${employees}">
-            <td th:text="${employee.id}"></td>
-            <td th:text="${employee.name}"></td>
-            <td th:text="${employee.role}"></td>
-            <td th:text="${employee.employeeNumber}"></td>
-            <td th:text="${employee.company}"></td>
-            <td>
-                <a th:href="@{/airline-employees/details/{id}(id=${employee.id})}">Details</a> |
-                <a th:href="@{/airline-employees/edit/{id}(id=${employee.id})}">Edit</a> |
-                <a th:href="@{/airline-employees/delete/{id}(id=${employee.id})}"
-                   onclick="return confirm('Delete?');">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <table class="fms-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Employee Number</th>
+                        <th>Role</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
 
+                    <tbody th:with="list=${employees} ?: ${airlineEmployees}">
+                    <tr th:each="e : ${list}">
+                        <td th:text="${e.id}"></td>
+                        <td th:text="${e.name}"></td>
+                        <td th:text="${e.company}"></td>
+                        <td th:text="${e.employeeNumber}"></td>
+                        <td th:text="${e.role}"></td>
+
+                        <td><a class="link" th:href="@{/airline-employees/details/{id}(id=${e.id})}">Details</a></td>
+                        <td><a class="link" th:href="@{/airline-employees/edit/{id}(id=${e.id})}">Edit</a></td>
+                        <td>
+                            <a class="link link-danger"
+                               th:href="@{/airline-employees/delete/{id}(id=${e.id})}"
+                               onclick="return confirm('Are you sure you want to delete this employee?');">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(list)}">
+                        <td colspan="8" class="empty">No employees found.</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+                <!-- Pagination (keeps filter + sort) -->
+                <div class="pagination">
+                    <a class="link" th:if="${page.hasPrevious()}"
+                       th:href="@{/airline-employees(
+                           page=${page.number - 1},
+                           size=${page.size},
+                           sortBy=${sortBy},
+                           ascending=${ascending},
+                           name=${filter.name},
+                           company=${filter.company},
+                           employeeNumber=${filter.employeeNumber},
+                           role=${filter.role}
+                       )}">
+                        Prev
+                    </a>
+
+                    <span class="pageinfo">
+                        <span th:text="${page.number + 1}"></span> /
+                        <span th:text="${page.totalPages}"></span>
+                    </span>
+
+                    <a class="link" th:if="${page.hasNext()}"
+                       th:href="@{/airline-employees(
+                           page=${page.number + 1},
+                           size=${page.size},
+                           sortBy=${sortBy},
+                           ascending=${ascending},
+                           name=${filter.name},
+                           company=${filter.company},
+                           employeeNumber=${filter.employeeNumber},
+                           role=${filter.role}
+                       )}">
+                        Next
+                    </a>
+                </div>
+
+                <div class="bottom-left">
+                    <a class="btn btn-back" href="/">Back</a>
+                </div>
+            </div>
+
+            <!-- RIGHT: Sort + Filter -->
+            <div class="side-area">
+
+                <!-- SORT PANEL -->
+                <div class="side-block">
+                    <div class="side-header">SORT</div>
+                    <div class="side-body">
+
+                        <form th:action="@{/airline-employees}" method="get" class="form-stack">
+                            <!-- keep filters -->
+                            <input type="hidden" name="name" th:value="${filter.name}"/>
+                            <input type="hidden" name="company" th:value="${filter.company}"/>
+                            <input type="hidden" name="employeeNumber" th:value="${filter.employeeNumber}"/>
+                            <input type="hidden" name="role" th:value="${filter.role}"/>
+
+                            <input type="hidden" name="page" value="0"/>
+                            <input type="hidden" name="size" th:value="${page.size}"/>
+
+                            <label class="lbl">Sort by</label>
+                            <select class="input" name="sortBy">
+                                <option value="id" th:selected="${sortBy == 'id'}">ID</option>
+                                <option value="name" th:selected="${sortBy == 'name'}">Name</option>
+                                <option value="company" th:selected="${sortBy == 'company'}">Company</option>
+                                <option value="employeeNumber" th:selected="${sortBy == 'employeeNumber'}">Employee Number</option>
+                                <option value="role" th:selected="${sortBy == 'role'}">Role</option>
+                            </select>
+
+                            <label class="lbl">Direction</label>
+                            <select class="input" name="ascending">
+                                <option value="true" th:selected="${ascending}">Ascending</option>
+                                <option value="false" th:selected="${!ascending}">Descending</option>
+                            </select>
+
+                            <div class="side-actions">
+                                <button class="btn btn-small" type="submit">Apply</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- FILTER PANEL -->
+                <div class="side-block">
+                    <div class="side-header">Filter</div>
+                    <div class="side-body">
+
+                        <form th:action="@{/airline-employees}" method="get" th:object="${filter}" class="form-stack">
+
+                            <div>
+                                <label class="lbl">Name</label>
+                                <input class="input" type="text" th:field="*{name}" placeholder="Employee name"/>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Company</label>
+                                <input class="input" type="text" th:field="*{company}" placeholder="Company"/>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Employee Number</label>
+                                <input class="input" type="text" th:field="*{employeeNumber}" placeholder="Employee number"/>
+                            </div>
+
+                            <div>
+                                <label class="lbl">Role</label>
+                                <select class="input" th:field="*{role}">
+                                    <option value="">All</option>
+                                    <option th:each="r : ${roles}"
+                                            th:value="${r}"
+                                            th:text="${r}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- keep sort -->
+                            <input type="hidden" name="sortBy" th:value="${sortBy}"/>
+                            <input type="hidden" name="ascending" th:value="${ascending}"/>
+                            <input type="hidden" name="size" th:value="${page.size}"/>
+                            <input type="hidden" name="page" value="0"/>
+
+                            <div class="side-actions">
+                                <button class="btn btn-small" type="submit">Apply</button>
+
+                                <a class="btn btn-small btn-secondary"
+                                   th:href="@{/airline-employees(page=0, size=${page.size}, sortBy=${sortBy}, ascending=${ascending})}">
+                                    Reset
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

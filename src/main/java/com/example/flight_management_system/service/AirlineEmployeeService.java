@@ -2,6 +2,8 @@ package com.example.flight_management_system.service;
 
 import com.example.flight_management_system.model.AirlineEmployee;
 import com.example.flight_management_system.repository.AirlineEmployeeRepository;
+import com.example.flight_management_system.specification.AirlineEmployeeSpecifications;
+import com.example.flight_management_system.specification.filter.AirlineEmployeeFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -19,4 +21,6 @@ public class AirlineEmployeeService {
     public AirlineEmployee findByEmployeeNumber(String employeeNumber) {
        return repo.findByEmployeeNumber(employeeNumber);
     }
+    public Page<AirlineEmployee> search (AirlineEmployeeFilter filter, Pageable pageable)
+    { return repo.findAll(AirlineEmployeeSpecifications.withFilter(filter),pageable);}
 }
