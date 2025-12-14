@@ -2,68 +2,87 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight Assignment Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2><span th:text="${assignment.id} ? 'Edit Assignment' : 'Create New Assignment'"></span></h2>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<form th:action="@{/assignments/save}" th:object="${assignment}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <div class="pill-title">
+            <span th:text="${assignment.id} ? 'Edit Assignment' : 'Create new Assignment'"></span>
+        </div>
 
-    <div>
-        <label for="assignmentDate">Assignment Date (required):</label>
-        <input type="date" id="assignmentDate" th:field="*{assignmentDate}" />
-        <span class="error"
-              th:if="${#fields.hasErrors('assignmentDate')}"
-              th:errors="*{assignmentDate}">
-            Date Error
-        </span>
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">ASSIGNMENT FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/assignments/save}" th:object="${assignment}" method="post" class="form-stack">
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Date -->
+                            <div>
+                                <label class="lbl" for="assignmentDate">Assignment Date (required)</label>
+                                <input class="input" type="date" id="assignmentDate" th:field="*{assignmentDate}" />
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('assignmentDate')}"
+                                      th:errors="*{assignmentDate}">
+                                    Date Error
+                                </span>
+                            </div>
+
+                            <!-- Flight: TEXT by ID -->
+                            <div>
+                                <label class="lbl" for="flightId">Flight ID (required)</label>
+                                <input class="input"
+                                       type="text"
+                                       id="flightId"
+                                       name="flightId"
+                                       th:value="${assignment.flight?.id}"
+                                       placeholder="e.g. 3" />
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('flight')}"
+                                      th:errors="*{flight}">
+                                    Flight Error
+                                </span>
+                            </div>
+
+                            <!-- Staff: TEXT by ID -->
+                            <div>
+                                <label class="lbl" for="staffId">Staff Member ID (required)</label>
+                                <input class="input"
+                                       type="text"
+                                       id="staffId"
+                                       name="staffId"
+                                       th:value="${assignment.staff?.id}"
+                                       placeholder="e.g. 7" />
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('staff')}"
+                                      th:errors="*{staff}">
+                                    Staff Error
+                                </span>
+                            </div>
+
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/assignments}">Cancel</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
+        </div>
+
     </div>
-    <br/>
-
-    <div>
-        <label for="flightId">Flight (required):</label>
-        <select id="flightId" name="flightId">
-            <option value="">-- Select Flight --</option>
-            <option th:each="f : ${flights}"
-                    th:value="${f.id}"
-                    th:text="${f.name}"
-                    th:selected="${assignment.flight != null and assignment.flight.id == f.id}">
-                Flight
-            </option>
-        </select>
-
-        <span class="error"
-              th:if="${#fields.hasErrors('flight')}"
-              th:errors="*{flight}">
-            Flight Selection Error
-        </span>
-    </div>
-    <br/>
-
-    <div>
-        <label for="staffId">Staff Member (required):</label>
-        <select id="staffId" name="staffId">
-            <option value="">-- Select Staff Member --</option>
-            <option th:each="s : ${staff}"
-                    th:value="${s.id}"
-                    th:text="${s.name}"
-                    th:selected="${assignment.staff != null and assignment.staff.id == s.id}">
-                Staff
-            </option>
-        </select>
-
-        <span class="error"
-              th:if="${#fields.hasErrors('staff')}"
-              th:errors="*{staff}">
-            Staff Selection Error
-        </span>
-    </div>
-    <br/>
-
-    <button type="submit">Save</button>
-    <a th:href="@{/assignments}">Cancel</a>
-</form>
+</div>
 </body>
 </html>
