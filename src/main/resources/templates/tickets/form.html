@@ -2,64 +2,82 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Ticket Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2><span th:text="${ticket.id} ? 'Edit Ticket' : 'Create New Ticket'"></span></h2>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<form th:action="@{/tickets/save}" th:object="${ticket}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <div class="pill-title">
+            <span th:text="${ticket.id} ? 'Edit Ticket' : 'Create new Ticket'"></span>
+        </div>
 
-    <!-- Price Field (@Positive/@Min Validation) -->
-    <div>
-        <label for="price">Price (must be positive):</label>
-        <input type="number" id="price" th:field="*{price}" />
-        <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">TICKET FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/tickets/save}" th:object="${ticket}" method="post" class="form-stack">
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Price -->
+                            <div>
+                                <label class="lbl" for="price">Price</label>
+                                <input class="input" type="number" id="price" th:field="*{price}" placeholder="e.g. 120" />
+                                <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
+                            </div>
+
+                            <!-- Seat Number -->
+                            <div>
+                                <label class="lbl" for="seatNumber">Seat Number</label>
+                                <input class="input" type="text" id="seatNumber" th:field="*{seatNumber}" placeholder="e.g. 12A" />
+                                <span class="error" th:if="${#fields.hasErrors('seatNumber')}" th:errors="*{seatNumber}">Seat Number Error</span>
+                            </div>
+
+                            <!-- Passenger: TEXT by ID -->
+                            <div>
+                                <label class="lbl" for="passengerId">Passenger ID</label>
+                                <input class="input"
+                                       type="text"
+                                       id="passengerId"
+                                       name="passengerId"
+                                       th:value="${ticket.passenger?.id}"
+                                       placeholder="e.g. 1" />
+                                <span class="error" th:if="${#fields.hasErrors('passenger')}" th:errors="*{passenger}">Passenger Error</span>
+                            </div>
+
+                            <!-- Flight: TEXT by ID -->
+                            <div>
+                                <label class="lbl" for="flightId">Flight ID</label>
+                                <input class="input"
+                                       type="text"
+                                       id="flightId"
+                                       name="flightId"
+                                       th:value="${ticket.flight?.id}"
+                                       placeholder="e.g. 3" />
+                                <span class="error" th:if="${#fields.hasErrors('flight')}" th:errors="*{flight}">Flight Error</span>
+                            </div>
+
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/tickets}">Cancel</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
+        </div>
+
     </div>
-    <br/>
-
-    <!-- Seat Number Field (@NotBlank Validation) -->
-    <div>
-        <label for="seatNumber">Seat Number (required):</label>
-        <input type="text" id="seatNumber" th:field="*{seatNumber}" />
-        <span class="error" th:if="${#fields.hasErrors('seatNumber')}" th:errors="*{seatNumber}">Seat Number Error</span>
-    </div>
-    <br/>
-
-    <!-- Many-to-One: Passenger (Now optional) -->
-    <div>
-        <label for="passengerId">Passenger:</label>
-        <select id="passengerId" name="passengerId">
-            <option value="">-- Select Passenger --</option>
-            <!-- Th:selected relies on the object ID repopulated in the Controller FIX -->
-            <option th:each="p : ${passengers}"
-                    th:value="${p.id}"
-                    th:text="${p.name}"
-                    th:selected="${ticket.passenger != null and ticket.passenger.id == p.id}">
-                Passenger
-            </option>
-        </select>
-    </div>
-    <br/>
-
-    <!-- Many-to-One: Flight (Now optional) -->
-    <div>
-        <label for="flightId">Flight:</label>
-        <select id="flightId" name="flightId">
-            <option value="">-- Select Flight --</option>
-            <option th:each="f : ${flights}"
-                    th:value="${f.id}"
-                    th:text="${f.name}"
-                    th:selected="${ticket.flight != null and ticket.flight.id == f.id}">
-                Flight
-            </option>
-        </select>
-    </div>
-    <br/>
-
-    <button type="submit">Save</button>
-    <a th:href="@{/tickets}">Cancel</a>
-</form>
+</div>
 </body>
 </html>
