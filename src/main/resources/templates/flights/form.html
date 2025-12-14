@@ -42,18 +42,20 @@
                             </div>
 
                             <div>
-                                <label class="lbl" for="airplaneNumber">Airplane Number</label>
+                                <label class="lbl" for="airplaneId">Airplane ID</label>
                                 <input class="input"
                                        type="text"
-                                       id="airplaneNumber"
-                                       name="airplaneNumber"
-                                       th:value="${flight.airplane?.number}"
-                                       placeholder="e.g. YR-ABC"/>
-                                <span class="error" th:if="${#fields.hasErrors('airplane')}" th:errors="*{airplane}"></span>
+                                       id="airplaneId"
+                                       name="airplaneId"
+                                       th:value="${flight.airplane?.id}"
+                                       placeholder="e.g. 1"/>
+                                <span class="error"
+                                      th:if="${#fields.hasErrors('airplane')}"
+                                      th:errors="*{airplane}">
+    </span>
                             </div>
 
-                            <div>
-                                <label class="lbl" for="noticeBoardId">Notice Board ID</label>
+                            <label class="lbl" for="noticeBoardId">Notice Board ID</label>
                                 <input class="input"
                                        type="text"
                                        id="noticeBoardId"

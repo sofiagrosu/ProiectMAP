@@ -20,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/luggages")
 public class LuggageController {
@@ -29,6 +31,7 @@ public class LuggageController {
 
     @Autowired
     private TicketService ticketService;
+
 
     @GetMapping
     public String listLuggages(
@@ -43,16 +46,15 @@ public class LuggageController {
         Sort sort = buildSort(sortBy, ascending);
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Luggage> objectPage = luggageService.search(filter,pageable);
-        model.addAttribute("luggages", objectPage.getContent());     // pentru tabel
-        model.addAttribute("page", objectPage);                     // pentru paginare (opțional)
+        model.addAttribute("luggages", objectPage.getContent());
+        model.addAttribute("page", objectPage);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("ascending", ascending);
         model.addAttribute("statuses", Status.values());
 
         return "luggages/index";
-
-
     }
+
     private Sort buildSort(String sortBy, boolean ascending) {
         Sort.Direction dir = ascending ? Sort.Direction.ASC : Sort.Direction.DESC;
 
@@ -60,12 +62,12 @@ public class LuggageController {
             case "id" -> Sort.by(dir, "id");
             case "status" -> Sort.by(dir, "status");
 
-            // sortare după ticket_id -> trebuie property path, NU nume coloană
             case "ticket" -> Sort.by(dir, "ticket.id");
 
             default -> Sort.by(Sort.Direction.ASC, "id");
         };
     }
+
     @GetMapping("/new")
     public String createLuggageForm(Model model, @RequestParam(required = false) Long ticketId) {
         Luggage luggage = new Luggage();
@@ -85,35 +87,39 @@ public class LuggageController {
                               @RequestParam(value = "ticketId", required = false) Long ticketId,
                               BindingResult result, Model model) {
 
+        Ticket ticket = null;
+        Optional<Ticket> ticketOptional = Optional.empty();
 
+        // validare ticket id
+        if (ticketId == null) {
+
+            result.rejectValue("ticket", "error.luggage.ticket.missing", "Ticket is mandatory.");
+        } else {
+            ticketOptional = Optional.ofNullable(ticketService.findById(ticketId));
+
+            if (ticketOptional.isEmpty()) {
+                result.rejectValue("ticket", "error.luggage.ticket.notfound",
+                        "Biletul cu ID-ul " + ticketId + " nu există. Vă rugăm introduceți un ID valid.");
+            } else {
+                ticket = ticketOptional.get();
+                luggage.setTicket(ticket);
+            }
+        }
+
+        // reincarcarea formularului daca exista erori
         if (result.hasErrors()) {
-            if (ticketId != null) {
-                Ticket selectedTicket = new Ticket();
-                selectedTicket.setId(ticketId);
-                luggage.setTicket(selectedTicket);
+
+            if (ticketOptional.isPresent()) {
+                luggage.setTicket(ticketOptional.get());
+            } else if (ticketId != null) {
+                Ticket tempTicket = new Ticket();
+                tempTicket.setId(ticketId);
+                luggage.setTicket(tempTicket);
             }
 
             model.addAttribute("tickets", ticketService.findAll());
             model.addAttribute("statuses", Status.values());
             return "luggages/form";
-        }
-
-        try {
-            if (ticketId == null) {
-                result.rejectValue("ticket", "notnull", "Ticket must be selected");
-            }
-            if (result.hasErrors()) {
-                model.addAttribute("tickets", ticketService.findAll());
-                model.addAttribute("statuses", Status.values());
-                return "luggages/form";
-            }
-
-            Ticket ticket = ticketService.findById(ticketId);
-                    //.orElseThrow(() -> new IllegalArgumentException("Ticket not found for ID: " + ticketId));
-            luggage.setTicket(ticket);
-
-        } catch (IllegalArgumentException e) {
-            throw e;
         }
 
         luggageService.save(luggage);
@@ -123,7 +129,7 @@ public class LuggageController {
     @GetMapping("/edit/{id}")
     public String editLuggageForm(@PathVariable("id") Long id, Model model) {
         Luggage luggage = luggageService.findById(id);
-              //  .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
+        //  .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
         model.addAttribute("luggage", luggage);
         model.addAttribute("tickets", ticketService.findAll());
         model.addAttribute("statuses", Status.values());
@@ -133,7 +139,7 @@ public class LuggageController {
     @GetMapping("/delete/{id}")
     public String deleteLuggage(@PathVariable("id") Long id) {
         Luggage luggage = luggageService.findById(id);
-               // .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
+        // .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
         luggageService.delete(luggage.getId());
 
         return "redirect:/luggages";
@@ -142,7 +148,7 @@ public class LuggageController {
     @GetMapping("/details/{id}")
     public String luggageDetails(@PathVariable("id") Long id, Model model) {
         Luggage luggage = luggageService.findById(id);
-              //  .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
+        //  .orElseThrow(() -> new IllegalArgumentException("Invalid luggage Id:" + id));
         model.addAttribute("luggage", luggage);
         return "luggages/details";
     }

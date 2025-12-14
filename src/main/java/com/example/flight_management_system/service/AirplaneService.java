@@ -24,4 +24,8 @@ public class AirplaneService {
     public Page<Airplane> search (AirplaneFilter filter, Pageable pageable) {
         return repo.findAll(AirplaneSpecifications.withFilter(filter), pageable);
     }
+
+    public Object findAll() {
+        return repo.findAll();
+    }
 }

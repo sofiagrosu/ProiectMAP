@@ -1,20 +1,18 @@
 package com.example.flight_management_system.controller;
-import com.example.flight_management_system.service.FlightService;
-import com.example.flight_management_system.specification.filter.FlightFilter;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import com.example.flight_management_system.model.Flight;
-import com.example.flight_management_system.repository.FlightRepository;
-import com.example.flight_management_system.repository.AirplaneRepository;
-import com.example.flight_management_system.repository.NoticeBoardRepository;
+import com.example.flight_management_system.service.AirplaneService;
+import com.example.flight_management_system.service.FlightService;
+import com.example.flight_management_system.service.NoticeBoardService;
+import com.example.flight_management_system.specification.filter.FlightFilter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
 
 @Controller
@@ -23,41 +21,44 @@ public class FlightController {
 
     @Autowired
     private FlightService flightService;
-    @Autowired
-    private AirplaneRepository airplaneRepository;
-    @Autowired
-    private NoticeBoardRepository noticeBoardRepository;
 
-//    @GetMapping
-//    public String listFlights(Model model) {
-//        model.addAttribute("flights", flightService.findAll());
-//        return "flights/index";
-//    }
+    @Autowired
+    private AirplaneService airplaneService;
+
+    @Autowired
+    private NoticeBoardService noticeBoardService;
+
+    // ✅ IMPORTANT: repo / repo1 NU erau injectate (erau null)
+    @Autowired
+    private com.example.flight_management_system.repository.AirplaneRepository repo;
+
+    @Autowired
+    private com.example.flight_management_system.repository.NoticeBoardRepository repo1;
+
     @GetMapping
     public String getAllFlights(
-            @ModelAttribute("filter") FlightFilter filter,// pentru filtrare
+            @ModelAttribute("filter") FlightFilter filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "true") boolean ascending,
-            Model model)
-    {
-
+            Model model
+    ) {
         Sort sort = buildSort(sortBy, ascending);
-    Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Flight> flightsPage = flightService.search(filter,pageable);
-        model.addAttribute("flights", flightsPage.getContent());     // pentru tabel
-        model.addAttribute("page", flightsPage);                     // pentru paginare (opțional)
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Flight> flightsPage = flightService.search(filter, pageable);
+        model.addAttribute("flights", flightsPage.getContent());
+        model.addAttribute("page", flightsPage);
         model.addAttribute("sortBy", sortBy);
         model.addAttribute("ascending", ascending);
-        //pentru dropdown
-        model.addAttribute("airplanes", airplaneRepository.findAll());
-        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
+
+        model.addAttribute("airplanes", airplaneService.findAll());
+        model.addAttribute("noticeboards", noticeBoardService.findAll());
 
         return "flights/index";
+    }
 
-
-}
     private Sort buildSort(String sortBy, boolean ascending) {
         return switch (sortBy) {
             case "id", "name", "gateNumber" -> ascending ? Sort.by(sortBy).ascending()
@@ -65,63 +66,84 @@ public class FlightController {
             default -> Sort.by("id").ascending();
         };
     }
+
     @GetMapping("/new")
     public String createFlightForm(Model model) {
         model.addAttribute("flight", new Flight());
-        model.addAttribute("airplanes", airplaneRepository.findAll());
-        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
+        model.addAttribute("airplanes", airplaneService.findAll());
+        model.addAttribute("noticeboards", noticeBoardService.findAll());
         return "flights/form";
     }
 
     @PostMapping("/save")
-    public String saveFlight(@Valid @ModelAttribute("flight") Flight flight,
-                             BindingResult result,  //colecteaza erorile de validare
-                             @RequestParam(value = "airplaneId", required = false) Long airplaneId,
-                             @RequestParam(value = "noticeBoardId", required = false) Long noticeBoardId,
-                             Model model) {
+    public String saveFlight(
+            @Valid @ModelAttribute("flight") Flight flight,
+            BindingResult result,
+            // ✅ primește STRING ca să poți distinge: gol vs nenumeric
+            @RequestParam(value = "airplaneId", required = false) String airplaneIdStr,
+            @RequestParam(value = "noticeBoardId", required = false) String noticeBoardIdStr,
+            Model model
+    ) {
 
-
+        // ===== 1) Unicitate nume (păstrat) =====
         Optional<Flight> existingFlightOpt = flightService.findByName(flight.getName());
-
         if (existingFlightOpt.isPresent()) {
             Flight existingFlight = existingFlightOpt.get();
             if (flight.getId() == null || !flight.getId().equals(existingFlight.getId())) {
-                result.rejectValue("name", "name.duplicate", "A flight with this name already exists. It must be unique.");
+                result.rejectValue("name", "name.duplicate",
+                        "A flight with this name already exists. It must be unique.");
             }
         }
 
-        if (airplaneId == null) {
+        // ===== 2) Validare & setare Airplane după ID =====
+        Long airplaneId = null;
+
+        if (airplaneIdStr == null || airplaneIdStr.isBlank()) {
             result.rejectValue("airplane", "notnull", "Airplane must be selected");
+        } else {
+            try {
+                airplaneId = Long.parseLong(airplaneIdStr.trim());
+                var apOpt = repo.findById(airplaneId);
+                if (apOpt.isEmpty()) {
+                    result.rejectValue("airplane", "airplane.notfound",
+                            "Airplane not found for ID: " + airplaneId);
+                } else {
+                    flight.setAirplane(apOpt.get());
+                }
+            } catch (NumberFormatException e) {
+                result.rejectValue("airplane", "airplane.invalid", "Airplane ID must be a number");
+            }
         }
-        if (noticeBoardId == null) {
+
+        // ===== 3) Validare & setare NoticeBoard după ID =====
+        Long noticeBoardId = null;
+
+        if (noticeBoardIdStr == null || noticeBoardIdStr.isBlank()) {
             result.rejectValue("noticeBoard", "notnull", "Notice Board must be selected");
+        } else {
+            try {
+                noticeBoardId = Long.parseLong(noticeBoardIdStr.trim());
+                var nbOpt = repo1.findById(noticeBoardId);
+                if (nbOpt.isEmpty()) {
+                    result.rejectValue("noticeBoard", "noticeBoard.notfound",
+                            "Notice Board not found for ID: " + noticeBoardId);
+                } else {
+                    flight.setNoticeBoard(nbOpt.get());
+                }
+            } catch (NumberFormatException e) {
+                result.rejectValue("noticeBoard", "noticeBoard.invalid", "Notice Board ID must be a number");
+            }
         }
 
+        // ===== 4) Dacă sunt erori, rămâi în form =====
         if (result.hasErrors()) {
-            if (airplaneId != null) {
-                flight.setAirplane(new com.example.flight_management_system.model.Airplane((int)(long)airplaneId));
-            }
-            if (noticeBoardId != null) {
-                flight.setNoticeBoard(new com.example.flight_management_system.model.NoticeBoard());
-                flight.getNoticeBoard().setId(noticeBoardId);
-            }
-
-            model.addAttribute("airplanes", airplaneRepository.findAll());
-            model.addAttribute("noticeboards", noticeBoardRepository.findAll());
+            // păstrează ce ai nevoie în model (ca înainte)
+            model.addAttribute("airplanes", airplaneService.findAll());
+            model.addAttribute("noticeboards", noticeBoardService.findAll());
             return "flights/form";
         }
 
-        try {
-            flight.setAirplane(airplaneRepository.findById(airplaneId)
-                    .orElseThrow(() -> new IllegalArgumentException("Airplane not found for ID: " + airplaneId)));
-
-            flight.setNoticeBoard(noticeBoardRepository.findById(noticeBoardId)
-                    .orElseThrow(() -> new IllegalArgumentException("Notice Board not found for ID: " + noticeBoardId)));
-
-        } catch (IllegalArgumentException e) {
-            throw e;
-        }
-
+        // ===== 5) Save =====
         flightService.save(flight);
         return "redirect:/flights";
     }
@@ -129,17 +151,15 @@ public class FlightController {
     @GetMapping("/edit/{id}")
     public String editFlightForm(@PathVariable("id") Long id, Model model) {
         Flight flight = flightService.findById(id);
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
         model.addAttribute("flight", flight);
-        model.addAttribute("airplanes", airplaneRepository.findAll());
-        model.addAttribute("noticeboards", noticeBoardRepository.findAll());
+        model.addAttribute("airplanes", airplaneService.findAll());
+        model.addAttribute("noticeboards", noticeBoardService.findAll());
         return "flights/form";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteFlight(@PathVariable("id") Long id) {
         Flight flight = flightService.findById(id);
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
         flightService.delete(flight.getId());
         return "redirect:/flights";
     }
@@ -147,7 +167,6 @@ public class FlightController {
     @GetMapping("/details/{id}")
     public String flightDetails(@PathVariable("id") Long id, Model model) {
         Flight flight = flightService.findById(id);
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid flight Id:" + id));
         model.addAttribute("flight", flight);
         return "flights/details";
     }

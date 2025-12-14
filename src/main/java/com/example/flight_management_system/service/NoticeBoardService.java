@@ -19,4 +19,8 @@ public class NoticeBoardService {
     public Page<NoticeBoard> search(NoticeBoardFilter filter, Pageable pageable){
         return repo.findAll(NoticeBoardSpecifications.withFilter(filter), pageable);
     }
+
+    public Object findAll() {
+        return repo.findAll();
+    }
 }

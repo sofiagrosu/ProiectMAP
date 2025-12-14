@@ -28,4 +28,6 @@ public class NoticeBoard implements BaseMethods {
     public void setDate(LocalDate date) { this.date = date; }
     public List<Flight> getFlightsOfTheDay() { return flightsOfTheDay; }
     public void setFlightsOfTheDay(List<Flight> flightsOfTheDay) { this.flightsOfTheDay = flightsOfTheDay; }
+
+
 }
