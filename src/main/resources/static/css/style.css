@@ -256,3 +256,10 @@ body {
     background: #2f3a97;
     color: #fff;
 }
+.list-page .error{
+    color: #ff2768;
+    font-weight: 700;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}

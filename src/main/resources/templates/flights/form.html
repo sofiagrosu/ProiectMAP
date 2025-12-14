@@ -2,69 +2,85 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flight Form</title>
-    <style> .error { color: red; } </style>
+    <!-- pune aici exact path-ul tău către css -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2><span th:text="${flight.id} ? 'Edit Flight' : 'Create New Flight'"></span></h2>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<form th:action="@{/flights/save}" th:object="${flight}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <!-- Titlu tip “pill” ca în list page -->
+        <div class="pill-title">
+            <span th:text="${flight.id} ? 'Edit Flight' : 'Create new Flight'"></span>
+        </div>
 
-    <!-- Flight Name Field: Validates @NotBlank and Business Uniqueness -->
-    <div>
-        <label for="name">Flight Name:</label>
-        <input type="text" id="name" th:field="*{name}" />
-        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+        <!-- Layout cu grid: stânga liber, dreapta “side-area” (exact ca la list page) -->
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">FLIGHT FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/flights/save}" th:object="${flight}" method="post" class="form-stack">
+
+                            <input type="hidden" th:field="*{id}"/>
+
+                            <div>
+                                <label class="lbl" for="name">Flight Name</label>
+                                <input class="input" type="text" id="name" th:field="*{name}" placeholder="Placeholder"/>
+                                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            </div>
+
+                            <div>
+                                <label class="lbl" for="gateNumber">Gate Number</label>
+                                <input class="input" type="text" id="gateNumber" th:field="*{gateNumber}" placeholder="Placeholder"/>
+                                <span class="error" th:if="${#fields.hasErrors('gateNumber')}" th:errors="*{gateNumber}"></span>
+                            </div>
+
+                            <div>
+                                <label class="lbl" for="airplaneNumber">Airplane Number</label>
+                                <input class="input"
+                                       type="text"
+                                       id="airplaneNumber"
+                                       name="airplaneNumber"
+                                       th:value="${flight.airplane?.number}"
+                                       placeholder="e.g. YR-ABC"/>
+                                <span class="error" th:if="${#fields.hasErrors('airplane')}" th:errors="*{airplane}"></span>
+                            </div>
+
+                            <div>
+                                <label class="lbl" for="noticeBoardId">Notice Board ID</label>
+                                <input class="input"
+                                       type="text"
+                                       id="noticeBoardId"
+                                       name="noticeBoardId"
+                                       th:value="${flight.noticeBoard?.id}"
+                                       placeholder="e.g. 1"/>
+                                <span class="error" th:if="${#fields.hasErrors('noticeBoard')}" th:errors="*{noticeBoard}"></span>
+                            </div>
+
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/flights}">Cancel</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber (rămâne gol) -->
+            <div class="table-area"></div>
+
+        </div>
+
+
     </div>
-    <br/>
-
-    <!-- Gate Number Field: Validates @NotBlank -->
-    <div>
-        <label for="gateNumber">Gate Number:</label>
-        <input type="text" id="gateNumber" th:field="*{gateNumber}" />
-        <span class="error" th:if="${#fields.hasErrors('gateNumber')}" th:errors="*{gateNumber}">Gate Error</span>
-    </div>
-    <br/>
-
-    <!-- Many-to-One: Airplane -->
-    <div>
-        <label for="airplaneId">Airplane:</label>
-        <!-- Name attribute is crucial for @RequestParam binding -->
-        <select id="airplaneId" name="airplaneId">
-            <option value="">-- Select Airplane --</option>
-            <!-- Th:selected checks the object field populated by the controller FIX -->
-            <option th:each="ap : ${airplanes}"
-                    th:value="${ap.id}"
-                    th:text="${'ID: ' + ap.id + ' - Number: ' + ap.number}"
-                    th:selected="${flight.airplane?.id == ap.id}">
-                Airplane
-            </option>
-        </select>
-        <!-- Error is manually tied to the object field name for clean display -->
-        <span class="error" th:if="${#fields.hasErrors('airplane')}" th:errors="*{airplane}">Airplane Selection Error</span>
-    </div>
-    <br/>
-
-    <!-- Many-to-One: NoticeBoard -->
-    <div>
-        <label for="noticeBoardId">Notice Board:</label>
-        <select id="noticeBoardId" name="noticeBoardId">
-            <option value="">-- Select Notice Board --</option>
-            <option th:each="nb : ${noticeboards}"
-                    th:value="${nb.id}"
-                    th:text="${'ID: ' + nb.id + ' - Date: ' + nb.date}"
-                    th:selected="${flight.noticeBoard?.id == nb.id}">
-                Notice Board
-            </option>
-        </select>
-        <!-- Error is manually tied to the object field name for clean display -->
-        <span class="error" th:if="${#fields.hasErrors('noticeBoard')}" th:errors="*{noticeBoard}">Notice Board Selection Error</span>
-    </div>
-    <br/>
-
-    <button type="submit">Save</button>
-    <a th:href="@{/flights}">Cancel</a>
-</form>
+</div>
 </body>
 </html>
