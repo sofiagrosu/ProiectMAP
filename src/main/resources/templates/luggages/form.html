@@ -2,48 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Luggage Form</title>
-    <style> .error { color: red; } </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<body>
 
-<h2><span th:text="${luggage.id} ? 'Edit Luggage' : 'Create New Luggage'"></span></h2>
+<body class="list-page">
+<div class="page">
+    <div class="panel">
 
-<form th:action="@{/luggages/save}" th:object="${luggage}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <div class="pill-title">
+            <span th:text="${luggage.id} ? 'Edit Luggage' : 'Create new Luggage'"></span>
+        </div>
 
-    <!-- Many-to-One Relationship: Ticket (@NotNull validation) -->
-    <div>
-        <label for="ticketId">Associated Ticket (required):</label>
-        <select id="ticketId" name="ticketId">
-            <option value="">-- Select Ticket --</option>
-            <!-- Th:selected relies on the dummy object ID set in the Controller on error -->
-            <option th:each="t : ${tickets}"
-                    th:value="${t.id}"
-                    th:text="${'ID: ' + t.id + ' (Flight: ' + t.flight.name + ')'}"
-                    th:selected="${luggage.ticket?.id == t.id}">
-                Ticket
-            </option>
-        </select>
-        <span class="error" th:if="${#fields.hasErrors('ticket')}" th:errors="*{ticket}">Ticket Selection Error</span>
+        <div class="content-grid">
+
+            <!-- STÂNGA: formular -->
+            <div class="side-area">
+
+                <div class="side-block">
+                    <div class="side-header">LUGGAGE FORM</div>
+
+                    <div class="side-body">
+                        <form th:action="@{/luggages/save}" th:object="${luggage}" method="post" class="form-stack">
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Ticket: TEXT by ID -->
+                            <div>
+                                <label class="lbl" for="ticketId">Associated Ticket ID (required)</label>
+                                <input class="input"
+                                       type="text"
+                                       id="ticketId"
+                                       name="ticketId"
+                                       th:value="${luggage.ticket?.id}"
+                                       placeholder="e.g. 1" />
+                                <span class="error" th:if="${#fields.hasErrors('ticket')}" th:errors="*{ticket}">
+                                    Ticket Error
+                                </span>
+                            </div>
+
+                            <!-- Status (rămâne dropdown, dar stilizat) -->
+                            <div>
+                                <label class="lbl" for="status">Status (required)</label>
+                                <select class="input" id="status" th:field="*{status}">
+                                    <option th:each="s : ${statuses}"
+                                            th:value="${s}"
+                                            th:text="${s}">
+                                        Status
+                                    </option>
+                                </select>
+                                <span class="error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">
+                                    Status Error
+                                </span>
+                            </div>
+
+                            <div class="side-actions">
+                                <a class="btn btn-back" th:href="@{/luggages}">Cancel</a>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DREAPTA: spațiu liber -->
+            <div class="table-area"></div>
+        </div>
+
     </div>
-    <br/>
-
-    <!-- Status Field (@NotNull validation) -->
-    <div>
-        <label for="status">Status (required):</label>
-        <select id="status" th:field="*{status}">
-            <option th:each="s : ${statuses}"
-                    th:value="${s}"
-                    th:text="${s}">
-                Status
-            </option>
-        </select>
-        <span class="error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Status Error</span>
-    </div>
-    <br/>
-
-    <button type="submit">Save</button>
-    <a th:href="@{/luggages}">Cancel</a>
-</form>
+</div>
 </body>
 </html>
