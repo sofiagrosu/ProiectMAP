@@ -28,7 +28,7 @@ public class FlightController {
     @Autowired
     private NoticeBoardService noticeBoardService;
 
-    // ✅ IMPORTANT: repo / repo1 NU erau injectate (erau null)
+
     @Autowired
     private com.example.flight_management_system.repository.AirplaneRepository repo;
 
@@ -79,7 +79,7 @@ public class FlightController {
     public String saveFlight(
             @Valid @ModelAttribute("flight") Flight flight,
             BindingResult result,
-            // ✅ primește STRING ca să poți distinge: gol vs nenumeric
+            // primește STRING ca să poți distinge: gol vs nenumeric
             @RequestParam(value = "airplaneId", required = false) String airplaneIdStr,
             @RequestParam(value = "noticeBoardId", required = false) String noticeBoardIdStr,
             Model model
