@@ -4,7 +4,7 @@ import com.example.flight_management_system.model.Role;
 
 public class AirlineEmployeeFilter {
 
-    // Staff(name) - presupun că în Staff există câmpul "name"
+
     private String name;
 
     private Role role;

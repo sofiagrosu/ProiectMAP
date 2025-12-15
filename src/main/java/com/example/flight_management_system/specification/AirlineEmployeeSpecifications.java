@@ -21,7 +21,7 @@ public class AirlineEmployeeSpecifications {
         return spec;
     }
 
-    // Staff.name (moștenit) - property name trebuie să fie exact "name" în clasa Staff
+
     public static Specification<AirlineEmployee> nameContains(String value) {
         return (root, query, cb) -> {
             if (value == null || value.isBlank()) return cb.conjunction();
