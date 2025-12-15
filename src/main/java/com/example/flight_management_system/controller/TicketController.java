@@ -96,36 +96,66 @@ public class TicketController {
                              @RequestParam(value = "flightId", required = false) Long flightId,
                              Model model) {
 
-        if (result.hasErrors()) {
-            if (passengerId != null) {
-                ticket.setPassenger(passengerService.findById(passengerId));
-                //.orElse(new Passenger()));
-                if (ticket.getPassenger().getId() == null) ticket.getPassenger().setId(passengerId);
+        Passenger passenger = null;
+        Flight flight = null;
+
+        // 1. Validate Passenger existence
+        if (passengerId != null) {
+            passenger = passengerService.findById(passengerId);
+            if (passenger == null) {
+                result.rejectValue("passenger", "error.ticket.passenger.notfound",
+                        "Passenger with ID " + passengerId + " does not exist. Please enter a valid ID.");
             }
-            if (flightId != null) {
-                ticket.setFlight(flightService.findById(flightId));
-                //.orElse(new Flight()));
-                if (ticket.getFlight().getId() == null) ticket.getFlight().setId(flightId);
+        }
+
+        // 2. Validate Flight existence
+        if (flightId != null) {
+            flight = flightService.findById(flightId);
+            if (flight == null) {
+                result.rejectValue("flight", "error.ticket.flight.notfound",
+                        "Flight with ID " + flightId + " does not exist. Please enter a valid ID.");
+            }
+        }
+
+
+        // 3. Check for validation errors (@Valid or custom existence errors)
+        if (result.hasErrors()) {
+            // Re-set entities (or placeholders) to maintain form state
+            if (passenger != null) {
+                ticket.setPassenger(passenger);
+            } else if (passengerId != null) {
+                // Set a temporary Passenger with the invalid ID
+                ticket.setPassenger(new Passenger());
+                ticket.getPassenger().setId(passengerId);
             }
 
+            if (flight != null) {
+                ticket.setFlight(flight);
+            } else if (flightId != null) {
+                // Set a temporary Flight with the invalid ID
+                ticket.setFlight(new Flight());
+                ticket.getFlight().setId(flightId);
+            }
+
+
+            // Repopulate model for dropdowns
             model.addAttribute("passengers", passengerService.findAll());
             model.addAttribute("flights", flightService.findAll());
             return "tickets/form";
         }
 
+        // 4. If no errors, set entities and save
         try {
-            if (passengerId != null) {
-                ticket.setPassenger(passengerService.findById(passengerId));
-                //.orElse(null));
-            }
-            if (flightId != null) {
-                ticket.setFlight(flightService.findById(flightId));
-                //.orElse(null));
-            }
-
+            // Set the validated entities
+            ticket.setPassenger(passenger);
+            ticket.setFlight(flight);
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("Error mapping relationships: " + e.getMessage());
+            // Handle unexpected errors (e.g., mapping errors or Service exceptions)
+            result.reject("global.error", "An unexpected error occurred while saving the ticket: " + e.getMessage());
+            model.addAttribute("passengers", passengerService.findAll());
+            model.addAttribute("flights", flightService.findAll());
+            return "tickets/form";
         }
 
         ticketService.save(ticket);
@@ -147,7 +177,7 @@ public class TicketController {
     @GetMapping("/delete/{id}")
     public String deleteTicket(@PathVariable("id") Long id) {
         Ticket ticket = ticketService.findById(id);
-                //.orElseThrow(() -> new IllegalArgumentException("Invalid ticket Id:" + id));
+        //.orElseThrow(() -> new IllegalArgumentException("Invalid ticket Id:" + id));
         ticketService.delete(ticket.getId());
 
         return "redirect:/tickets";
@@ -156,7 +186,7 @@ public class TicketController {
     @GetMapping("/details/{id}")
     public String ticketDetails(@PathVariable("id") Long id, Model model) {
         Ticket ticket = ticketService.findById(id);
-              //  .orElseThrow(() -> new IllegalArgumentException("Invalid ticket Id:" + id));
+        //  .orElseThrow(() -> new IllegalArgumentException("Invalid ticket Id:" + id));
         model.addAttribute("ticket", ticket);
         return "tickets/details";
     }
